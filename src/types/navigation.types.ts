@@ -3,6 +3,7 @@ import {Routes} from '../router/routes';
 
 export type AppNavigation = NativeStackNavigationProp<NavigationParamList>;
 
+
 export type NavigationParamList = {
   [Routes.authRouter]: {
     isAuth: boolean;
