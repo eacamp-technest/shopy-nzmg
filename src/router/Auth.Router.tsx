@@ -14,7 +14,7 @@ import { authStackScreenOption } from 'configs/navigation.configs'
 
 const AuthStack = createNativeStackNavigator<NavigationParamList>()
 
-export const AuthRouter = () => {
+const AuthRouter = () => {
     return (
         <SafeAreaView style={CommonStyles.flex}>
             <AuthStack.Navigator
@@ -32,3 +32,4 @@ export const AuthRouter = () => {
 }
 
 const styles = StyleSheet.create({})
+export default AuthRouter
