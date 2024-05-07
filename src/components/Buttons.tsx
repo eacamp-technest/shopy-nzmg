@@ -12,6 +12,7 @@ import {TypographyStyles} from '../theme/typography';
 import {normalize} from '../theme/metrics';
 import {CommonStyles} from '../theme/Common.styles';
 import {buttonThemes} from '../helpers/buttonTheme';
+import {colors} from 'theme/colors';
 
 type TPosition = 'left' | 'right';
 type TSize = 'small' | 'block' | 'large';
@@ -80,7 +81,7 @@ export const Button: React.FC<IButton> = ({
         <SvgImage
           width={svgSize}
           height={svgSize}
-          color={'#fff'}
+          color={colors.white}
           source={icon}
         />
       ) : null}
