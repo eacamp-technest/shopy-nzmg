@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, FlatList, Image } from 'react-native'
-import React, { version } from 'react'
+import React, { Fragment, version } from 'react'
 import { CommonStyles } from 'theme/common.styles'
 import { windowWidth } from 'theme/consts.styles'
 import { TypographyStyles } from 'theme/typography'
@@ -100,19 +100,20 @@ export const WelcomeScreen: React.FC<NativeStackScreenProps<NavigationParamList,
     }
 
     return (
-        <View style={styles.root}>
-            <FlatList
-                data={onboarding}
-                initialScrollIndex={0}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                pagingEnabled
-                initialNumToRender={1}
-                renderItem={renderItem}
-                contentContainerStyle={styles.contentContainerStyle}
-                style={CommonStyles.flex}
-            />
-        </View>
+        <Fragment>
+            <View style={styles.root}>
+                <FlatList
+                    data={onboarding}
+                    initialScrollIndex={0}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    pagingEnabled
+                    initialNumToRender={1}
+                    renderItem={renderItem}
+                    contentContainerStyle={styles.contentContainerStyle}
+                    style={CommonStyles.flex}
+                /> </View>
+        </Fragment>
     )
 }
 

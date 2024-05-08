@@ -271,4 +271,8 @@ export const TypographyStyles = StyleSheet.create({
     textAlignCenter: {
         textAlign: 'center'
     }
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> 3bf94f8003e056e48a99d4b1cef60b75f4691e4f
