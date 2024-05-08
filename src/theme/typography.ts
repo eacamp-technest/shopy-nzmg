@@ -268,4 +268,7 @@ export const TypographyStyles = StyleSheet.create({
         fontFamily: montserratFonts[400],
         ...commonFontStyling
     },
+    textAlignCenter: {
+        textAlign: 'center'
+    }
 })

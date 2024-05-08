@@ -10,8 +10,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 // import X from './src/assets/vectors/logo.svg'
 import { StatusBar, StyleSheet, Text, View } from 'react-native';
 import BootSplash from "react-native-bootsplash";
-import Router from './src/router';
+import Router from 'router';
 import { colors } from './src/theme/colors'
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
 function App(): React.JSX.Element {
 
@@ -43,4 +44,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default App;
+export default gestureHandlerRootHOC(App);
