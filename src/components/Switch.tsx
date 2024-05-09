@@ -1,5 +1,7 @@
 import {View, StyleSheet, Pressable, ViewProps, StyleProp} from 'react-native';
 import React, {useState} from 'react';
+import {colors} from 'theme/colors';
+import {normalize} from 'theme/metrics';
 type TSize = 'miniKnop' | 'material' | 'switch';
 type TCircle = 'circle' | 'miniKnopCircle' | 'materialCircle';
 type TRightCircle =
@@ -37,36 +39,36 @@ export const Switch: React.FC<ISwitch> = ({
 
 const styles = StyleSheet.create({
   switch: {
-    width: 56,
-    height: 32,
+    width: normalize('width', 56),
+    height: normalize('height', 32),
     borderRadius: 32,
-    backgroundColor: '#DADADC',
+    backgroundColor: colors.sky.light,
   },
   right: {
-    backgroundColor: '#DE6053',
+    backgroundColor: colors.primary.base,
   },
   circle: {
-    backgroundColor: '#ffffff',
-    width: 28,
-    height: 28,
+    backgroundColor: colors.white,
+    width: normalize('width', 28),
+    height: normalize('height', 28),
     top: 2,
-    left: 2,
+    marginHorizontal: normalize('horizontal', 2),
     borderRadius: 50,
   },
   rightCircle: {
     left: 26,
   },
   miniKnop: {
-    width: 48,
-    height: 24,
+    width: normalize('width', 48),
+    height: normalize('height', 24),
     top: 6,
     left: 6,
     borderRadius: 32,
   },
 
   miniKnopCircle: {
-    width: 12,
-    height: 12,
+    width: normalize('width', 12),
+    height: normalize('height', 12),
     top: 6,
     left: 6,
   },
@@ -75,12 +77,12 @@ const styles = StyleSheet.create({
   },
 
   material: {
-    width: 36,
-    height: 20,
+    width: normalize('width', 36),
+    height: normalize('height', 20),
   },
   materialCircle: {
-    width: 20,
-    height: 20,
+    width: normalize('width', 20),
+    height: normalize('height', 20),
     top: 0,
     left: 0,
   },

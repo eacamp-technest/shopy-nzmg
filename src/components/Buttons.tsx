@@ -6,12 +6,12 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {SvgImage} from './SvgImages';
-import {TypographyStyles} from '../theme/typography';
-import {normalize} from '../theme/metrics';
-import {CommonStyles} from '../theme/Common.styles';
-import {buttonThemes} from '../helpers/buttonTheme';
+import {TypographyStyles} from 'theme/typography';
+import {normalize} from 'theme/metrics';
+import {CommonStyles} from '../theme/common.styles';
+import {buttonThemes} from 'helpers/buttonTheme';
 import {colors} from 'theme/colors';
 
 type TPosition = 'left' | 'right';
@@ -19,7 +19,7 @@ type TSize = 'small' | 'block' | 'large';
 type TTypes = 'primary' | 'secondary' | 'outlined' | 'transparent';
 
 interface IButton {
-  text: string;
+  text?: string;
   size?: TSize;
   types?: TTypes;
   disabled?: boolean;
@@ -27,6 +27,7 @@ interface IButton {
   position?: TPosition;
   loading?: boolean;
   onPress?: () => void;
+  textStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
 }
 
@@ -39,6 +40,7 @@ export const Button: React.FC<IButton> = ({
   position = 'left',
   size = 'block',
   style,
+  textStyle,
   types = 'primary',
 }) => {
   const [pressed, setPressed] = useState<boolean>(false);
@@ -76,7 +78,9 @@ export const Button: React.FC<IButton> = ({
       onPressOut={onPressOut}
       disabled={disabled || loading}
       onPress={onPress}>
-      <NativeText style={[styles.text, textStyles]}>{text}</NativeText>
+      <NativeText style={[styles.text, textStyles, textStyle]}>
+        {text}
+      </NativeText>
       {icon ? (
         <SvgImage
           width={svgSize}
