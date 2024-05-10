@@ -1,7 +1,7 @@
 import {TextStyle, ViewStyle} from 'react-native';
-import {colors} from '../theme/colors';
-
+import {colors} from 'theme/colors';
 export type TTypesButton = 'primary' | 'secondary' | 'outlined' | 'transparent';
+
 type TStates = {
   press?: boolean;
   disabled?: boolean;
@@ -18,7 +18,7 @@ type ButtonTheme = {
 const normal = {
   primary: {
     component: {
-      backgroundColor: colors.primary.Base,
+      backgroundColor: colors.primary.base,
       borderWidth: 0,
     } as ViewStyle,
     text: {
@@ -28,20 +28,20 @@ const normal = {
   secondary: {
     component: {
       borderWidth: 0,
-      backgroundColor: colors.primary.Lightest,
+      backgroundColor: colors.primary.lightest,
     } as ViewStyle,
     text: {
-      color: colors.primary.Base,
+      color: colors.primary.base,
     } as TextStyle,
   },
   outlined: {
     component: {
       backgroundColor: colors.white,
       borderWidth: 1,
-      borderColor: colors.primary.Base,
+      borderColor: colors.primary.base,
     } as ViewStyle,
     text: {
-      color: colors.primary.Base,
+      color: colors.primary.base,
     } as TextStyle,
   },
   transparent: {
@@ -50,7 +50,7 @@ const normal = {
       borderWidth: 0,
     } as ViewStyle,
     text: {
-      color: colors.primary.Base,
+      color: colors.primary.base,
     } as TextStyle,
   },
 };
@@ -60,7 +60,7 @@ const normal = {
 const pressed = {
   primary: {
     component: {
-      backgroundColor: colors.primary.Darkest,
+      backgroundColor: colors.primary.darkest,
       borderWidth: 0,
     } as ViewStyle,
     text: {
@@ -70,29 +70,29 @@ const pressed = {
   secondary: {
     component: {
       borderWidth: 0,
-      backgroundColor: colors.primary.Lighter,
+      backgroundColor: colors.primary.lighter,
     } as ViewStyle,
     text: {
-      color: colors.primary.Dark,
+      color: colors.primary.darkest,
     } as TextStyle,
   },
   outlined: {
     component: {
       backgroundColor: colors.white,
       borderWidth: 1,
-      borderColor: colors.primary.Dark,
+      borderColor: colors.primary.darkest,
     } as ViewStyle,
     text: {
-      color: colors.primary.Dark,
+      color: colors.primary.darkest,
     } as TextStyle,
   },
   transparent: {
     component: {
-      backgroundColor: colors.primary.Lightest,
+      backgroundColor: colors.primary.lightest,
       borderWidth: 0,
     } as ViewStyle,
     text: {
-      color: colors.primary.Base,
+      color: colors.primary.base,
     } as TextStyle,
   },
 };
@@ -102,29 +102,29 @@ const pressed = {
 const disabled = {
   primary: {
     component: {
-      backgroundColor: colors.sky.Light,
+      backgroundColor: colors.sky.light,
       borderWidth: 0,
     } as ViewStyle,
     text: {
-      color: colors.sky.Darkest,
+      color: colors.sky.dark,
     } as TextStyle,
   },
   secondary: {
     component: {
-      backgroundColor: colors.sky.Light,
+      backgroundColor: colors.sky.light,
     } as ViewStyle,
     text: {
-      color: colors.sky.Darkest,
+      color: colors.sky.dark,
     } as TextStyle,
   },
   outlined: {
     component: {
       backgroundColor: colors.white,
       borderWidth: 1,
-      borderColor: colors.sky.Base,
+      borderColor: colors.sky.base,
     } as ViewStyle,
     text: {
-      color: colors.sky.Base,
+      color: colors.sky.base,
     } as TextStyle,
   },
   transparent: {
@@ -133,7 +133,7 @@ const disabled = {
       borderWidth: 0,
     } as ViewStyle,
     text: {
-      color: colors.sky.Base,
+      color: colors.sky.base,
     } as TextStyle,
   },
 };
@@ -153,12 +153,12 @@ const determineStateIndex = (state: TStates) => {
   }
   return 'normal';
 };
-
-export const buttonThemes = (types: TTypesButton, state: TStates) => {
+export const ButtonTheme = (type: TTypesButton, state: TStates) => {
   const index = determineStateIndex(state);
 
   const styles = {
-    ...buttonTheme[index][types],
+    ...buttonTheme[index][type],
+
   };
 
   return styles;

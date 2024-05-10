@@ -11,7 +11,7 @@ import {SvgImage} from './SvgImages';
 import {TypographyStyles} from 'theme/typography';
 import {normalize} from 'theme/metrics';
 import {CommonStyles} from '../theme/common.styles';
-import {buttonThemes} from 'helpers/buttonTheme';
+import {ButtonTheme} from 'helpers/buttonTheme';
 import {colors} from 'theme/colors';
 
 type TPosition = 'left' | 'right';
@@ -44,13 +44,16 @@ export const Button: React.FC<IButton> = ({
   types = 'primary',
 }) => {
   const [pressed, setPressed] = useState<boolean>(false);
+  
+  const svgSize = size === 'small' ? 16 : 24;
 
-  const {component: rootStyles, text: textStyles} = buttonThemes(types, {
-    disabled,
-    press: pressed,
-  });
+    const onPressIn = () => setPress(true)
+    const onPressOut = () => setPress(false)
 
-  const svgSize = useMemo(() => (size === 'small' ? 16 : 24), [size]);
+    const { component: componentStyle, text: textStyle } = getButtonTheme(type, {
+        press,
+        disabled
+    })
 
   const renderLoading = () => {
     return loading ? (

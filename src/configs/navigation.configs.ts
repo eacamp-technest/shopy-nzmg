@@ -2,9 +2,12 @@ import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { colors } from "theme/colors";
 import { normalize } from 'theme/metrics'
 
-const defaultScreenOptions: NativeStackNavigationOptions = {
+export const defaultScreenOptions: NativeStackNavigationOptions = {
     headerShown: false,
     orientation: 'portrait',
+    contentStyle: {
+        backgroundColor: colors.white
+    }
 }
 
 export const authStackScreenOption: NativeStackNavigationOptions = {
