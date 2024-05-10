@@ -1,6 +1,5 @@
 import {TextStyle, ViewStyle} from 'react-native';
 import {colors} from 'theme/colors';
-
 export type TTypesButton = 'primary' | 'secondary' | 'outlined' | 'transparent';
 
 type TStates = {
@@ -154,12 +153,12 @@ const determineStateIndex = (state: TStates) => {
   }
   return 'normal';
 };
-
 export const ButtonTheme = (type: TTypesButton, state: TStates) => {
   const index = determineStateIndex(state);
 
   const styles = {
     ...buttonTheme[index][type],
+
   };
 
   return styles;

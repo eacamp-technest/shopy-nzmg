@@ -1,9 +1,9 @@
-import { PixelRatio } from 'react-native';
+import {PixelRatio} from 'react-native';
 
 import {
-    windowHeight as deviceHeight,
-    windowWidth as deviceWidth,
-} from './consts.styles';
+  windowHeight as deviceHeight,
+  windowWidth as deviceWidth,
+} from './Const.styles';
 
 /**
  * Layout height and width from design
@@ -17,17 +17,17 @@ const heightScaleFactor = deviceHeight / layoutHeight;
 let maxFont = PixelRatio.getFontScale();
 
 const fontScales = [
-    { limit: 1.28, value: 0 },
-    { limit: 1.6, value: 2 },
-    { limit: 2, value: 4 },
-    { limit: 2.5, value: 5 },
-    { limit: 3, value: 7 },
-    { limit: 3.5, value: 8 },
-    { limit: Infinity, value: 8.8 },
+  {limit: 1.28, value: 0},
+  {limit: 1.6, value: 2},
+  {limit: 2, value: 4},
+  {limit: 2.5, value: 5},
+  {limit: 3, value: 7},
+  {limit: 3.5, value: 8},
+  {limit: Infinity, value: 8.8},
 ];
 
 let fontScaleValue = (
-    fontScales.find(scale => maxFont <= scale.limit) || { value: 0 }
+  fontScales.find(scale => maxFont <= scale.limit) || {value: 0}
 ).value;
 
 /**
@@ -36,8 +36,8 @@ let fontScaleValue = (
  * @returns The normalized width value.
  */
 function normalizeWidth(size: number) {
-    const resizedWidth = size * widthScaleFactor;
-    return Math.round(PixelRatio.roundToNearestPixel(resizedWidth));
+  const resizedWidth = size * widthScaleFactor;
+  return Math.round(PixelRatio.roundToNearestPixel(resizedWidth));
 }
 
 /**
@@ -46,8 +46,8 @@ function normalizeWidth(size: number) {
  * @returns The normalized height value.
  */
 function normalizeHeight(size: number) {
-    const resizedHeight = size * heightScaleFactor;
-    return Math.round(PixelRatio.roundToNearestPixel(resizedHeight));
+  const resizedHeight = size * heightScaleFactor;
+  return Math.round(PixelRatio.roundToNearestPixel(resizedHeight));
 }
 
 /**
@@ -56,7 +56,7 @@ function normalizeHeight(size: number) {
  * @returns The converted pixel width value.
  */
 const pixelWidth = (size: number): number => {
-    return normalizeWidth(size);
+  return normalizeWidth(size);
 };
 
 /**
@@ -65,7 +65,7 @@ const pixelWidth = (size: number): number => {
  * @returns The converted pixel height value.
  */
 const pixelHeight = (size: number): number => {
-    return normalizeHeight(size);
+  return normalizeHeight(size);
 };
 
 /**
@@ -74,7 +74,7 @@ const pixelHeight = (size: number): number => {
  * @returns The converted pixel font size value.
  */
 const pixelFont = (size: number): number => {
-    return pixelHeight(size - fontScaleValue);
+  return pixelHeight(size - fontScaleValue);
 };
 
 /**
@@ -83,7 +83,7 @@ const pixelFont = (size: number): number => {
  * @returns The converted pixel value for margin and padding in the vertical direction.
  */
 const pixelVertical = (size: number): number => {
-    return pixelHeight(size);
+  return pixelHeight(size);
 };
 
 /**
@@ -92,19 +92,19 @@ const pixelVertical = (size: number): number => {
  * @returns The converted pixel value for margin and padding in the horizontal direction.
  */
 const pixelHorizontal = (size: number): number => {
-    return pixelWidth(size);
+  return pixelWidth(size);
 };
 
 const normalizeFunctions = {
-    width: pixelWidth,
-    font: pixelFont,
-    height: pixelHeight,
-    vertical: pixelVertical,
-    horizontal: pixelHorizontal,
-    // radius: pixelBorderRadius,
+  width: pixelWidth,
+  font: pixelFont,
+  height: pixelHeight,
+  vertical: pixelVertical,
+  horizontal: pixelHorizontal,
+  // radius: pixelBorderRadius,
 };
 
 export const normalize = (
-    func: keyof typeof normalizeFunctions,
-    px: number,
+  func: keyof typeof normalizeFunctions,
+  px: number,
 ): number => normalizeFunctions[func](px);

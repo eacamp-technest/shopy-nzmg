@@ -5,49 +5,21 @@
     "module": "ES2022",
     "baseUrl": ".",
     "noUncheckedIndexedAccess": true,
-    "paths": {
-      "*": [
-        "src/*"
-      ],
-      "components/*": [
-        "src/components/*"
-      ],
-      "assets/*": [
-        "./src/assets/*"
-      ],
-      "configs/*": [
-        "./src/configs/*"
-      ],
-      "hooks/*": [
-        "./src/hooks/*"
-      ],
-      "helpers/*": [
-        "./src/helpers/*"
-      ],
-      "router/*": [
-        "./src/router/*"
-      ],
-      "screens/*": [
-        "./src/screens/*"
-      ],
-      "services/*": [
-        "./src/services/*"
-      ],
-      "store/*": [
-        "src/store/*"
-      ],
-      "theme/*": [
-        "./src/theme/*"
-      ],
-      "constants/*": [
-        "./src/constants/*"
-      ],
-      "types/*": [
-        "./src/types/*"
-      ],
-      "utils/*": [
-        "./src/utils/*"
-      ]
-    }
+  "paths": {
+    "*": ["src/*"],
+    "components/*": ["src/components/*"],
+    "assets/*": ["./src/assets/*"],
+    "configs/*": ["./src/configs/*"],
+    "hooks/*": ["./src/hooks/*"],
+    "helpers/*": ["./src/helpers/*"],
+    "router/*": ["./src/router/*"],
+    "screens/*": ["./src/screens/*"],
+    "services/*": ["./src/services/*"],
+    "store/*": ["src/store/*"],
+    "theme/*": ["./src/theme/*"],
+    "constants/*": ["./src/constants/*"],
+    "types/*": ["./src/types/*"],
+    "utils/*": ["./src/utils/*"]
   }
+}
 }

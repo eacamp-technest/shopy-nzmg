@@ -13,7 +13,12 @@ import BootSplash from 'react-native-bootsplash';
 import Router from 'router';
 import {colors} from './src/theme/colors';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+
 import {WelcomeScreen} from 'screens/auth/Welcome.Screen';
+import {Button} from 'components/Buttons';
+import {Switch} from './src/components/Switch';
+import {Navbar} from 'components/Navbar';
+import {TextLink} from 'components/TextLinks';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -30,9 +35,7 @@ function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
       <StatusBar barStyle={'light-content'} />
-      <View style={styles.root}>
-        <Router />
-      </View>
+      <View style={styles.root}></View>
     </SafeAreaProvider>
   );
 }
