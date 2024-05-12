@@ -4,7 +4,7 @@ import {TypographyStyles} from 'theme/typography';
 import {CommonStyles} from 'theme/common.styles';
 import {SvgImage} from './SvgImages';
 import {colors} from 'theme/colors';
-import {Button} from './Buttons';
+import {Buttons} from './Buttons';
 import {normalize} from 'theme/metrics';
 
 type TIcon = {
@@ -44,7 +44,7 @@ export const Navbar: React.FC<INavBar> = ({
         <Text style={TypographyStyles.title2}>{title}</Text>
 
         {rightActionType === 'button' ? (
-          <Button
+          <Buttons
             types="outlined"
             size="small"
             text={right?.toString()}
@@ -100,7 +100,7 @@ export const Navbar: React.FC<INavBar> = ({
 
       case 'button':
         return (
-          <Button
+          <Buttons
             types="primary"
             size="small"
             text={data?.toString()}

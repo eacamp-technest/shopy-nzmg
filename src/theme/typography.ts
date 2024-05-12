@@ -57,7 +57,7 @@ export const TypographyStyles = StyleSheet.create({
     fontFamily: montserratFonts[700],
     ...commonFontStyling,
   },
-  LargeNoneSemilBold: {
+  LargeNoneSemiBold: {
     fontSize: fontSize18,
     // lineHeight: lineHeight18,
     fontFamily: montserratFonts[600],

@@ -1,6 +1,6 @@
 import {
   ActivityIndicator,
-  Text as NativeText,
+  Text,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {SvgImage} from './SvgImages';
-import {TypographyStyles} from 'theme/typography';
-import {normalize} from 'theme/metrics';
-import {CommonStyles} from '../theme/common.styles';
-import {ButtonTheme} from 'helpers/buttonTheme';
+import {TypographyStyles} from '../theme/typography';
+import {normalize} from '../theme/metrics';
+import {CommonStyles} from 'theme/common.styles';
+import {ButtonTheme} from '../helpers/buttonTheme';
 import {colors} from 'theme/colors';
 
 type TPosition = 'left' | 'right';
@@ -19,7 +19,7 @@ type TSize = 'small' | 'block' | 'large';
 type TTypes = 'primary' | 'secondary' | 'outlined' | 'transparent';
 
 interface IButton {
-  text?: string;
+  text: string | undefined;
   size?: TSize;
   types?: TTypes;
   disabled?: boolean;
@@ -27,11 +27,10 @@ interface IButton {
   position?: TPosition;
   loading?: boolean;
   onPress?: () => void;
-  textStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<ViewStyle>;
 }
 
-export const Button: React.FC<IButton> = ({
+export const Buttons: React.FC<IButton> = ({
   text,
   onPress,
   disabled,
@@ -40,20 +39,16 @@ export const Button: React.FC<IButton> = ({
   position = 'left',
   size = 'block',
   style,
-  textStyle,
   types = 'primary',
 }) => {
   const [pressed, setPressed] = useState<boolean>(false);
-  
-  const svgSize = size === 'small' ? 16 : 24;
 
-    const onPressIn = () => setPress(true)
-    const onPressOut = () => setPress(false)
+  const {component: rootStyles, text: textStyles} = ButtonTheme(types, {
+    disabled,
+    press: pressed,
+  });
 
-    const { component: componentStyle, text: textStyle } = getButtonTheme(type, {
-        press,
-        disabled
-    })
+  const svgSize = useMemo(() => (size === 'small' ? 16 : 24), [size]);
 
   const renderLoading = () => {
     return loading ? (
@@ -75,20 +70,18 @@ export const Button: React.FC<IButton> = ({
         styles[size],
         styles[position],
         rootStyles,
-        style,
+        text == 'Log in Instead' && styles.login,
       ]}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       disabled={disabled || loading}
       onPress={onPress}>
-      <NativeText style={[styles.text, textStyles, textStyle]}>
-        {text}
-      </NativeText>
+      <Text style={[styles.text, textStyles]}>{text}</Text>
       {icon ? (
         <SvgImage
           width={svgSize}
           height={svgSize}
-          color={colors.white}
+          color={'#fff'}
           source={icon}
         />
       ) : null}
@@ -128,5 +121,8 @@ const styles = StyleSheet.create({
   large: {
     backgroundColor: 'green',
     padding: normalize('vertical', 15),
+  },
+  login: {
+    backgroundColor: colors.ink.base,
   },
 });
