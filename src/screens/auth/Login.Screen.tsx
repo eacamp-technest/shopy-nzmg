@@ -14,9 +14,7 @@ import { FormRules } from 'constants/formRules'
 export const LoginScreen = () => {
   return (
     <View>
-      <Text>Login.Screen</Text>
+      <Text>LoginScreen</Text>
     </View>
   );
 };
-
-const styles = StyleSheet.create({});
