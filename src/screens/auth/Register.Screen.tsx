@@ -1,24 +1,27 @@
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import {Navbar} from 'components/Navbar';
-import {Buttons} from 'components/Buttons';
-import {TextLink} from 'components/TextLinks';
-import {normalize} from 'theme/metrics';
-import {NavigationParamList} from 'types/navigation.types';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Routes} from 'router/routes';
+import { Navbar } from 'components/Navbar';
+import { Buttons } from 'components/Buttons';
+import { TextLink } from 'components/TextLinks';
+import { normalize } from 'theme/metrics';
+import { NavigationParamList } from 'types/navigation.types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Routes } from 'router/routes';
+import { vectors } from './Verification.Screen';
 
 export const RegisterScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.register>
-> = ({navigation}) => {
+> = ({ navigation }) => {
   const navigateToWelcome = () => navigation.goBack();
   const navigateToVerification = () => navigation.navigate(Routes.verification);
   return (
     <View style={styles.root}>
       <Navbar
+
+        type="standard"
         onLeftPress={navigateToWelcome}
         leftActionType="icon"
-        left={require('../../assets/vectors/left.svg')}
+        left={vectors.leftVector}
       />
       <Navbar type="large" title="CREATE ACCOUNT" />
       <View style={styles.footer}>
