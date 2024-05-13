@@ -18,7 +18,7 @@ type NavbarActions = 'icon' | 'icon-text' | 'text' | 'button' | 'none';
 type NavbarSide = NodeRequire | TIcon | string | React.ReactNode | undefined;
 
 interface INavBar {
-  type: 'large' | 'standard';
+  type?: 'large' | 'standard';
   title?: string;
   left?: NavbarSide;
   right?: NavbarSide;
@@ -76,10 +76,18 @@ export const Navbar: React.FC<INavBar> = ({
       case 'icon':
         if (hasIcon) {
           const {icon, ...restOfIcon} = data as TIcon;
-          return <SvgImage source={icon} {...restOfIcon} />;
+          return (
+            <SvgImage
+              color={colors.ink.darkest}
+              source={icon}
+              {...restOfIcon}
+            />
+          );
         }
 
-        return <SvgImage source={data as NodeRequire} />;
+        return (
+          <SvgImage color={colors.ink.darkest} source={data as NodeRequire} />
+        );
 
       case 'icon-text':
         if (hasIcon) {
