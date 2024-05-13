@@ -25,16 +25,7 @@ export const VerificationScreen: React.FC = () => {
                         pinCount={4}
                         autoFocusOnLoad
                         style={styles.otpInput}
-                        codeInputFieldStyle={{
-                            width: 48,
-                            height: 48,
-                            color: colors.ink.base,
-                            fontWeight: '700',
-                            borderWidth: 1,
-                            borderColor: colors.sky.light,
-                            borderRadius: 8,
-                            padding: 16
-                        }}
+                        codeInputFieldStyle={styles.inputText}
                         codeInputHighlightStyle={{
                             borderColor: colors.primary.base
 
@@ -60,7 +51,7 @@ export const VerificationScreen: React.FC = () => {
         </SafeAreaView>
     )
 }
-const vectors = {
+export const vectors = {
     leftVector: {
         icon: require('../../assets/vectors/chevron-left.svg'),
         color: colors.ink.base
@@ -76,6 +67,18 @@ const styles = StyleSheet.create({
         width: "100%",
         height: 200,
         paddingHorizontal: normalize('horizontal', 32)
+    },
+    inputText: {
+        width: 48,
+        height: 48,
+        color: colors.ink.base,
+        borderWidth: 1,
+        borderColor: colors.sky.light,
+        borderRadius: 8,
+        padding: 16,
+        fontSize: normalize('font', 16),
+        lineHeight: normalize("font", 16),
+        fontFamily: "Montserrat-Bold"
     },
     submitButton: {
         backgroundColor: colors.sky.light,
