@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
 import { Navbar } from 'components/Navbar';
 import { Buttons } from 'components/Buttons';
@@ -8,22 +8,68 @@ import { NavigationParamList } from 'types/navigation.types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Routes } from 'router/routes';
 import { vectors } from './Verification.Screen';
+import { useForm } from 'react-hook-form'
+import { InputControlled } from 'components/InputControlled'
+import { FormRules } from 'constants/formRules'
+import { CommonStyles } from 'theme/common.styles';
+
+interface IRegister {
+  email: string;
+  password: string;
+  name?: string;
+}
 
 export const RegisterScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.register>
 > = ({ navigation }) => {
+  const {
+    control,
+    formState: { errors },
+  } = useForm<IRegister>();
   const navigateToWelcome = () => navigation.goBack();
   const navigateToVerification = () => navigation.navigate(Routes.verification);
   return (
-    <View style={styles.root}>
+    <ScrollView
+      keyboardShouldPersistTaps="handled"
+      scrollEnabled={false}
+      style={CommonStyles.flex}
+      contentContainerStyle={CommonStyles.flex}
+    >
       <Navbar
-
         type="standard"
         onLeftPress={navigateToWelcome}
         leftActionType="icon"
         left={vectors.leftVector}
       />
       <Navbar type="large" title="CREATE ACCOUNT" />
+      <View style={styles.inputs}>
+        <InputControlled
+          control={control}
+          name='name'
+          label='Full Name'
+          type='text'
+          placeholder='Enter your name'
+        />
+        <InputControlled
+          control={control}
+          name='email'
+          label='Email'
+          errorMessage={errors.email?.message}
+          rules={FormRules.email}
+          type='text'
+          keyboardType='email-address'
+          placeholder='Enter your email'
+        />
+        <InputControlled
+          control={control}
+          name='password'
+          label='Password'
+          errorMessage={errors.password?.message}
+          rules={FormRules.password}
+          type='password'
+          placeholder='Enter your password'
+        />
+      </View>
       <View style={styles.footer}>
         <Buttons text="Create an account" onPress={navigateToVerification} />
         <TextLink
@@ -41,14 +87,16 @@ export const RegisterScreen: React.FC<
           ]}
         />
       </View>
-    </View>
+    </ScrollView >
   );
 };
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    paddingHorizontal: normalize('horizontal', 12),
+  },
+  inputs: {
+    gap: 24
   },
   footer: {
     flex: 1,
