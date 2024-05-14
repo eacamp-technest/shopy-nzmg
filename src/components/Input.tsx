@@ -19,7 +19,7 @@ export interface IInput {
     caption?: string;
     value?: string;
     placeholder?: string;
-    disabled: boolean;
+    disabled?: boolean;
     keyboardType?: KeyboardTypeOptions;
     icon?: TIcon | NodeRequire;
     errorMessage?: string;
@@ -48,7 +48,7 @@ export const Input: React.FC<IInput> = ({
                         source={
                             secureTextEntry
                                 ? require('../assets/vectors/eye-off.svg')
-                                : require('../assets/vectors/eye.svg')
+                                : require('../assets/vectors/eye .svg')
                         }
                         color={colors.ink.base}
                         width={24}
