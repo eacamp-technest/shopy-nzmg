@@ -151,8 +151,7 @@ const styles = StyleSheet.create({
   },
   large: {
     ...CommonStyles.alignCenterJustifyBetweenRow,
-    paddingVertical: normalize('vertical', 16),
-    paddingHorizontal: normalize('horizontal', 16),
+    paddingVertical: normalize('vertical', 16)
   },
   action: {
     flex: 0.4,
