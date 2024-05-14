@@ -26,7 +26,7 @@ export const AuthRouter = () => {
     <SafeAreaView style={CommonStyles.flex} edges={edges}>
       <AuthStack.Navigator
         screenOptions={authStackScreenOption}
-        initialRouteName={Routes.register}>
+        initialRouteName={Routes.login}>
         <AuthStack.Screen
           name={Routes.welcome}
           component={WelcomeScreen}
