@@ -73,10 +73,11 @@ export const LoginScreen: React.FC = () => {
         // onPress={() => onSubmit(email, password)}
         // disabled={errors.email || errors.password}
         />
+        <Text style={[TypographyStyles.TinyNormalRegular, styles.option]}>or sign in with</Text>
         <View style={styles.social}>
           {Object.values(vectors).map(renderSocialButtons)}
         </View>
-        <TextLink content='By signing up you agree to our Terms and Conditions of Use'
+        <TextLink content='Already have an account?'
           center
           highlighted={highlighted} />
       </View>
@@ -86,17 +87,13 @@ export const LoginScreen: React.FC = () => {
 
 const highlighted = [
   {
-    text: 'Terms',
-    callback: () => console.log('terms')
-  },
-  {
-    text: 'Conditions of Use',
-    callback: () => console.log('conditions')
-  },
+    text: 'Log in',
+    callback: () => console.log('login')
+  }
 ]
 const vectors = {
   arrow_left: {
-    icon: require('../../assets/vectors/arrow-left (1).svg'),
+    icon: require('../../assets/vectors/chevron-left.svg'),
     color: colors.ink.base
   },
   google: require('../../assets/social/google.svg'),
@@ -108,6 +105,10 @@ const styles = StyleSheet.create({
   inputs: {
     gap: 24
   },
+  option: {
+    textAlign: "center",
+    color: colors.ink.dark
+  },
   social: {
     flexDirection: "row",
     alignItems: 'flex-start',
@@ -116,7 +117,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   footer: {
-    marginTop: 32,
+    marginVertical: 32,
     gap: 32,
     flex: 1
   }
