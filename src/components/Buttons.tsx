@@ -6,19 +6,19 @@ import {
   StyleSheet,
   ViewStyle,
 } from 'react-native';
-import React, {useMemo, useState} from 'react';
-import {SvgImage} from './SvgImages';
-import {TypographyStyles} from '../theme/typography';
-import {normalize} from '../theme/metrics';
-import {CommonStyles} from 'theme/common.styles';
-import {ButtonTheme} from '../helpers/buttonTheme';
-import {colors} from 'theme/colors';
+import React, { useMemo, useState } from 'react';
+import { SvgImage } from './SvgImages';
+import { TypographyStyles } from '../theme/typography';
+import { normalize } from '../theme/metrics';
+import { CommonStyles } from 'theme/common.styles';
+import { ButtonTheme } from '../helpers/buttonTheme';
+import { colors } from 'theme/colors';
 
 type TPosition = 'left' | 'right';
 type TSize = 'small' | 'block' | 'large';
 type TTypes = 'primary' | 'secondary' | 'outlined' | 'transparent';
 
-interface IButton {
+export interface IButton {
   text: string | undefined;
   size?: TSize;
   types?: TTypes;
@@ -43,7 +43,7 @@ export const Buttons: React.FC<IButton> = ({
 }) => {
   const [pressed, setPressed] = useState<boolean>(false);
 
-  const {component: rootStyles, text: textStyles} = ButtonTheme(types, {
+  const { component: rootStyles, text: textStyles } = ButtonTheme(types, {
     disabled,
     press: pressed,
   });

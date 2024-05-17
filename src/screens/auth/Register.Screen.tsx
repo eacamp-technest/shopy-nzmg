@@ -7,11 +7,11 @@ import { normalize } from 'theme/metrics';
 import { NavigationParamList } from 'types/navigation.types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Routes } from 'router/routes';
-import { vectors } from './Verification.Screen';
 import { useForm } from 'react-hook-form'
 import { InputControlled } from 'components/InputControlled'
 import { FormRules } from 'constants/formRules'
 import { CommonStyles } from 'theme/common.styles';
+import { colors } from 'theme/colors';
 
 interface IRegister {
   email: string;
@@ -89,7 +89,14 @@ export const RegisterScreen: React.FC<
       </View>
     </ScrollView >
   );
-};
+}
+
+export const vectors = {
+  leftVector: {
+    icon: require('../../assets/vectors/chevron-left.svg'),
+    color: colors.ink.base
+  }
+}
 
 const styles = StyleSheet.create({
   root: {

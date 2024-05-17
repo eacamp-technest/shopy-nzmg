@@ -11,7 +11,7 @@ export const onboarding = [
     },
     {
         title: 'Shop top brands online and in-store',
-        image: require('../assets/images/onboarding_6.png'),
+        image: require('../assets/images/onboarding_3.png'),
         id: 2,
     },
 ];
