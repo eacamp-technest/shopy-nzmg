@@ -1,14 +1,14 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import { Edges, SafeAreaView } from 'react-native-safe-area-context';
-import { WelcomeScreen } from 'screens/auth/Welcome.Screen';
-import { VerificationScreen } from 'screens/auth/Verification.Screen';
-import { LoginScreen } from 'screens/auth/Login.Screen';
-import { PaymentMethodScreen } from 'screens/auth/PaymentMethod.Screen';
-import { RegisterScreen } from 'screens/auth/Register.Screen';
-import { Routes } from './routes';
-import { NavigationParamList } from 'types/navigation.types';
-import { CommonStyles } from 'theme/common.styles';
+import {Edges, SafeAreaView} from 'react-native-safe-area-context';
+import {WelcomeScreen} from 'screens/auth/Welcome.Screen';
+import {VerificationScreen} from 'screens/auth/Verification.Screen';
+import {LoginScreen} from 'screens/auth/Login.Screen';
+import {PaymentMethodScreen} from 'screens/auth/PaymentMethod.Screen';
+import {RegisterScreen} from 'screens/auth/Register.Screen';
+import {Routes} from './routes';
+import {NavigationParamList} from 'types/navigation.types';
+import {CommonStyles} from 'theme/common.styles';
 import {
   authStackScreenOption,
   defaultScreenOptions,
@@ -26,7 +26,7 @@ export const AuthRouter = () => {
     <SafeAreaView style={CommonStyles.flex} edges={edges}>
       <AuthStack.Navigator
         screenOptions={authStackScreenOption}
-        initialRouteName={Routes.verification}>
+        initialRouteName={Routes.welcome}>
         <AuthStack.Screen
           name={Routes.welcome}
           component={WelcomeScreen}
