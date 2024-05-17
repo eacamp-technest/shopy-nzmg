@@ -1,17 +1,17 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
+import {View, StyleSheet, ScrollView, KeyboardAvoidingView} from 'react-native';
 import React from 'react';
-import { Navbar } from 'components/Navbar';
-import { Buttons } from 'components/Buttons';
-import { TextLink } from 'components/TextLinks';
-import { normalize } from 'theme/metrics';
-import { NavigationParamList } from 'types/navigation.types';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Routes } from 'router/routes';
-import { vectors } from './Verification.Screen';
-import { useForm } from 'react-hook-form'
-import { InputControlled } from 'components/InputControlled'
-import { FormRules } from 'constants/formRules'
-import { CommonStyles } from 'theme/common.styles';
+import {Navbar} from 'components/Navbar';
+import {Buttons} from 'components/Buttons';
+import {TextLink} from 'components/TextLinks';
+import {normalize} from 'theme/metrics';
+import {NavigationParamList} from 'types/navigation.types';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Routes} from 'router/routes';
+import {vectors} from './Verification.Screen';
+import {useForm} from 'react-hook-form';
+import {InputControlled} from 'components/InputControlled';
+import {FormRules} from 'constants/formRules';
+import {CommonStyles} from 'theme/common.styles';
 
 interface IRegister {
   email: string;
@@ -21,10 +21,10 @@ interface IRegister {
 
 export const RegisterScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.register>
-> = ({ navigation }) => {
+> = ({navigation}) => {
   const {
     control,
-    formState: { errors },
+    formState: {errors},
   } = useForm<IRegister>();
   const navigateToWelcome = () => navigation.goBack();
   const navigateToVerification = () => navigation.navigate(Routes.verification);
@@ -33,41 +33,40 @@ export const RegisterScreen: React.FC<
       keyboardShouldPersistTaps="handled"
       scrollEnabled={false}
       style={CommonStyles.flex}
-      contentContainerStyle={CommonStyles.flex}
-    >
+      contentContainerStyle={CommonStyles.flex}>
       <Navbar
         type="standard"
         onLeftPress={navigateToWelcome}
         leftActionType="icon"
-        left={vectors.leftVector}
+        left={vectors.arrowLeft}
       />
       <Navbar type="large" title="CREATE ACCOUNT" />
       <View style={styles.inputs}>
         <InputControlled
           control={control}
-          name='name'
-          label='Full Name'
-          type='text'
-          placeholder='Enter your name'
+          name="name"
+          label="Full Name"
+          type="text"
+          placeholder="Enter your name"
         />
         <InputControlled
           control={control}
-          name='email'
-          label='Email'
+          name="email"
+          label="Email"
           errorMessage={errors.email?.message}
           rules={FormRules.email}
-          type='text'
-          keyboardType='email-address'
-          placeholder='Enter your email'
+          type="text"
+          keyboardType="email-address"
+          placeholder="Enter your email"
         />
         <InputControlled
           control={control}
-          name='password'
-          label='Password'
+          name="password"
+          label="Password"
           errorMessage={errors.password?.message}
           rules={FormRules.password}
-          type='password'
-          placeholder='Enter your password'
+          type="password"
+          placeholder="Enter your password"
         />
       </View>
       <View style={styles.footer}>
@@ -87,7 +86,7 @@ export const RegisterScreen: React.FC<
           ]}
         />
       </View>
-    </ScrollView >
+    </ScrollView>
   );
 };
 
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   inputs: {
-    gap: 24
+    gap: 24,
   },
   footer: {
     flex: 1,
