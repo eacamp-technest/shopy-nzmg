@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form'
 import { InputControlled } from 'components/InputControlled'
 import { FormRules } from 'constants/formRules'
 import { SvgImage } from 'components/SvgImages';
+import { TypographyStyles } from 'theme/typography';
 
 interface ILoginForm {
   email: string;
@@ -66,7 +67,7 @@ export const LoginScreen: React.FC = () => {
       </View>
       <View style={styles.footer}>
         <Buttons
-          text='Create an account'
+          text='Login'
           loading={isSubmitting}
           onPress={handleSubmit(onSubmit)}
         // disabled={!isValid}
@@ -77,20 +78,24 @@ export const LoginScreen: React.FC = () => {
         <View style={styles.social}>
           {Object.values(vectors).map(renderSocialButtons)}
         </View>
-        <TextLink content='Already have an account?'
+        <TextLink
+          content="By signing up you agree to our Terms and Conditions of Use"
           center
-          highlighted={highlighted} />
+          highlighted={[
+            {
+              text: 'Terms',
+              callback: () => console.log('terms'),
+            },
+            {
+              text: 'Conditions of Use',
+              callback: () => console.log('conditions of use'),
+            },
+          ]}
+        />
       </View>
     </ScrollView>
   );
 };
-
-const highlighted = [
-  {
-    text: 'Log in',
-    callback: () => console.log('login')
-  }
-]
 const vectors = {
   arrow_left: {
     icon: require('../../assets/vectors/chevron-left.svg'),
