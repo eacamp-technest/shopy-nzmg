@@ -24,7 +24,7 @@ import {TypographyStyles} from 'theme/typography';
 
 interface IModalButtons extends IButton {}
 
-interface IModal {
+export interface IModal {
   title?: string;
   subTitle?: string | React.ReactNode;
   buttons?: IModalButtons[];
@@ -33,6 +33,7 @@ interface IModal {
   imageSize?: 'small' | 'medium' | 'large';
   source?: ImageSourcePropType | undefined;
   modalStyle?: StyleProp<ViewStyle>;
+  defaultOpen:boolean;
   children?: React.ReactNode;
   onClose?: () => void;
 }
@@ -51,6 +52,7 @@ const Modal: ForwardRefRenderFunction<IModalRefCallbacks, IModal> = (
     closeable,
     modalStyle,
     wrapperStyle,
+    defaultOpen,
     onClose,
     buttons,
     subTitle,
@@ -58,7 +60,7 @@ const Modal: ForwardRefRenderFunction<IModalRefCallbacks, IModal> = (
     source,
     title,
   } = props;
-  const [visible, setVisible] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(!!defaultOpen);
 
   const isElement = isValidElement(subTitle);
 
