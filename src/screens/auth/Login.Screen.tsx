@@ -1,4 +1,11 @@
-import {View, StyleSheet, Pressable, ScrollView, Linking} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Pressable,
+  Text,
+  ScrollView,
+  Linking,
+} from 'react-native';
 import React from 'react';
 import {Navbar} from 'components/Navbar';
 import {colors} from 'theme/colors';
@@ -54,8 +61,13 @@ export const LoginScreen: React.FC<
       scrollEnabled={false}
       style={CommonStyles.flex}
       contentContainerStyle={CommonStyles.flex}>
-      <Navbar type="standard" leftActionType="icon" left={vectors.arrow_left} />
-      <Navbar type="large" title="Welcome!" />
+      <Navbar
+        type="standard"
+        leftActionType="icon"
+        left={vectors.arrow_left}
+        onLeftPress={navigation.goBack}
+      />
+      <Navbar type="large" title="Login!" />
       <View style={styles.inputs}>
         <InputControlled
           control={control}
@@ -83,33 +95,28 @@ export const LoginScreen: React.FC<
           loading={isSubmitting}
           onPress={handleSubmit(onSubmit)}
         />
+        <Text style={CommonStyles.alginSelfCenter}>or sign in with</Text>
         <View style={styles.social}>
           {Object.values(vectors).map(renderSocialButtons)}
         </View>
         <TextLink
-          content="By signing up you agree to our Terms and Conditions of Use"
+          content="Don't have an account? Sign up"
           center
-          highlighted={highlighted}
+          highlighted={[
+            {
+              text: 'Sign up',
+              callback: () => console.log('terns'),
+            },
+          ]}
         />
       </View>
     </ScrollView>
   );
 };
 
-const highlighted = [
-  {
-    text: 'Terms',
-    callback: () => console.log('terns'),
-  },
-  {
-    text: 'Conditions of Use',
-    callback: () => console.log('conditions'),
-  },
-];
-
 const vectors = {
   arrow_left: {
-    icon: require('../../assets/vectors/arrow-left (1).svg'),
+    icon: require('../../assets/vectors/arrow-left.svg'),
     color: colors.ink.base,
   },
   google: require('../../assets/social/google.svg'),
@@ -131,6 +138,7 @@ const styles = StyleSheet.create({
   footer: {
     marginTop: 32,
     gap: 32,
+    marginBottom: 12,
     flex: 1,
   },
 });

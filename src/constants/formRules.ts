@@ -1,7 +1,17 @@
 import {RegisterOptions} from 'react-hook-form';
-import {Regex} from './regex';
+import {Regex} from './regexs';
 
 export class FormRules {
+  public static fullName = {
+    required: {
+      message: 'FullName is required',
+      value: true,
+    },
+    pattern: {
+      value: Regex.email,
+      message: 'FullName is not valid',
+    },
+  } as RegisterOptions;
   public static email = {
     required: {
       message: 'Email is required',

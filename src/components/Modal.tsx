@@ -33,7 +33,7 @@ export interface IModal {
   imageSize?: 'small' | 'medium' | 'large';
   source?: ImageSourcePropType | undefined;
   modalStyle?: StyleProp<ViewStyle>;
-  defaultOpen:boolean;
+  defaultOpen?: boolean;
   children?: React.ReactNode;
   onClose?: () => void;
 }
