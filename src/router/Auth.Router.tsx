@@ -6,9 +6,11 @@ import {VerificationScreen} from 'screens/auth/Verification.Screen';
 import {LoginScreen} from 'screens/auth/Login.Screen';
 import {PaymentMethodScreen} from 'screens/auth/PaymentMethod.Screen';
 import {RegisterScreen} from 'screens/auth/Register.Screen';
+import { ModalScreen } from 'screens/Modal.Screen';
 import {Routes} from './routes';
 import {NavigationParamList} from 'types/navigation.types';
 import {CommonStyles} from 'theme/common.styles';
+import { modalScreenOptions } from 'configs/navigation.configs';
 import {
   authStackScreenOption,
   defaultScreenOptions,
@@ -42,6 +44,7 @@ export const AuthRouter = () => {
           component={PaymentMethodScreen}
         />
         <AuthStack.Screen name={Routes.register} component={RegisterScreen} />
+        <AuthStack.Screen name={Routes.modalScreen} component={ModalScreen} options={modalScreenOptions}  />
       </AuthStack.Navigator>
     </SafeAreaView>
   );
