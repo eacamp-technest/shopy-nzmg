@@ -6,15 +6,17 @@ import {VerificationScreen} from 'screens/auth/Verification.Screen';
 import {LoginScreen} from 'screens/auth/Login.Screen';
 import {PaymentMethodScreen} from 'screens/auth/PaymentMethod.Screen';
 import {RegisterScreen} from 'screens/auth/Register.Screen';
-import { ModalScreen } from 'screens/Modal.Screen';
+import {ModalScreen} from 'screens/Modal.Screen';
 import {Routes} from './routes';
 import {NavigationParamList} from 'types/navigation.types';
 import {CommonStyles} from 'theme/common.styles';
-import { modalScreenOptions } from 'configs/navigation.configs';
+import {modalScreenOptions} from 'configs/navigation.configs';
 import {
   authStackScreenOption,
   defaultScreenOptions,
 } from 'configs/navigation.configs';
+import {YourCardScreen} from 'screens/auth/YourCard.Screen';
+import {TestScreen} from 'Test.Screen';
 
 const AuthStack = createNativeStackNavigator<NavigationParamList>();
 
@@ -28,7 +30,7 @@ export const AuthRouter = () => {
     <SafeAreaView style={CommonStyles.flex} edges={edges}>
       <AuthStack.Navigator
         screenOptions={authStackScreenOption}
-        initialRouteName={Routes.welcome}>
+        initialRouteName={Routes.paymentMethod}>
         <AuthStack.Screen
           name={Routes.welcome}
           component={WelcomeScreen}
@@ -44,7 +46,13 @@ export const AuthRouter = () => {
           component={PaymentMethodScreen}
         />
         <AuthStack.Screen name={Routes.register} component={RegisterScreen} />
-        <AuthStack.Screen name={Routes.modalScreen} component={ModalScreen} options={modalScreenOptions}  />
+        <AuthStack.Screen name={Routes.test} component={TestScreen} />
+        <AuthStack.Screen name={Routes.yourCard} component={YourCardScreen} />
+        <AuthStack.Screen
+          name={Routes.modalScreen}
+          component={ModalScreen}
+          options={modalScreenOptions}
+        />
       </AuthStack.Navigator>
     </SafeAreaView>
   );

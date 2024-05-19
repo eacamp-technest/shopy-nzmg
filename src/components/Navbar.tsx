@@ -41,6 +41,8 @@ interface INavBar {
   leftActionType?: NavbarActions;
   rightActionType?: NavbarActions;
   style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<ViewStyle>;
+  rootStyle?: StyleProp<ViewStyle>;
 }
 
 export const Navbar: React.FC<INavBar> = ({
@@ -51,6 +53,8 @@ export const Navbar: React.FC<INavBar> = ({
   right,
   title,
   style,
+  rootStyle,
+  textStyle,
   onLeftPress,
   onRightPress,
 }) => {
@@ -84,7 +88,7 @@ export const Navbar: React.FC<INavBar> = ({
     switch (actionType) {
       case 'text':
         return (
-          <Text numberOfLines={2} style={styles.textType}>
+          <Text numberOfLines={2} style={[styles.textType, textStyle]}>
             {data as string}
           </Text>
         );
@@ -158,7 +162,7 @@ export const Navbar: React.FC<INavBar> = ({
   };
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, rootStyle]}>
       <Pressable
         disabled={!onLeftPress || leftActionType === 'button'}
         onPress={onLeftPress}

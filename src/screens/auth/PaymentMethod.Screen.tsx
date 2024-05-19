@@ -65,7 +65,7 @@ export const PaymentMethodScreen = () => {
 
 const styles = StyleSheet.create({
   root: {
-    paddingHorizontal: normalize('horizontal', 24),
+    paddingHorizontal: normalize('horizontal', 12),
   },
   navbars: {
     gap: 16,
