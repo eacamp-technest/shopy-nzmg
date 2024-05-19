@@ -24,7 +24,7 @@ import {TypographyStyles} from 'theme/typography';
 
 interface IModalButtons extends IButton {}
 
-interface IModal {
+export interface IModal {
   title?: string;
   subTitle?: string | React.ReactNode;
   buttons?: IModalButtons[];
