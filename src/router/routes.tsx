@@ -5,7 +5,8 @@ export enum Routes {
   login = 'Login.Screen',
   verification = 'verification',
   paymentMethod = 'paymentMethod',
-  modalScreen ='modalScreen',
+  modalScreen = 'modalScreen',
   register = 'register',
+  yourCard = 'yourCard',
   test = 'test',
 }
