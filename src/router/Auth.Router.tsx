@@ -7,6 +7,7 @@ import {LoginScreen} from 'screens/auth/Login.Screen';
 import {PaymentMethodScreen} from 'screens/auth/PaymentMethod.Screen';
 import {RegisterScreen} from 'screens/auth/Register.Screen';
 import { ModalScreen } from 'screens/Modal.Screen';
+import { CreateYourCardScreen } from 'screens/auth/CreateYourCard.Screen';
 import {Routes} from './routes';
 import {NavigationParamList} from 'types/navigation.types';
 import {CommonStyles} from 'theme/common.styles';
@@ -45,6 +46,7 @@ export const AuthRouter = () => {
         />
         <AuthStack.Screen name={Routes.register} component={RegisterScreen} />
         <AuthStack.Screen name={Routes.modalScreen} component={ModalScreen} options={modalScreenOptions}  />
+        <AuthStack.Screen name={Routes.createyourcard} component={CreateYourCardScreen} />
       </AuthStack.Navigator>
     </SafeAreaView>
   );

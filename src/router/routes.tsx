@@ -6,6 +6,7 @@ export enum Routes {
   verification = 'verification',
   paymentMethod = 'paymentMethod',
   modalScreen ='modalScreen',
+  createyourcard='createyourcardscreen ',
   register = 'register',
   test = 'test',
 }
