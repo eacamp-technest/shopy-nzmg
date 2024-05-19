@@ -41,6 +41,11 @@ interface INavBar {
   leftActionType?: NavbarActions;
   rightActionType?: NavbarActions;
   style?: StyleProp<ViewStyle>;
+<<<<<<< HEAD
+=======
+  textStyle?: StyleProp<ViewStyle>;
+  rootStyle?: StyleProp<ViewStyle>;
+>>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
 }
 
 export const Navbar: React.FC<INavBar> = ({
@@ -51,6 +56,11 @@ export const Navbar: React.FC<INavBar> = ({
   right,
   title,
   style,
+<<<<<<< HEAD
+=======
+  rootStyle,
+  textStyle,
+>>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
   onLeftPress,
   onRightPress,
 }) => {
@@ -84,7 +94,7 @@ export const Navbar: React.FC<INavBar> = ({
     switch (actionType) {
       case 'text':
         return (
-          <Text numberOfLines={2} style={styles.textType}>
+          <Text numberOfLines={2} style={[styles.textType, textStyle]}>
             {data as string}
           </Text>
         );
@@ -158,7 +168,7 @@ export const Navbar: React.FC<INavBar> = ({
   };
 
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, rootStyle]}>
       <Pressable
         disabled={!onLeftPress || leftActionType === 'button'}
         onPress={onLeftPress}

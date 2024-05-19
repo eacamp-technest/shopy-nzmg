@@ -106,7 +106,7 @@ export const RegisterScreen: React.FC<
   );
 };
 
-export const vectors = {
+const vectors = {
   leftVector: {
     icon: require('../../assets/vectors/chevron-left.svg'),
     color: colors.ink.base,

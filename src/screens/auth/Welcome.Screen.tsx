@@ -1,24 +1,24 @@
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import {StyleSheet, Text, View, FlatList, Image} from 'react-native';
 import React from 'react';
-import { CommonStyles } from 'theme/common.styles';
-import { windowWidth } from 'theme/consts.styles';
-import { TypographyStyles } from 'theme/typography';
-import { Buttons } from 'components/Buttons';
-import { colors } from 'theme/colors';
-import { Pagination } from 'components/Pagination';
-import { normalize } from 'theme/metrics';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { onboarding } from 'constants/onboarding';
+import {CommonStyles} from 'theme/common.styles';
+import {windowWidth} from 'theme/consts.styles';
+import {TypographyStyles} from 'theme/typography';
+import {Buttons} from 'components/Buttons';
+import {colors} from 'theme/colors';
+import {Pagination} from 'components/Pagination';
+import {normalize} from 'theme/metrics';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {onboarding} from 'constants/onboarding';
 import X from '../../assets/vectors/logo.svg';
 
 export const WelcomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.welcome>
-> = ({ navigation }) => {
+> = ({navigation}) => {
   const navigateToLogin = () => navigation.navigate(Routes.login);
   const navigateToRegister = () => navigation.navigate(Routes.register);
-  const renderItem = ({ item }: { item: (typeof onboarding)[0] }) => {
+  const renderItem = ({item}: {item: (typeof onboarding)[0]}) => {
     return item.id === 0 ? (
       <View style={styles.background}>
         <View style={styles.round}>
@@ -81,7 +81,11 @@ export const WelcomeScreen: React.FC<
         <View style={styles.round}>
           <X style={styles.logo2} />
         </View>
-        <Image source={item.image} style={styles.smallImage} resizeMode="contain" />
+        <Image
+          source={item.image}
+          style={styles.smallImage}
+          resizeMode="contain"
+        />
         <View style={styles.main}>
           <Text
             style={[TypographyStyles.title2, TypographyStyles.textAlignCenter]}>
@@ -152,7 +156,7 @@ const styles = StyleSheet.create({
     left: '50%',
     color: colors.primary.base,
     borderWidth: 1,
-    borderColor: "green"
+    borderColor: 'green',
   },
   buttons: {
     gap: normalize('vertical', 16),
@@ -176,7 +180,7 @@ const styles = StyleSheet.create({
   },
   lastImage: {
     width: '100%',
-    height: normalize('height', 300)
+    height: normalize('height', 300),
   },
   contentContainerStyle: {},
   background: {
