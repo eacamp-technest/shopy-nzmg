@@ -1,4 +1,11 @@
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  Pressable,
+  StyleProp,
+  StyleSheet,
+  Text,
+  View,
+  ViewStyle,
+} from 'react-native';
 import React from 'react';
 import {TypographyStyles} from 'theme/typography';
 import {CommonStyles} from 'theme/common.styles';
@@ -10,11 +17,18 @@ import {normalize} from 'theme/metrics';
 type TIcon = {
   icon: NodeRequire;
   text?: string;
+  subText?: string | undefined;
   width?: number;
   height?: number;
   color?: string;
 };
-type NavbarActions = 'icon' | 'icon-text' | 'text' | 'button' | 'none';
+type NavbarActions =
+  | 'icon'
+  | 'icon-text'
+  | 'text'
+  | 'button'
+  | 'none'
+  | 'icon-subText';
 type NavbarSide = NodeRequire | TIcon | string | React.ReactNode | undefined;
 
 interface INavBar {
@@ -26,6 +40,7 @@ interface INavBar {
   onRightPress?: () => void;
   leftActionType?: NavbarActions;
   rightActionType?: NavbarActions;
+  style?: StyleProp<ViewStyle>;
 }
 
 export const Navbar: React.FC<INavBar> = ({
@@ -35,6 +50,7 @@ export const Navbar: React.FC<INavBar> = ({
   left,
   right,
   title,
+  style,
   onLeftPress,
   onRightPress,
 }) => {
@@ -97,9 +113,29 @@ export const Navbar: React.FC<INavBar> = ({
               style={[
                 CommonStyles.alignCenterJustifyBetweenRow,
                 side === 'right' && CommonStyles.rowReverse,
+                styles.text,
               ]}>
               <SvgImage source={icon} {...restOfIcon} />
-              <Text>{text}</Text>
+
+              <Text style={TypographyStyles.RegularNoneSemiBold}>{text}</Text>
+            </View>
+          );
+        }
+      case 'icon-subText':
+        if (hasIcon) {
+          const {icon, text, subText, ...restOfIcon} = data as TIcon;
+          return (
+            <View
+              style={[
+                styles.container,
+                CommonStyles.alignCenterJustifyBetweenRow,
+                side === 'right' && CommonStyles.rowReverse,
+              ]}>
+              <SvgImage source={icon} {...restOfIcon} />
+              <View>
+                <Text style={TypographyStyles.RegularNoneSemiBold}>{text}</Text>
+                <Text style={styles.subText}>{subText}</Text>
+              </View>
             </View>
           );
         }
@@ -126,7 +162,7 @@ export const Navbar: React.FC<INavBar> = ({
       <Pressable
         disabled={!onLeftPress || leftActionType === 'button'}
         onPress={onLeftPress}
-        style={[styles.action, !leftActionType && styles.hide]}>
+        style={[styles.action, !leftActionType && styles.hide, style]}>
         {renderActions(leftActionType, left, 'left')}
       </Pressable>
       <Text style={TypographyStyles.title3}>{title}</Text>
@@ -151,7 +187,7 @@ const styles = StyleSheet.create({
   },
   large: {
     ...CommonStyles.alignCenterJustifyBetweenRow,
-    paddingVertical: normalize('vertical', 16)
+    paddingVertical: normalize('vertical', 16),
   },
   action: {
     flex: 0.4,
@@ -167,5 +203,19 @@ const styles = StyleSheet.create({
   },
   hide: {
     opacity: 0,
+  },
+  subText: {
+    color: colors.lavender.base,
+    backgroundColor: colors.lavender.lightest,
+    paddingHorizontal: normalize('horizontal', 12),
+    paddingVertical: normalize('vertical', 4),
+    alignSelf: 'flex-start',
+    borderRadius: 100,
+  },
+  text: {
+    gap: 12,
+  },
+  container: {
+    gap: 16,
   },
 });
