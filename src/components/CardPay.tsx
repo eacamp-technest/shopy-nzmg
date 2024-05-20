@@ -22,21 +22,20 @@ export const CardPay: React.FC<ICardPay> = ({
     <Pressable onPress={onPress} style={styles.root}>
       <Navbar
         textStyle={styles.text}
-        leftActionType="text"
-        left={text}
+        type="large"
+        title={text}
         rightActionType="icon"
         right={require('../assets/vectors/brands.svg')}
       />
       <Text style={styles.cardNumber}>{cardNumber}</Text>
       <View style={styles.container}>
         <Navbar
-          type="large"
           rootStyle={styles.navbar}
-          textStyle={styles.text}
+          textStyle={[styles.cardDate]}
           leftActionType="text"
-          left="card holder"
+          left="CARD HOLDER"
           rightActionType="text"
-          right="card save"
+          right="CARD SAVE"
         />
         <Navbar
           rootStyle={styles.navbar}
@@ -62,10 +61,11 @@ const styles = StyleSheet.create({
     ...TypographyStyles.RegularTightSemiBold,
     color: colors.mellowApricot.lightest,
   },
+
   cardNumber: {
     ...TypographyStyles.title3,
     color: colors.mellowApricot.lightest,
-    paddingTop: 29,
+    paddingTop: 13,
     paddingBottom: 16,
   },
   container: {
@@ -76,5 +76,9 @@ const styles = StyleSheet.create({
   },
   navbarSide: {
     flex: 0.8,
+  },
+  cardDate: {
+    ...TypographyStyles.Inter,
+    color: colors.mellowApricot.additionColor,
   },
 });

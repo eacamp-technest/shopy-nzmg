@@ -34,6 +34,7 @@ export const colors = {
     light: '#F5C48F',
     base: '#F2B36D',
     darkest: '#A57A4A',
+    additionColor: '#F1EFFD',
   },
   blue: {
     lightest: '#DFE8FB',
