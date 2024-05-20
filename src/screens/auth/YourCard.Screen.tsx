@@ -10,6 +10,7 @@ import {Routes} from 'router/routes';
 export const YourCardScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.yourCard>
 > = ({navigation}) => {
+  const navigateToAddNewCard = () => navigation.navigate(Routes.addnewcard);
   return (
     <View style={styles.root}>
       <Navbar
@@ -25,7 +26,11 @@ export const YourCardScreen: React.FC<
         cardSave="12/24"
         cardNumber={'4532 1245 8765 2156'}
       />
-      <Buttons text="Add new card" types={'outlined'} />
+      <Buttons
+        onPress={navigateToAddNewCard}
+        text="Add new card"
+        types={'outlined'}
+      />
     </View>
   );
 };
