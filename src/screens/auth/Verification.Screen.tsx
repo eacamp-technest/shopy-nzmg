@@ -1,25 +1,14 @@
-<<<<<<< HEAD
-
-import {View, StyleSheet, Keyboard, ScrollView} from 'react-native';
-=======
-import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
->>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
+import { View, StyleSheet, Keyboard, ScrollView } from 'react-native';
 import React from 'react';
-import {Navbar} from 'components/Navbar';
-import {colors} from 'theme/colors';
-import {TextLink} from 'components/TextLinks';
-import {Buttons} from 'components/Buttons';
-import {CommonStyles} from 'theme/common.styles';
-<<<<<<< HEAD
-import {OtpCodeField} from 'components/OtpCodeField';
-import {NavigationParamList} from 'types/navigation.types';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-
-=======
-import {NavigationParamList} from 'types/navigation.types';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
->>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
-import {Routes} from 'router/routes';
+import { Navbar } from 'components/Navbar';
+import { colors } from 'theme/colors';
+import { TextLink } from 'components/TextLinks';
+import { Buttons } from 'components/Buttons';
+import { CommonStyles } from 'theme/common.styles';
+import { OtpCodeField } from 'components/OtpCodeField';
+import { NavigationParamList } from 'types/navigation.types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Routes } from 'router/routes';
 
 console.warn = (message: string) => {
   if (message.includes('Non-serializable')) {
@@ -28,20 +17,12 @@ console.warn = (message: string) => {
 };
 export const VerificationScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.verification>
-<<<<<<< HEAD
-
-
-
-
-
-=======
->>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
-> = ({navigation}) => {
+> = ({ navigation }) => {
   const [code, setCode] = React.useState<string>('');
   const verify = () => {
     navigation.navigate(Routes.modalScreen, {
       title: 'What’s your team name',
-      wrapperStyle: {gap: 24},
+      wrapperStyle: { gap: 24 },
       buttons: [
         {
           text: 'Agree and continue',
@@ -61,16 +42,10 @@ export const VerificationScreen: React.FC<
           highlighted={modalHighlighted}
         />
       ),
-      onClose: () => {},
+      onClose: () => { },
       closeable: true,
     });
   };
-
-<<<<<<< HEAD
- 
-
-=======
->>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
   return (
     <ScrollView scrollEnabled={false} contentContainerStyle={CommonStyles.flex}>
       <Navbar
@@ -93,23 +68,12 @@ export const VerificationScreen: React.FC<
           center
           highlighted={highlighted}
         />
-<<<<<<< HEAD
-
-=======
->>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
         <Buttons
           onPress={verify}
           text="Continue"
           disabled={code.length !== 4}
         />
       </View>
-<<<<<<< HEAD
-         
-  
-     
-
-=======
->>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
     </ScrollView>
   );
 };

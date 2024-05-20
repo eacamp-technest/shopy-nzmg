@@ -1,57 +1,8 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { Routes } from 'router/routes'
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Routes } from 'router/routes';
 import { IModal } from 'components/Modal'
 export type AppNavigation = NativeStackNavigationProp<NavigationParamList>
 
-export type NavigationParamList = {
-    [Routes.authRouter]: {
-        isAuth: boolean
-    }
-    [Routes.mainRouter]: undefined
-    [Routes.welcome]: undefined
-    [Routes.login]: undefined
-    [Routes.register]: undefined
-    [Routes.verification]:{
-        email:string;
-        password:string;
-    }
-    [Routes.modalScreen]:IModal
-    [Routes.paymentMethod]: undefined
-    [Routes.test]: undefined
-}
-=======
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Routes} from 'router/routes';
->>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
-
-
-<<<<<<< HEAD
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import { Routes } from 'router/routes'
-import { IModal } from 'components/Modal'
-export type AppNavigation = NativeStackNavigationProp<NavigationParamList>
-
-export type NavigationParamList = {
-    [Routes.authRouter]: {
-        isAuth: boolean
-    }
-    [Routes.mainRouter]: undefined
-    [Routes.welcome]: undefined
-    [Routes.login]: undefined
-    [Routes.register]: undefined
-    [Routes.verification]:{
-        email:string;
-        password:string;
-    }
-    [Routes.modalScreen]:IModal
-    [Routes.paymentMethod]: undefined
-    [Routes.test]: undefined
-}
-
-=======
 export type NavigationParamList = {
   [Routes.authRouter]: {
     isAuth: boolean;
@@ -67,8 +18,9 @@ export type NavigationParamList = {
     password?: string;
     verificationType: 'login' | 'register';
   };
+  [Routes.modalScreen]: IModal
   [Routes.paymentMethod]: undefined;
+  [Routes.createyourcard]: undefined;
+  [Routes.addnewcard]: undefined;
   [Routes.test]: undefined;
 };
->>>>>>> main
->>>>>>> ecba3dd57e8cd4fe1cc90abe0d5beb60046bacbe
