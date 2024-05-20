@@ -116,7 +116,7 @@ export const LoginScreen: React.FC<
 
 const vectors = {
   arrow_left: {
-    icon: require('../../assets/vectors/arrow-left.svg'),
+    icon: require('../../assets/vectors/chevron-left.svg'),
     color: colors.ink.base,
   },
   google: require('../../assets/social/google.svg'),
