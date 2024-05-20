@@ -8,10 +8,8 @@ import { useForm } from 'react-hook-form';
 import { InputControlled } from 'components/InputControlled';
 import { FormRules } from 'constants/formRules';
 import { Buttons } from 'components/Buttons';
-import Card from '../../assets/images/PaymentCard.png'
 import { IAddNewCard } from './AddNewCard.Screen';
-
-// const Card = require('../../assets/images/PaymentCard.png'),
+import { CardPay } from 'components/CardPay';
 
 export const CreateYourCardScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.createyourcard>
@@ -44,9 +42,12 @@ export const CreateYourCardScreen: React.FC<
         title="YOUR CARD"
         onLeftPress={navigation.goBack}
       />
-      <View>
-        <Image source={Card} style={styles.CardImage} />
-      </View>
+      <CardPay
+        text="Universal Card"
+        userName="Brooklyn Simmons"
+        cardSave="12/24"
+        cardNumber={'4532 1245 8765 2156'}
+      />
       <View style={styles.InputView}>
         <InputControlled
           control={control}
@@ -83,17 +84,13 @@ export const CreateYourCardScreen: React.FC<
 
 const styles = StyleSheet.create({
   root: {
-    gap: 24
-  },
-  CardImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 16,
+    flex: 1
   },
   InputView: {
-    gap: 24
+    gap: 24,
+    paddingTop: 8,
   },
   buttonView: {
-    marginTop: 120
+    marginTop: 118
   }
 });
