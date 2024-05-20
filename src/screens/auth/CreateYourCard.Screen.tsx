@@ -1,38 +1,41 @@
-import {StyleSheet, View, Image} from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import React from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationParamList} from 'types/navigation.types';
-import {Routes} from 'router/routes';
-import {Navbar} from 'components/Navbar';
-import {useForm} from 'react-hook-form';
-import {InputControlled} from 'components/InputControlled';
-import {FormRules} from 'constants/formRules';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationParamList } from 'types/navigation.types';
+import { Routes } from 'router/routes';
+import { Navbar } from 'components/Navbar';
+import { useForm } from 'react-hook-form';
+import { InputControlled } from 'components/InputControlled';
+import { FormRules } from 'constants/formRules';
 import { Buttons } from 'components/Buttons';
-import Card from '../../assets/images/PaymentCard.png';
-interface ICreateYourCard{
-    card:string,
-    cardholder:string,
-    date:string
-}
+import Card from '../../assets/images/PaymentCard.png'
+import { IAddNewCard } from './AddNewCard.Screen';
+
+// const Card = require('../../assets/images/PaymentCard.png'),
+
 export const CreateYourCardScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.createyourcard>
-> = ({navigation}) => {
-    const {
-        control,
-        handleSubmit,
-        formState: {errors, isSubmitting},
-      } = useForm<ICreateYourCard>({
-        defaultValues: {
-          card: __DEV__ ? '4532 1245 8765 2156' : '',
-          cardholder: __DEV__ ? 'Brooklyn Simmons' :'',
-          date: __DEV__ ? '12 / 24  /  088' : '',
-        },
-      });
+> = ({ navigation }) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<IAddNewCard>({
+    defaultValues: {
+      cardNumber: __DEV__ ? '4532 1245 8765 2156' : '',
+      cardHolder: __DEV__ ? 'Brooklyn Simmons' : '',
+      date: __DEV__ ? '12 / 24  /  088' : '',
+    },
+  });
+  const onSubmit = (data: IAddNewCard) => {
+    console.log("Card info added");
+
+  }
   return (
     <View style={styles.root}>
       <Navbar
         leftActionType="icon"
-        left={require('../../assets/vectors/arrow-left.svg')}
+        left={require('../../assets/vectors/chevron-left.svg')}
         title="YOUR CARD"
         onLeftPress={navigation.goBack}
       />
@@ -40,29 +43,29 @@ export const CreateYourCardScreen: React.FC<
         <Image source={Card} style={styles.CardImage} />
       </View>
       <View style={styles.InputView}>
-      <InputControlled
+        <InputControlled
           control={control}
-          name="card"
+          name="card number"
           label="Card Number"
-          errorMessage={errors.card?.message}
-          rules={FormRules.card}
+          errorMessage={errors.cardNumber?.message}
+          rules={FormRules.cardNumber}
           type="text"
           placeholder="card number"
         />
-         <InputControlled
+        <InputControlled
           control={control}
           name="card name"
           label="Cardholder Name"
-          errorMessage={errors.cardholder?.message}
-          rules={FormRules.cardholder}
+          errorMessage={errors.cardHolder?.message}
+          rules={FormRules.cardHolder}
           placeholder="Cardholder Name"
         />
-         <InputControlled
+        <InputControlled
           control={control}
           name="date"
           errorMessage={errors.date?.message}
-          rules={FormRules.date}
-          type="number"
+          rules={FormRules.cardDate}
+          type="text"
           placeholder="date"
         />
       </View>
@@ -74,18 +77,18 @@ export const CreateYourCardScreen: React.FC<
 };
 
 const styles = StyleSheet.create({
- root:{
-    gap:24
- },
+  root: {
+    gap: 24
+  },
   CardImage: {
     width: '100%',
     height: 200,
     borderRadius: 16,
   },
-  InputView:{
-    gap:24
+  InputView: {
+    gap: 24
   },
-  buttonView:{
-    marginTop:120
+  buttonView: {
+    marginTop: 120
   }
 });
