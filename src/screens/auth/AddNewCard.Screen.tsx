@@ -17,67 +17,72 @@ export interface IAddNewCard {
 }
 
 export const AddNewCardScreen: React.FC<
-  NativeStackScreenProps<NavigationParamList, Routes.addnewcard>
-> = ({navigation}) => {
-  const {
-    control,
-    handleSubmit,
-    formState: {errors, isSubmitted},
-  } = useForm<IAddNewCard>();
-  const onSubmit = (data: any) => {
-    navigation.navigate(Routes.createyourcard, data);
-  };
-  const navigateToMain = () => navigation.navigate(Routes.test);
-  return (
-    <View style={styles.root}>
-      <Navbar
-        type="standard"
-        leftActionType="icon"
-        left={vectors.leftVector}
-        onLeftPress={navigation.goBack}
-        rightActionType="text"
-        right={'Skip'}
-        onRightPress={navigateToMain}
-      />
-      <Navbar type="large" title="Add New Card" />
-      <View style={styles.inputs}>
-        <InputControlled
-          name="cardNumber"
-          control={control}
-          label="Card Number"
-          errorMessage={errors.cardNumber?.message}
-          rules={FormRules.cardNumber}
-          type="text"
-          keyboardType="numeric"
-          placeholder="Enter your card number"
-        />
-        <InputControlled
-          name="cardHolder"
-          control={control}
-          label="Cardholder Name"
-          errorMessage={errors.cardHolder?.message}
-          rules={FormRules.cardHolder}
-          type="text"
-          placeholder="Enter your holder name"
-        />
-        <InputControlled
-          name="date"
-          control={control}
-          errorMessage={errors.date?.message}
-          rules={FormRules.cardDate}
-          type="text"
-          keyboardType="numeric"
-          placeholder="MM/ YY / CVV"
-        />
-      </View>
-      <Buttons
-        text="Add Card"
-        loading={isSubmitted}
-        onPress={handleSubmit(onSubmit)}
-      />
-    </View>
-  );
-};
+    NativeStackScreenProps<NavigationParamList, Routes.addnewcard>
+> = ({ navigation }) => {
+    const {
+        control,
+        handleSubmit,
+        formState: { errors, isSubmitted },
+    } = useForm<IAddNewCard>({
+        defaultValues: {
+            cardNumber: '4532124587652156',
+            cardHolder: 'Brooklyn Simmons',
+            date: '09/23/2027'
+        },
+    });
+    const onSubmit = (data: any) => {
+        console.log(data);
+
+        navigation.navigate(Routes.createyourcard, data);
+    };
+    return (
+        <View style={styles.root}>
+            <Navbar
+                type="standard"
+                leftActionType="icon"
+                left={vectors.leftVector}
+                onLeftPress={navigation.goBack}
+                rightActionType="text"
+                right={'Skip'}
+            />
+            <Navbar type="large" title="Add New Card" />
+            <View style={styles.inputs}>
+                <InputControlled
+                    name="cardNumber"
+                    control={control}
+                    label="Card Number"
+                    errorMessage={errors.cardNumber?.message}
+                    rules={FormRules.cardNumber}
+                    type="text"
+                    keyboardType='numeric'
+                    placeholder="Enter your card number"
+                />
+                <InputControlled
+                    name="cardHolder"
+                    control={control}
+                    label="Cardholder Name"
+                    errorMessage={errors.cardHolder?.message}
+                    rules={FormRules.cardHolder}
+                    type="text"
+                    placeholder="Enter your holder name"
+                />
+                <InputControlled
+                    name="date"
+                    control={control}
+                    errorMessage={errors.date?.message}
+                    rules={FormRules.cardDate}
+                    type="text"
+                    keyboardType='numeric'
+                    placeholder="MM/ YY / CVV"
+                />
+            </View>
+            <Buttons text='Add Card'
+                onPress={handleSubmit(onSubmit)} />
+        </View>
+    )
+}
+
+     
 
 const vectors = {
   leftVector: {

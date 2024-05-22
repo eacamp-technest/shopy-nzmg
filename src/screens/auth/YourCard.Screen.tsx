@@ -1,15 +1,15 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import {CardPay} from 'components/CardPay';
-import {Navbar} from 'components/Navbar';
-import {Buttons} from 'components/Buttons';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationParamList} from 'types/navigation.types';
-import {Routes} from 'router/routes';
+import { CardPay } from 'components/CardPay';
+import { Navbar } from 'components/Navbar';
+import { Buttons } from 'components/Buttons';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationParamList } from 'types/navigation.types';
+import { Routes } from 'router/routes';
 
 export const YourCardScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.yourCard>
-> = ({navigation}) => {
+> = ({ navigation }) => {
   const navigateToAddNewCard = () => navigation.navigate(Routes.addnewcard);
   return (
     <View style={styles.root}>

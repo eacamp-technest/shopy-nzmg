@@ -1,17 +1,18 @@
-import {View, StyleSheet, ScrollView} from 'react-native';
+import { View, StyleSheet, ScrollView, Keyboard } from 'react-native';
 import React from 'react';
-import {Navbar} from 'components/Navbar';
-import {Buttons} from 'components/Buttons';
-import {TextLink} from 'components/TextLinks';
-import {normalize} from 'theme/metrics';
-import {NavigationParamList} from 'types/navigation.types';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Routes} from 'router/routes';
-import {useForm} from 'react-hook-form';
-import {InputControlled} from 'components/InputControlled';
-import {FormRules} from 'constants/formRules';
-import {CommonStyles} from 'theme/common.styles';
-import {colors} from 'theme/colors';
+import { Navbar } from 'components/Navbar';
+import { Buttons } from 'components/Buttons';
+import { TextLink } from 'components/TextLinks';
+import { normalize } from 'theme/metrics';
+import { NavigationParamList } from 'types/navigation.types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Routes } from 'router/routes';
+import { useForm } from 'react-hook-form';
+import { InputControlled } from 'components/InputControlled';
+import { FormRules } from 'constants/formRules';
+import { CommonStyles } from 'theme/common.styles';
+import { colors } from 'theme/colors';
+// import {keyboardHideEvent, keyboardShowEvent} from 'constants/common.consts'
 
 interface IRegister {
   fullName: string;
@@ -21,23 +22,39 @@ interface IRegister {
 
 export const RegisterScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.register>
-> = ({navigation}) => {
+> = ({ navigation }) => {
+  // const scrollRef = useRef<ScrollView>(null)
   const {
     control,
     handleSubmit,
-    formState: {errors, isSubmitted},
+    formState: { errors, isSubmitted },
   } = useForm<IRegister>({
     defaultValues: {
+      fullName: 'NGS Group',
       email: 'technest@gmail.com',
       password: 'qwe45678!',
     },
   });
-  const navigateToWelcome = () => navigation.goBack();
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: IRegister) => {
     console.log(data);
-
-    navigation.navigate(Routes.verification, data);
+    navigation.navigate(Routes.verification, {
+      ...data,
+      verificationType: 'register'
+    });
   };
+  // useEffect(()=>{
+  //   const showListener = Keyboard.addListener(keyboardShowEvent, ()=>{
+  //     scrollRef?.current?.scrollToEnd({animated:true})
+  //   })
+  //   const hideListener = Keyboard.addListener(keyboardHideEvent, ()=>{
+  //     scrollRef?.current?.scrollTo({y:0, animated:true})
+  //   })
+  //   return ()=>{
+  //     hideListener.remove();
+  //     showListener.remove()
+  //   }
+  // },[])
+
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"
@@ -46,7 +63,7 @@ export const RegisterScreen: React.FC<
       contentContainerStyle={CommonStyles.flex}>
       <Navbar
         type="standard"
-        onLeftPress={navigateToWelcome}
+        onLeftPress={navigation.goBack}
         leftActionType="icon"
         left={vectors.leftVector}
       />

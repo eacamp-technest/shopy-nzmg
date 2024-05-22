@@ -17,9 +17,15 @@ console.warn = (message: string) => {
 };
 export const VerificationScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.verification>
-> = ({navigation}) => {
+> = ({ navigation, route }) => {
+  const { verificationType } = route.params
   const [code, setCode] = React.useState<string>('');
   const verify = () => {
+    if (verificationType === 'login') {
+      console.log('Login verification');
+      return
+    }
+
     navigation.navigate(Routes.modalScreen, {
       title: 'What’s your team name',
       wrapperStyle: {gap: 24},

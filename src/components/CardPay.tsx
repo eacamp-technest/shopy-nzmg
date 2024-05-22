@@ -1,9 +1,9 @@
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
-import {Navbar} from './Navbar';
-import {colors} from 'theme/colors';
-import {TypographyStyles} from 'theme/typography';
-import {normalize} from 'theme/metrics';
+import { Navbar } from './Navbar';
+import { colors } from 'theme/colors';
+import { TypographyStyles } from 'theme/typography';
+import { normalize } from 'theme/metrics';
 interface ICardPay {
   text?: string;
   cardNumber?: string;

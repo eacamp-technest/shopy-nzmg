@@ -8,5 +8,5 @@ export class Regex {
   public static includeNumber = /\d/;
   public static cardNumber = /^[0-9]{16}$/;
   public static cardholderName = /^[A-Za-z\s]+$/;
-  public static cardDate = /^(0[1-9]|1[0-2])\/[0-9]{2}$/;
+  public static cardDate = /\b(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})\b/;
 }
