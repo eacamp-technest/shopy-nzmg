@@ -11,6 +11,9 @@ export const montserratFonts = {
   600: 'Montserrat-SemiBold',
   700: 'Montserrat-Bold',
 };
+export const inter = {
+  500: 'Inter-Medium',
+};
 const fontSize12 = normalize('font', 12);
 const fontSize14 = normalize('font', 14);
 const fontSize16 = normalize('font', 16);
@@ -269,5 +272,10 @@ export const TypographyStyles = StyleSheet.create({
   },
   textAlignCenter: {
     textAlign: 'center',
+  },
+  Inter: {
+    fontSize: fontSize12,
+    fontFamily: inter[500],
+    ...commonFontStyling,
   },
 });

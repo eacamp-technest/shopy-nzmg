@@ -8,23 +8,26 @@ import { useForm } from 'react-hook-form';
 import { InputControlled } from 'components/InputControlled';
 import { FormRules } from 'constants/formRules';
 import { Buttons } from 'components/Buttons';
-import Card from '../../assets/images/PaymentCard.png'
 import { IAddNewCard } from './AddNewCard.Screen';
-
-// const Card = require('../../assets/images/PaymentCard.png'),
+import { CardPay } from 'components/CardPay';
 
 export const CreateYourCardScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.createyourcard>
-> = ({ navigation }) => {
+> = ({ route, navigation }) => {
+  const params = route.params as IAddNewCard | undefined
+  const { cardNumber = "", cardHolder = "", date = "" } = params ?? {}
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<IAddNewCard>({
     defaultValues: {
-      cardNumber: __DEV__ ? '4532 1245 8765 2156' : '',
-      cardHolder: __DEV__ ? 'Brooklyn Simmons' : '',
-      date: __DEV__ ? '12 / 24  /  088' : '',
+      cardHolder,
+      cardNumber,
+      date
+      // cardNumber: __DEV__ ? '4532 1245 8765 2156' : '',
+      // cardHolder: __DEV__ ? 'Brooklyn Simmons' : '',
+      // date: __DEV__ ? '12 / 24  /  088' : '',
     },
   });
   const onSubmit = (data: IAddNewCard) => {
@@ -39,26 +42,29 @@ export const CreateYourCardScreen: React.FC<
         title="YOUR CARD"
         onLeftPress={navigation.goBack}
       />
-      <View>
-        <Image source={Card} style={styles.CardImage} />
-      </View>
+      <CardPay
+        text="Universal Card"
+        userName="Brooklyn Simmons"
+        cardSave="12/24"
+        cardNumber={'4532 1245 8765 2156'}
+      />
       <View style={styles.InputView}>
         <InputControlled
           control={control}
-          name="card number"
+          name="cardNumber"
           label="Card Number"
           errorMessage={errors.cardNumber?.message}
           rules={FormRules.cardNumber}
           type="text"
-          placeholder="card number"
+          placeholder="card Number"
         />
         <InputControlled
           control={control}
-          name="card name"
+          name="cardHolder"
           label="Cardholder Name"
           errorMessage={errors.cardHolder?.message}
           rules={FormRules.cardHolder}
-          placeholder="Cardholder Name"
+          placeholder="card Holder"
         />
         <InputControlled
           control={control}
@@ -78,17 +84,13 @@ export const CreateYourCardScreen: React.FC<
 
 const styles = StyleSheet.create({
   root: {
-    gap: 24
-  },
-  CardImage: {
-    width: '100%',
-    height: 200,
-    borderRadius: 16,
+    flex: 1
   },
   InputView: {
-    gap: 24
+    gap: 24,
+    paddingTop: 8,
   },
   buttonView: {
-    marginTop: 120
+    marginTop: 118
   }
 });

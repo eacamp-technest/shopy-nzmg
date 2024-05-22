@@ -23,7 +23,13 @@ export const AddNewCardScreen: React.FC<
         control,
         handleSubmit,
         formState: { errors, isSubmitted },
-    } = useForm<IAddNewCard>();
+    } = useForm<IAddNewCard>({
+        defaultValues: {
+            cardNumber: '4532124587652156',
+            cardHolder: 'Brooklyn Simmons',
+            date: '09/23/2027'
+        },
+    });
     const onSubmit = (data: any) => {
         console.log(data);
 
@@ -70,7 +76,7 @@ export const AddNewCardScreen: React.FC<
                     placeholder="MM/ YY / CVV"
                 />
             </View>
-            <Buttons text='Add Card' loading={isSubmitted}
+            <Buttons text='Add Card'
                 onPress={handleSubmit(onSubmit)} />
         </View>
     )

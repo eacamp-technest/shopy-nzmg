@@ -13,14 +13,18 @@ import { Routes } from 'router/routes';
 export const PaymentMethodScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.paymentMethod>
 > = ({ navigation }) => {
-
-  const navigateToAddNewCard = () => navigation.navigate(Routes.register);
+  const navigateToAddNewCard = () => navigation.navigate(Routes.addnewcard);
+  const navigateToLogin = () => navigation.navigate(Routes.login);
+  const navigateToMain = () => navigation.navigate(Routes.test);
+  const navigateToYourCard = () => navigation.navigate(Routes.yourCard);
   return (
     <View style={styles.root}>
       <Navbar
         leftActionType="icon"
+        onLeftPress={navigateToLogin}
         left={require('../../assets/vectors/chevron-left.svg')}
         rightActionType="text"
+        onRightPress={navigateToMain}
         right={'Skip'}
       />
       <Navbar type="large" title="payment methods" />
@@ -45,6 +49,7 @@ export const PaymentMethodScreen: React.FC<
             subText: 'Primary',
             icon: require('../../assets/vectors/brands.svg'),
           }}
+          onRightPress={navigateToYourCard}
           right={require('../../assets/vectors/chevron-right.svg')}
           rightActionType="icon"
         />
@@ -55,7 +60,7 @@ export const PaymentMethodScreen: React.FC<
             icon: require('../../assets/vectors/plus-cicle.svg'),
             text: 'Add another card',
           }}
-          onLeftPress={navigateToAddNewCard}
+          onRightPress={navigateToAddNewCard}
           rightActionType="icon"
           right={require('../../assets/vectors/chevron-right.svg')}
         />
