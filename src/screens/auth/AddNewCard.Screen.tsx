@@ -1,19 +1,19 @@
-import { StyleSheet, View } from 'react-native'
-import React from 'react'
-import { Navbar } from 'components/Navbar'
-import { FormRules } from 'constants/formRules';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { InputControlled } from 'components/InputControlled'
-import { Routes } from 'router/routes';
-import { colors } from 'theme/colors';
-import { useForm } from 'react-hook-form';
-import { Buttons } from 'components/Buttons';
+import {StyleSheet, View} from 'react-native';
+import React from 'react';
+import {Navbar} from 'components/Navbar';
+import {FormRules} from 'constants/formRules';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {InputControlled} from 'components/InputControlled';
+import {Routes} from 'router/routes';
+import {colors} from 'theme/colors';
+import {useForm} from 'react-hook-form';
+import {Buttons} from 'components/Buttons';
 
 export interface IAddNewCard {
-    cardNumber: string,
-    cardHolder: string,
-    date: string
+  cardNumber: string;
+  cardHolder: string;
+  date: string;
 }
 
 export const AddNewCardScreen: React.FC<
@@ -82,20 +82,22 @@ export const AddNewCardScreen: React.FC<
     )
 }
 
+     
+
 const vectors = {
-    leftVector: {
-        icon: require('../../assets/vectors/chevron-left.svg'),
-        color: colors.ink.base,
-    },
+  leftVector: {
+    icon: require('../../assets/vectors/chevron-left.svg'),
+    color: colors.ink.base,
+  },
 };
 
 const styles = StyleSheet.create({
-    root: {
-        flex: 1,
-    },
-    inputs: {
-        gap: 24,
-        marginTop: 24,
-        marginBottom: 32
-    },
-})
+  root: {
+    flex: 1,
+  },
+  inputs: {
+    gap: 24,
+    marginTop: 24,
+    marginBottom: 32,
+  },
+});

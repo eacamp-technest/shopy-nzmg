@@ -1,7 +1,7 @@
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Routes } from 'router/routes';
-import { IModal } from 'components/Modal'
-export type AppNavigation = NativeStackNavigationProp<NavigationParamList>
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {Routes} from 'router/routes';
+import {IModal} from 'components/Modal';
+export type AppNavigation = NativeStackNavigationProp<NavigationParamList>;
 
 export type NavigationParamList = {
   [Routes.authRouter]: {
@@ -18,9 +18,10 @@ export type NavigationParamList = {
     password?: string;
     verificationType: 'login' | 'register';
   };
-  [Routes.modalScreen]: IModal
+  [Routes.modalScreen]: IModal;
   [Routes.paymentMethod]: undefined;
   [Routes.createyourcard]: undefined;
   [Routes.addnewcard]: undefined;
+  [Routes.yourCard]: undefined;
   [Routes.test]: undefined;
 };

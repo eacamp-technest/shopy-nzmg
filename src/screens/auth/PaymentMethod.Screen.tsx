@@ -1,18 +1,18 @@
-import { StyleSheet, Text, View } from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import { Navbar } from 'components/Navbar';
-import { TypographyStyles } from 'theme/typography';
-import { TextLink } from 'components/TextLinks';
-import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
-import { Buttons } from 'components/Buttons';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
+import {Navbar} from 'components/Navbar';
+import {TypographyStyles} from 'theme/typography';
+import {TextLink} from 'components/TextLinks';
+import {colors} from 'theme/colors';
+import {normalize} from 'theme/metrics';
+import {Buttons} from 'components/Buttons';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
 
 export const PaymentMethodScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.paymentMethod>
-> = ({ navigation }) => {
+> = ({navigation}) => {
   const navigateToAddNewCard = () => navigation.navigate(Routes.addnewcard);
   const navigateToLogin = () => navigation.navigate(Routes.login);
   const navigateToMain = () => navigation.navigate(Routes.test);
