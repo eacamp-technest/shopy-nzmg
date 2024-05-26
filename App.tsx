@@ -5,20 +5,14 @@
  * @format
  */
 
-import React, { useEffect } from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import React, {useEffect} from 'react';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 // import X from './src/assets/vectors/logo.svg'
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import Router from 'router';
-import { colors } from './src/theme/colors';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
-
-// import {WelcomeScreen} from 'screens/auth/Welcome.Screen';
-// import {Buttons} from 'components/Buttons';
-// import {Switch} from './src/components/Switch';
-// import {Navbar} from 'components/Navbar';
-// import {TextLink} from 'components/TextLinks';
+import {colors} from './src/theme/colors';
+import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -27,14 +21,14 @@ function App(): React.JSX.Element {
     };
 
     init().finally(async () => {
-      await BootSplash.hide({ fade: true });
+      await BootSplash.hide({fade: true});
       console.log('BootSplash has been hidden successfully');
     });
   }, []);
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={'light-content'} />
+      <StatusBar barStyle={'dark-content'} backgroundColor={colors.white} />
       <View style={styles.root}>
         <Router />
       </View>
