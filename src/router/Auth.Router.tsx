@@ -48,12 +48,22 @@ export const AuthRouter = () => {
           component={PaymentMethodScreen}
         />
         <AuthStack.Screen name={Routes.register} component={RegisterScreen} />
-        <AuthStack.Screen name={Routes.modalScreen} component={ModalScreen} options={modalScreenOptions} />
-        <AuthStack.Screen name={Routes.createyourcard} component={CreateYourCardScreen} />
+        <AuthStack.Screen
+          name={Routes.modalScreen}
+          component={ModalScreen}
+          options={modalScreenOptions}
+        />
+        <AuthStack.Screen
+          name={Routes.createyourcard}
+          component={CreateYourCardScreen}
+        />
         <AuthStack.Screen name={Routes.test} component={TestScreen} />
         <AuthStack.Screen name={Routes.yourCard} component={YourCardScreen} />
-        <AuthStack.Screen name={Routes.addnewcard} component={AddNewCardScreen} />
-      </AuthStack.Navigator >
-    </SafeAreaView >
+        <AuthStack.Screen
+          name={Routes.addnewcard}
+          component={AddNewCardScreen}
+        />
+      </AuthStack.Navigator>
+    </SafeAreaView>
   );
 };

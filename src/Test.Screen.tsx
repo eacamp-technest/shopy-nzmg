@@ -38,7 +38,6 @@ export const TestScreen: React.FC<
 
 const styles = StyleSheet.create({
   root: {
-    flex: 1,
-    gap: 10
+    flex: 1
   },
-})
+});
