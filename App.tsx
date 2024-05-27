@@ -7,7 +7,6 @@
 
 import React, {useEffect} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-// import X from './src/assets/vectors/logo.svg'
 import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import Router from 'router';
