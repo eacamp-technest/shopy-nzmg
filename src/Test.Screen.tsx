@@ -6,10 +6,15 @@ import { Routes } from 'router/routes';
 import { colors } from 'theme/colors';
 import { normalize } from 'theme/metrics';
 import { Navbar } from 'components/Navbar';
+import { Buttons } from 'components/Buttons';
+import { usecardStore } from 'store/card/card.store';
+// import { useCardStoreActions } from 'store/card';
 
 export const TestScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.test>
 > = ({ navigation }) => {
+  // const count = usecardStore(state => state.count)
+  // const { increment, decrement } = useCardStoreActions()
 
   return (
     <View style={styles.root}>
@@ -22,6 +27,9 @@ export const TestScreen: React.FC<
         right={require('./assets/vectors/shopping-bag.svg')}
         rightActionType='icon'
       />
+      {/* <Text>{count}</Text>
+      <Buttons text='Increment' onPress={increment} />
+      <Buttons text='Decrement' onPress={decrement} /> */}
       {/* search input  */}
       {/* All stores / In-Store */}
     </View>
@@ -31,5 +39,6 @@ export const TestScreen: React.FC<
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    gap: 10
   },
 })

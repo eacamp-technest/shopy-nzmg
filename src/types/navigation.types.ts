@@ -21,6 +21,7 @@ export type NavigationParamList = {
   [Routes.modalScreen]: IModal
   [Routes.paymentMethod]: undefined;
   [Routes.createyourcard]: undefined;
+  [Routes.yourCard]: undefined;
   [Routes.addnewcard]: undefined;
   [Routes.test]: undefined;
 };

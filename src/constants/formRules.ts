@@ -36,18 +36,34 @@ export class FormRules {
   } as RegisterOptions;
 
   public static cardNumber = {
-    required: "Card number is required",
-    minLength: {
-      value: 16,
-      message: "Card number must be at least 16 digits"
-    },
-    maxLength: {
-      value: 16,
-      message: "Card number must be at most 16 digits"
+    required: {
+      message: 'Bank card is required',
+      value: true,
     },
     pattern: {
       value: Regex.cardNumber,
-      message: "Card Number must be 16 numeric digits"
+      message: 'Bank card is not valid',
+    },
+  } as RegisterOptions;
+
+  // public static cardDate = {
+  //   required: {
+  //     message: "Expiration date and cvv are required",
+  //     value: true,
+  //   },
+  //   pattern: {
+  //     value: Regex.cardDate,
+  //     message: "Invalid format. Use MM/YY/ CVV format"
+  //   },
+  // } as RegisterOptions;
+  public static cvv = {
+    required: {
+      message: "cvv is required",
+      value: true,
+    },
+    pattern: {
+      value: Regex.cvv,
+      message: "Invalid format"
     },
   } as RegisterOptions;
 
@@ -62,12 +78,4 @@ export class FormRules {
       message: 'Cardholder name must be exceed 50 characters'
     }
   } as RegisterOptions;
-
-  public static cardDate = {
-    required: "Expiration date is required",
-    pattern: {
-      value: Regex.cardDate,
-      message: "Expiration date must be in MM/YY format"
-    }
-  }
 }

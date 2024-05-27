@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { IInput, Input } from './Input'
 import { Controller, ControllerProps } from 'react-hook-form'
+import { Manipulators } from 'utils/manipulators'
 
 interface IInputController extends IInput, Partial<ControllerProps> {
     control?: any;
     disabledControl?: boolean;
+    manipulator?: 'cardNumber'
 }
 
 export const InputControlled: React.FC<IInputController> = ({
@@ -14,8 +16,19 @@ export const InputControlled: React.FC<IInputController> = ({
     rules,
     disabled,
     disabledControl,
+    manipulator,
     ...inputProps
 }) => {
+    const handleValueChange = useCallback(
+        (value: string, onChange: (value: string) => void) => {
+            if (manipulator === 'cardNumber') {
+                onChange(Manipulators.cardNumber(value))
+            } else {
+                onChange(value)
+            }
+        },
+        [manipulator]
+    )
     return (
         <Controller
             disabled={disabledControl}
@@ -26,7 +39,7 @@ export const InputControlled: React.FC<IInputController> = ({
             render={({ field }) => (
                 <Input
                     disabled={disabled}
-                    setValue={field.onChange}
+                    setValue={value => handleValueChange(value, field.onChange)}
                     value={field.value}
                     onBlur={field.onBlur}
                     {...inputProps}
