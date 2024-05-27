@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput, KeyboardTypeOptions, StyleProp, ViewStyle, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { SvgImage } from './SvgImages'
 import { TypographyStyles } from 'theme/typography'
 import { colors } from 'theme/colors'
@@ -24,9 +24,11 @@ export interface IInput {
     icon?: TIcon | NodeRequire;
     errorMessage?: string;
     style?: StyleProp<ViewStyle>;
+    maxLength?: number;
     setValue?: (value: string) => void;
     onFocus?: () => void;
-    onBlur?: () => void
+    onBlur?: () => void;
+    onInputPress?: () => void
 }
 export const Input: React.FC<IInput> = ({
     value,
@@ -38,9 +40,11 @@ export const Input: React.FC<IInput> = ({
     const [focused, setFocused] = useState<boolean>(false)
     const [secureTextEntry, setSecureTextEntry] = useState<boolean>(type === 'password')
 
-    const isMoreIcon = ('position' in (icon ?? {}) && (icon as TIcon)?.position === 'right') || type === 'password'
+    const isMoreIcon = useMemo(() => ('position' in (icon ?? {}) && (icon as TIcon)?.position === 'right') || type === 'password', [icon, type])
 
-    const renderIcon = () => {
+    const isPressable = props.onInputPress instanceof Function
+
+    const renderIcon = useMemo(() => {
         if (type === 'password') {
             return (
                 <Pressable hitSlop={standardHitSlopSize}>
@@ -77,7 +81,7 @@ export const Input: React.FC<IInput> = ({
                 color={props.disabled ? colors.sky.base : colors.ink.base}
             />
         )
-    }
+    }, [icon, props.disabled, secureTextEntry, type])
 
     const handleOnFocused = () => {
         setFocused(true)
@@ -103,15 +107,16 @@ export const Input: React.FC<IInput> = ({
                     props.disabled && styles.wrapperDisabled,
                     isMoreIcon && CommonStyles.rowReverse
                 ]}>
-                {renderIcon()}
+                {renderIcon}
                 <TextInput
                     placeholder={props.placeholder}
                     keyboardType={props.keyboardType}
                     value={value}
                     onFocus={handleOnFocused}
                     onBlur={handleOnBlur}
+                    onPressIn={props.onInputPress}
                     autoCapitalize='none'
-                    editable={!props.disabled}
+                    editable={!isPressable ?? !props.disabled}
                     secureTextEntry={secureTextEntry}
                     onChangeText={setValue}
                     placeholderTextColor={props.disabled ? colors.sky.base : colors.ink.lighter}

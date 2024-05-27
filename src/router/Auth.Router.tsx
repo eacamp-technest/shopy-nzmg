@@ -1,24 +1,24 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {Edges, SafeAreaView} from 'react-native-safe-area-context';
-import {WelcomeScreen} from 'screens/auth/Welcome.Screen';
-import {VerificationScreen} from 'screens/auth/Verification.Screen';
-import {LoginScreen} from 'screens/auth/Login.Screen';
-import {PaymentMethodScreen} from 'screens/auth/PaymentMethod.Screen';
-import {RegisterScreen} from 'screens/auth/Register.Screen';
-import {ModalScreen} from 'screens/Modal.Screen';
-import {CreateYourCardScreen} from 'screens/auth/CreateYourCard.Screen';
-import {Routes} from './routes';
-import {NavigationParamList} from 'types/navigation.types';
-import {CommonStyles} from 'theme/common.styles';
-import {modalScreenOptions} from 'configs/navigation.configs';
+import { Edges, SafeAreaView } from 'react-native-safe-area-context';
+import { WelcomeScreen } from 'screens/auth/Welcome.Screen';
+import { VerificationScreen } from 'screens/auth/Verification.Screen';
+import { LoginScreen } from 'screens/auth/Login.Screen';
+import { PaymentMethodScreen } from 'screens/payments/PaymentMethod.Screen';
+import { RegisterScreen } from 'screens/auth/Register.Screen';
+import { ModalScreen } from 'screens/Modal.Screen';
+import { CreateYourCardScreen } from 'screens/payments/CreateYourCard.Screen';
+import { Routes } from './routes';
+import { NavigationParamList } from 'types/navigation.types';
+import { CommonStyles } from 'theme/common.styles';
+import { modalScreenOptions } from 'configs/navigation.configs';
 import {
   authStackScreenOption,
   defaultScreenOptions,
 } from 'configs/navigation.configs';
-import {YourCardScreen} from 'screens/auth/YourCard.Screen';
-import {TestScreen} from 'Test.Screen';
-import {AddNewCardScreen} from 'screens/auth/AddNewCard.Screen';
+import { YourCardScreen } from 'screens/payments/YourCard.Screen';
+import { TestScreen } from 'Test.Screen';
+import { AddNewCardScreen } from 'screens/payments/AddNewCard.Screen';
 
 const AuthStack = createNativeStackNavigator<NavigationParamList>();
 
@@ -32,7 +32,7 @@ export const AuthRouter = () => {
     <SafeAreaView style={CommonStyles.flex} edges={edges}>
       <AuthStack.Navigator
         screenOptions={authStackScreenOption}
-        initialRouteName={Routes.welcome}>
+        initialRouteName={Routes.paymentMethod}>
         <AuthStack.Screen
           name={Routes.welcome}
           component={WelcomeScreen}
