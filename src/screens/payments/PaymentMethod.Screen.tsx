@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Navbar } from 'components/Navbar';
 import { TypographyStyles } from 'theme/typography';
 import { TextLink } from 'components/TextLinks';
@@ -13,12 +13,15 @@ import { CommonStyles } from 'theme/common.styles';
 import { useUserStore } from 'store/user/user.store';
 import { ICardInputFrom } from 'types/card.types';
 import { SvgImage } from 'components/SvgImages';
+import { useToast } from 'store/toast';
 
 export const PaymentMethodScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.paymentMethod>
 > = ({ navigation }) => {
 
   const { cards, actions: { selectCard }, } = useUserStore(state => state)
+
+  const showToast = useToast()
 
   const renderCards = (data: ICardInputFrom) => {
     const onPress = () => {
@@ -40,10 +43,22 @@ export const PaymentMethodScreen: React.FC<
       </Pressable>
     )
   }
+  const [paymentText, setPaymentText] = useState<string>('Add Payment Method')
+  const navigateToAddNewCard = () => {
+    navigation.navigate(Routes.addnewcard);
 
-  const navigateToAddNewCard = () => navigation.navigate(Routes.addnewcard);
+  }
   const navigateToMain = () => navigation.navigate(Routes.test);
   const navigateToYourCard = () => navigation.navigate(Routes.yourCard);
+
+  const onAddNewMethod = () => {
+    if (cards.length >= 2) {
+      showToast('error', 'You can only store up to 3 cards')
+      return
+    }
+    setPaymentText('Add another Card')
+    navigateToAddNewCard()
+  }
 
   return (
     <View style={styles.root}>
@@ -58,27 +73,30 @@ export const PaymentMethodScreen: React.FC<
       />
       <Navbar type="large" title="payment methods" />
       <View style={styles.container}>
-        <Text style={TypographyStyles.RegularNormalSemiBold}>Stored Card</Text>
-        <TextLink
-          content="You have stored your card to make shopping with Shoppay even smoother. To enroll in Connected card, view card detail. Learn more"
-          center={false}
-          highlighted={[
-            {
-              text: 'Learn more',
-              callback: () => console.log("Learn more"),
-            },
-          ]}
-        />
+        <View style={styles.text}>
+          <Text style={TypographyStyles.RegularNormalSemiBold}>STORED CARD</Text>
+          <TextLink
+            style={TypographyStyles.RegularNormalRegular}
+            content="You have stored your card to make shopping with Shoppay even smoother. To enroll in Connected card, view card detail. Learn more"
+            center={false}
+            highlighted={[
+              {
+                text: 'Learn more',
+                callback: () => console.log("Learn more"),
+              },
+            ]}
+          />
+        </View>
         <View style={styles.methods}>
           {cards.map(renderCards)}
           <Pressable style={styles.component}
-            onPress={navigateToAddNewCard}>
+            onPress={onAddNewMethod}>
             <View style={styles.plus}>
               <SvgImage source={require('../../assets/vectors/plus-cicle.svg')} color={colors.white} />
             </View>
             <Text style={[TypographyStyles.RegularNormalSemiBold,
             CommonStyles.flexGrow
-            ]}>Add another card</Text>
+            ]}>{paymentText}</Text>
             <SvgImage
               source={require('../../assets/vectors/chevron-right.svg')}
               isPressable
@@ -88,7 +106,7 @@ export const PaymentMethodScreen: React.FC<
           </Pressable>
         </View>
         <View style={styles.container}>
-          <Text style={TypographyStyles.RegularNormalSemiBold}>Stored Card</Text>
+          <Text style={TypographyStyles.RegularNormalSemiBold}>STORED CARD</Text>
           <Text style={styles.text}>
             You don’t have a connected bank account.
           </Text>
@@ -111,6 +129,9 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: normalize('vertical', 24),
   },
+  methods: {
+    gap: 16
+  },
   plus: {
     width: 40,
     height: 40,
@@ -125,19 +146,4 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 12,
   },
-  methods: {
-    gap: 16
-  },
-
-  // navbars: {
-  //   gap: 16,
-  //   paddingVertical: normalize('vertical', 8),
-  // },
-  // yourCard: {
-  //   flex: 0,
-  // },
-  // addCard: {
-  //   flex: 0.6,
-  //   gap: 12,
-  // },
 });

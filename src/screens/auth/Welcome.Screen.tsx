@@ -23,7 +23,7 @@ export const WelcomeScreen: React.FC<
     return item.id === 0 ? (
       <View style={styles.background}>
         <View style={styles.round}>
-          <X style={styles.logo2} />
+          <X style={styles.logo} />
         </View>
         <Image source={item.image} resizeMode={isIos ? 'center' : undefined} style={styles.image} />
 
@@ -46,9 +46,7 @@ export const WelcomeScreen: React.FC<
       </View>
     ) : item.id === 1 ? (
       <View style={styles.secondary}>
-        <View style={styles.round}>
-          <X style={styles.logo2} />
-        </View>
+        <X style={[styles.logo, styles.logo2]} />
         <Image source={item.image} style={styles.smallImage} />
         <View style={styles.main}>
           <Text
@@ -79,9 +77,7 @@ export const WelcomeScreen: React.FC<
       </View>
     ) : (
       <View style={styles.secondary}>
-        <View style={styles.round}>
-          <X style={styles.logo2} />
-        </View>
+        <X style={[styles.logo, styles.logo2]} />
         <Image
           source={item.image}
           style={styles.smallImage}
@@ -151,13 +147,14 @@ const styles = StyleSheet.create({
     top: -197,
     right: 0,
   },
-  logo2: {
+  logo: {
     position: 'absolute',
     top: '50%',
     left: '50%',
     color: colors.primary.base,
-    borderWidth: 1,
-    borderColor: 'green',
+  },
+  logo2: {
+    top: 32,
   },
   buttons: {
     gap: normalize('vertical', 16),

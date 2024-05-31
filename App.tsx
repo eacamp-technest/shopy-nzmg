@@ -5,13 +5,14 @@
  * @format
  */
 
-import React, {useEffect} from 'react';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import React, { useEffect } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import Router from 'router';
-import {colors} from './src/theme/colors';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import { colors } from './src/theme/colors';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import { Toast } from 'components/Toast';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -20,13 +21,14 @@ function App(): React.JSX.Element {
     };
 
     init().finally(async () => {
-      await BootSplash.hide({fade: true});
+      await BootSplash.hide({ fade: true });
       console.log('BootSplash has been hidden successfully');
     });
   }, []);
 
   return (
     <SafeAreaProvider>
+      <Toast />
       <StatusBar barStyle={'dark-content'} backgroundColor={colors.white} />
       <View style={styles.root}>
         <Router />

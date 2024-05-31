@@ -7,8 +7,8 @@ export interface SvgImageProps extends SvgProps {
     source: any;
     isPressable?: boolean;
     onPress?: () => void;
-    pressableStyle?: StyleProp<ViewStyle>
-    pressableHitSLop?: null | Insets | number | undefined
+    pressableStyle?: StyleProp<ViewStyle>;
+    pressableHitSLop?: null | Insets | number | undefined;
 }
 
 export const SvgImage: React.FC<SvgImageProps> = ({
@@ -17,6 +17,7 @@ export const SvgImage: React.FC<SvgImageProps> = ({
     isPressable,
     onPress,
     pressableHitSLop,
+    pressableStyle,
     ...props
 }) => {
     if (!source?.default) {
@@ -26,13 +27,12 @@ export const SvgImage: React.FC<SvgImageProps> = ({
         props.width = normalize('width', Number(props.width))
     }
     if (props.height) {
-        props.height = normalize('height', Number(props.height))
+        props.height = normalize('width', Number(props.height))
     }
     if (isPressable) {
         return (
-            <Pressable hitSlop={pressableHitSLop} onPress={onPress}>
+            <Pressable hitSlop={pressableHitSLop} onPress={onPress} style={pressableStyle}>
                 {React.createElement(source.default, props, children)}
-
             </Pressable>
         )
     }

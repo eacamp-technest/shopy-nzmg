@@ -1,6 +1,6 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {Routes} from 'router/routes';
-import {IModal} from 'components/Modal';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Routes } from 'router/routes';
+import { IModal } from 'components/Modal';
 export type AppNavigation = NativeStackNavigationProp<NavigationParamList>;
 
 export type NavigationParamList = {

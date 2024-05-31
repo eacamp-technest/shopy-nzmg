@@ -105,7 +105,7 @@ export const LoginScreen: React.FC<
           highlighted={[
             {
               text: 'Sign up',
-              callback: () => console.log('terns'),
+              callback: () => navigation.navigate(Routes.register),
             },
           ]}
         />

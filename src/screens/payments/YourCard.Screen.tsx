@@ -32,12 +32,13 @@ export const YourCardScreen: React.FC<
                 <CardPay
                     cardNumber={selectedCard?.cardNumber}
                     cardHolder={selectedCard?.cardHolder}
-                    date={selectedCard?.date}
+                    cardDate={selectedCard?.cardDate}
                 />
                 <Buttons
                     onPress={navigateToAddNewCard}
                     text="Add new card"
                     types={'outlined'}
+                    disabled={YourCardScreen.length >= 2}
                 />
             </View>
         </View>
