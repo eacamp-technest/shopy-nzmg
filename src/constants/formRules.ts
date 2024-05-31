@@ -8,7 +8,7 @@ export class FormRules {
       value: true,
     },
     pattern: {
-      value: Regex.email,
+      value: Regex.fullName,
       message: 'FullName is not valid',
     },
   } as RegisterOptions;
@@ -46,16 +46,6 @@ export class FormRules {
     },
   } as RegisterOptions;
 
-  // public static cardDate = {
-  //   required: {
-  //     message: "Expiration date and cvv are required",
-  //     value: true,
-  //   },
-  //   pattern: {
-  //     value: Regex.cardDate,
-  //     message: "Invalid format. Use MM/YY/ CVV format"
-  //   },
-  // } as RegisterOptions;
   public static cvv = {
     required: {
       message: "cvv is required",
@@ -63,19 +53,18 @@ export class FormRules {
     },
     pattern: {
       value: Regex.cvv,
-      message: "Invalid format"
+      message: "Invalid cvv format"
     },
   } as RegisterOptions;
 
   public static cardHolder = {
-    required: "Cardholder name is required",
+    required: {
+      message: "Cardholder name is required",
+      value: true,
+    },
     pattern: {
       value: Regex.cardholderName,
       message: "Cardholder name must be alphabetic",
     },
-    maxLength: {
-      value: 50,
-      message: 'Cardholder name must be exceed 50 characters'
-    }
   } as RegisterOptions;
 }

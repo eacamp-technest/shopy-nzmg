@@ -116,6 +116,7 @@ export const Input: React.FC<IInput> = ({
                     onBlur={handleOnBlur}
                     onPressIn={props.onInputPress}
                     autoCapitalize='none'
+                    maxLength={props.maxLength}
                     editable={!isPressable ?? !props.disabled}
                     secureTextEntry={secureTextEntry}
                     onChangeText={setValue}

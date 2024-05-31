@@ -15,7 +15,7 @@ export const CreateYourCardScreen: React.FC<
     NativeStackScreenProps<NavigationParamList, Routes.createyourcard>
 > = ({ route, navigation }) => {
     const params = route.params as ICardInputFrom | undefined
-    const { cardNumber = "", cardHolder = "", date = "" } = params ?? {}
+    const { cardNumber = "", cardHolder = "", cardDate = "" } = params ?? {}
     const {
         control,
         handleSubmit,
@@ -24,10 +24,10 @@ export const CreateYourCardScreen: React.FC<
         defaultValues: {
             cardHolder,
             cardNumber,
-            date
+            cardDate
             // cardNumber: __DEV__ ? '4532 1245 8765 2156' : '',
             // cardHolder: __DEV__ ? 'Brooklyn Simmons' : '',
-            // date: __DEV__ ? '12 / 24  /  088' : '',
+            // cardDate: __DEV__ ? '12 / 24  /  088' : '',
         },
     });
     const onSubmit = (data: ICardInputFrom) => {
@@ -68,8 +68,8 @@ export const CreateYourCardScreen: React.FC<
                 />
                 <InputControlled
                     control={control}
-                    name="date"
-                    errorMessage={errors.date?.message}
+                    name="cardDate"
+                    errorMessage={errors.cardDate?.message}
                     rules={FormRules.cardDate}
                     type="text"
                     placeholder="date"

@@ -6,7 +6,7 @@ import { Manipulators } from 'utils/manipulators'
 interface IInputController extends IInput, Partial<ControllerProps> {
     control?: any;
     disabledControl?: boolean;
-    manipulator?: 'cardNumber'
+    manipulator?: 'cardNumber';
 }
 
 export const InputControlled: React.FC<IInputController> = ({
@@ -34,6 +34,7 @@ export const InputControlled: React.FC<IInputController> = ({
             disabled={disabledControl}
             control={control}
             name={name as string}
+
             rules={rules}
             defaultValue={defaultValue}
             render={({ field }) => (

@@ -9,9 +9,6 @@ export class Regex {
   public static cardNumber = /^\d{4} \d{4} \d{4} \d{4}$/;
   public static cardholderName = /^[A-Za-z\s]+$/;
   public static cvv = /^\d{3}$/;
-  // public static cardDate = /^(0[1-9]|1[0-2]) \/ [0-9]{2} \/ [0-9]{3}$/
-  // public static cardNumber = /^[0-9]{16}$/;
-  // public static cardDate = /\b(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})\b/;
 }
 
 
