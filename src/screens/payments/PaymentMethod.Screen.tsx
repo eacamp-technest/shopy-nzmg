@@ -4,39 +4,43 @@ import { Navbar } from 'components/Navbar';
 import { TypographyStyles } from 'theme/typography';
 import { TextLink } from 'components/TextLinks';
 import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
 import { Buttons } from 'components/Buttons';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
 import { Routes } from 'router/routes';
 import { CommonStyles } from 'theme/common.styles';
 import { useUserStore } from 'store/user/user.store';
 import { ICardInputFrom } from 'types/card.types';
 import { SvgImage } from 'components/SvgImages';
 import { useToast } from 'store/toast';
+import { SceneRendererProps } from 'react-native-tab-view';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { normalize } from 'theme/metrics';
 
-export const PaymentMethodScreen: React.FC<
-  NativeStackScreenProps<NavigationParamList, Routes.paymentMethod>
-> = ({ navigation }) => {
+export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) => {
 
   const { cards, actions: { selectCard }, } = useUserStore(state => state)
+  const navigation = useNavigation<NavigationProp<any>>()
 
   const showToast = useToast()
 
   const renderCards = (data: ICardInputFrom) => {
     const onPress = () => {
       selectCard(data.id);
-      navigation.navigate(Routes.yourCard)
+      jumpTo(Routes.yourCard)
     }
     return (
-      <Pressable key={data.id} style={styles.component} onPress={onPress}>
+      <Pressable
+        onLayout={() => console.log('render')}
+        key={data.id}
+        style={styles.component}
+        onPress={onPress}>
         <SvgImage color={colors.black} source={require('../../assets/vectors/brands.svg')} />
         <Text style={[TypographyStyles.RegularNormalSemiBold, CommonStyles.flexGrow]}>
           Mastercard * * * * {data.cardNumber.slice(-4)}
         </Text>
         <SvgImage
           isPressable
-          onPress={navigateToYourCard}
+          onPress={() => console.log("...")
+          }
           source={require('../../assets/vectors/chevron-right.svg')}
           color={colors.ink.darkest}
         />
@@ -44,20 +48,14 @@ export const PaymentMethodScreen: React.FC<
     )
   }
   const [paymentText, setPaymentText] = useState<string>('Add Payment Method')
-  const navigateToAddNewCard = () => {
-    navigation.navigate(Routes.addnewcard);
-
-  }
-  const navigateToMain = () => navigation.navigate(Routes.test);
-  const navigateToYourCard = () => navigation.navigate(Routes.yourCard);
 
   const onAddNewMethod = () => {
     if (cards.length >= 2) {
-      showToast('error', 'You can only store up to 3 cards')
-      return
+      showToast('error', 'You can only store up to 3 cards');
+      return;
     }
     setPaymentText('Add another Card')
-    navigateToAddNewCard()
+    jumpTo(Routes.addnewcard)
   }
 
   return (
@@ -68,7 +66,7 @@ export const PaymentMethodScreen: React.FC<
         onLeftPress={() => navigation.goBack()}
         left={require('../../assets/vectors/chevron-left.svg')}
         rightActionType="text"
-        onRightPress={navigateToMain}
+        onRightPress={() => navigation.navigate(Routes.test)}
         right={'Skip'}
       />
       <Navbar type="large" title="payment methods" />
@@ -100,7 +98,6 @@ export const PaymentMethodScreen: React.FC<
             <SvgImage
               source={require('../../assets/vectors/chevron-right.svg')}
               isPressable
-              onPress={navigateToAddNewCard}
               color={colors.ink.darkest}
             />
           </Pressable>

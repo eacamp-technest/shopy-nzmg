@@ -14,13 +14,9 @@ import { ICardInputFrom } from 'types/card.types'
 import { useUserStoreActions } from 'store/user';
 import DatePicker from 'react-native-date-picker';
 import { useToast } from 'store/toast'
+import { SceneRendererProps } from 'react-native-tab-view';
 
-
-// import {SceneRendererProps} from 'react-native-tab-view'
-
-export const AddNewCardScreen: React.FC<
-    NativeStackScreenProps<NavigationParamList, Routes.addnewcard>
-> = ({ navigation }) => {
+export const AddNewCardScreen: React.FC<SceneRendererProps> = ({ jumpTo }) => {
     const [picker, setPicker] = useState<boolean>(false)
     const { addCard } = useUserStoreActions()
     const showToast = useToast()
@@ -46,7 +42,7 @@ export const AddNewCardScreen: React.FC<
         console.log(data);
         data.id = String(Math.random() * 10000).slice(0, 4);
         addCard(data);
-        navigation.navigate(Routes.paymentMethod) //check it 
+        jumpTo(Routes.paymentMethod);
         showToast('success', 'Card added successfully')
         reset();
     };
@@ -66,7 +62,7 @@ export const AddNewCardScreen: React.FC<
                 type="standard"
                 leftActionType="icon"
                 left={vectors.leftVector}
-                onLeftPress={navigation.goBack}
+                onLeftPress={() => jumpTo(Routes.paymentMethod)}
                 rightActionType="text"
                 right={'Skip'}
             />

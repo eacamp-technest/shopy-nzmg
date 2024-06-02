@@ -3,20 +3,15 @@ import React from 'react';
 import { CardPay } from 'components/specific/CardPay';
 import { Navbar } from 'components/Navbar';
 import { Buttons } from 'components/Buttons';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
 import { Routes } from 'router/routes';
 import { CommonStyles } from 'theme/common.styles';
 import { useUserStore } from 'store/user/user.store';
+import { SceneRendererProps } from 'react-native-tab-view';
 
-export const YourCardScreen: React.FC<
-    NativeStackScreenProps<NavigationParamList, Routes.yourCard>
-> = ({ navigation }) => {
-    const navigateToAddNewCard = () => navigation.navigate(Routes.addnewcard);
-    const navigateToPaymentMethod = () => navigation.navigate(Routes.paymentMethod);
-    const { selectedCard, actions: { selectCard } } = useUserStore(state => state)
+export const YourCardScreen: React.FC<SceneRendererProps> = ({ jumpTo }) => {
+    const { selectedCard, cards, actions: { selectCard } } = useUserStore(state => state)
     const onLeftPress = () => {
-        navigateToPaymentMethod();
+        jumpTo(Routes.paymentMethod)
         selectCard(null)
     }
     return (
@@ -35,10 +30,10 @@ export const YourCardScreen: React.FC<
                     cardDate={selectedCard?.cardDate}
                 />
                 <Buttons
-                    onPress={navigateToAddNewCard}
+                    onPress={() => jumpTo(Routes.addnewcard)}
                     text="Add new card"
                     types={'outlined'}
-                    disabled={YourCardScreen.length >= 2}
+                    disabled={cards.length >= 2}
                 />
             </View>
         </View>
