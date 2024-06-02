@@ -4,6 +4,7 @@ interface IUserStoreActions {
     addCard: (card: ICardInputFrom) => void;
     removeCard: (id: string) => void;
     selectCard: (id: string | null) => void;
+    initialize: () => void;
     reset: () => void
 }
 
