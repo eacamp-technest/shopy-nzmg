@@ -19,7 +19,7 @@ export type NavigationParamList = {
     verificationType: 'login' | 'register';
   };
   [Routes.modalScreen]: IModal;
-  [Routes.paymentScreensTab]: { screen?: keyof NavigationParamList };
+  [Routes.paymentScreensTab]: undefined;
   [Routes.paymentMethod]: undefined;
   [Routes.addnewcard]: undefined;
   [Routes.createyourcard]: undefined;
