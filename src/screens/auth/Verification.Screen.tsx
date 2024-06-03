@@ -33,7 +33,7 @@ export const VerificationScreen: React.FC<
         {
           text: 'Agree and continue',
           types: 'primary',
-          onPress: () => navigation.navigate(Routes.paymentScreensTab, { screen: Routes.paymentMethod }),
+          onPress: () => navigation.navigate(Routes.paymentScreensTab),
         },
         {
           text: 'Disagree and close',
