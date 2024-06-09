@@ -3,6 +3,7 @@ import {
   StyleProp,
   StyleSheet,
   Text,
+  TextStyle,
   View,
   ViewStyle,
 } from 'react-native';
@@ -41,7 +42,7 @@ interface INavBar {
   leftActionType?: NavbarActions;
   rightActionType?: NavbarActions;
   style?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle> | undefined;
   rootStyle?: StyleProp<ViewStyle>;
 }
 
@@ -61,8 +62,6 @@ export const Navbar: React.FC<INavBar> = ({
   if (type === 'large') {
     return (
       <View style={styles.large}>
-        <Text style={[TypographyStyles.title2, textStyle]}>{title}</Text>
-
         {rightActionType === 'button' ? (
           <Buttons
             types="outlined"
@@ -88,7 +87,9 @@ export const Navbar: React.FC<INavBar> = ({
     switch (actionType) {
       case 'text':
         return (
-          <Text numberOfLines={2} style={[styles.textType, textStyle]}>
+          <Text
+            numberOfLines={2}
+            style={[styles.textType, side === 'left' && textStyle]}>
             {data as string}
           </Text>
         );
