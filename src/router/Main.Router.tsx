@@ -2,15 +2,13 @@ import {View, Text} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {HomeScreen} from 'screens/main/Home.Screen';
-import Router from 'router';
 import {Routes} from './routes';
 import {DiscoverScreen} from 'screens/main/Discover.Screen';
 import {BookmarkScreen} from 'screens/main/Bookmark.Screen';
 import {SettingsScreen} from 'screens/main/Settings.Screen';
 import {NortificationScreen} from 'screens/main/Nortification.Screen';
-import {Edges, SafeAreaView} from 'react-native-safe-area-context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {CommonStyles} from 'theme/common.styles';
-import {normalize} from 'theme/metrics';
 import {SvgImage} from 'components/SvgImages';
 import {colors} from 'theme/colors';
 
