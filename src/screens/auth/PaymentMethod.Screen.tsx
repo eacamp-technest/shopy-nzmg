@@ -71,7 +71,7 @@ export const PaymentMethodScreen: React.FC<
           You don’t have a connected bank account.
         </Text>
       </View>
-      <Buttons text="Connect a bank account" />
+      <Buttons text="Connect a bank account" onPress={navigateToMain} />
     </View>
   );
 };

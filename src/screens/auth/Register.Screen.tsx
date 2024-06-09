@@ -35,12 +35,9 @@ export const RegisterScreen: React.FC<
       password: 'qwe45678!',
     },
   });
-  const onSubmit = (data: IRegister) => {
+  const onSubmit = (data: any) => {
     console.log(data);
-    navigation.navigate(Routes.verification, {
-      ...data,
-      verificationType: 'register'
-    });
+    navigation.navigate(Routes.verification,data);
   };
   // useEffect(()=>{
   //   const showListener = Keyboard.addListener(keyboardShowEvent, ()=>{

@@ -46,7 +46,7 @@ export const WelcomeScreen: React.FC<
       </View>
     ) : item.id === 1 ? (
       <View style={styles.secondary}>
-        <View style={styles.round}>
+        <View style={styles.round2}>
           <X style={styles.logo2} />
         </View>
         <Image source={item.image} style={styles.smallImage} />
@@ -151,6 +151,15 @@ const styles = StyleSheet.create({
     top: -197,
     right: 0,
   },
+  round2: {
+    width: 461,
+    height: 461,
+    borderRadius: 999,
+    position: 'absolute',
+    backgroundColor: "transparent",
+    top: -197,
+    right: 0,
+  },
   logo2: {
     position: 'absolute',
     top: '50%',
@@ -174,6 +183,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     bottom: 0,
+ 
   },
   smallImage: {
     width: '100%',
