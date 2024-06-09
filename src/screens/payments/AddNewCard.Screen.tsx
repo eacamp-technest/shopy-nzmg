@@ -13,28 +13,38 @@ import { CommonStyles } from 'theme/common.styles';
 import { ICardInputFrom } from 'types/card.types'
 import { useUserStoreActions } from 'store/user';
 import DatePicker from 'react-native-date-picker';
+import { useToast } from 'store/toast'
+import { SceneRendererProps } from 'react-native-tab-view';
 
-// import { CommonStyles } from 'theme/common.styles';
-// import {SceneRendererProps} from 'react-native-tab-view'
-
-export const AddNewCardScreen: React.FC<
-    NativeStackScreenProps<NavigationParamList, Routes.addnewcard>
-> = ({ navigation }) => {
+export const AddNewCardScreen: React.FC<SceneRendererProps> = ({ jumpTo }) => {
     const [picker, setPicker] = useState<boolean>(false)
     const { addCard } = useUserStoreActions()
+    const showToast = useToast()
+
     const {
         control,
         handleSubmit,
         setValue,
         reset,
         formState: { errors },
-    } = useForm<ICardInputFrom>();
+    } = useForm<ICardInputFrom>({
+        defaultValues: __DEV__
+            ? {
+                cardNumber: '1111 5555 7777 7777',
+                cardHolder: 'John Doe',
+                cvv: '333',
+                cardDate: '05 / 25'
+            }
+            : {}
+    });
+
     const onSubmit = (data: ICardInputFrom) => {
         console.log(data);
-        data.id = String(Math.random() * 10000).slice(0, 4)
-        addCard(data)
-        navigation.navigate(Routes.paymentMethod) //check it 
-        reset()
+        data.id = String(Math.random() * 10000).slice(0, 4);
+        addCard(data);
+        jumpTo(Routes.paymentMethod);
+        showToast('success', 'Card added successfully')
+        reset();
     };
     const onDateConfirm = (date: Date) => {
         const month =
@@ -43,7 +53,7 @@ export const AddNewCardScreen: React.FC<
                 : date.getMonth() + 1;
         const year = String(date.getFullYear()).slice(2)
 
-        setValue('date', `${month} / ${year}`);
+        setValue('cardDate', `${month} / ${year}`);
         setPicker(false);
     }
     return (
@@ -52,7 +62,7 @@ export const AddNewCardScreen: React.FC<
                 type="standard"
                 leftActionType="icon"
                 left={vectors.leftVector}
-                onLeftPress={navigation.goBack}
+                onLeftPress={() => jumpTo(Routes.paymentMethod)}
                 rightActionType="text"
                 right={'Skip'}
             />
@@ -77,7 +87,6 @@ export const AddNewCardScreen: React.FC<
                         label="Cardholder Name"
                         errorMessage={errors.cardHolder?.message}
                         rules={FormRules.cardHolder}
-                        type="text"
                         placeholder="Enter your holder name"
                     />
                     <InputControlled
@@ -91,9 +100,9 @@ export const AddNewCardScreen: React.FC<
                         placeholder="Enter your CVV"
                     />
                     <InputControlled
-                        name="date"
+                        name="cardDate"
                         control={control}
-                        errorMessage={errors.date?.message}
+                        errorMessage={errors.cardDate?.message}
                         label='Expiration Date'
                         onInputPress={() => setPicker(true)}
                         placeholder="MM/ YY"

@@ -1,14 +1,14 @@
-import {View, StyleSheet, Keyboard, ScrollView} from 'react-native';
+import { View, StyleSheet, Keyboard, ScrollView } from 'react-native';
 import React from 'react';
-import {Navbar} from 'components/Navbar';
-import {colors} from 'theme/colors';
-import {TextLink} from 'components/TextLinks';
-import {Buttons} from 'components/Buttons';
-import {CommonStyles} from 'theme/common.styles';
-import {OtpCodeField} from 'components/OtpCodeField';
-import {NavigationParamList} from 'types/navigation.types';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Routes} from 'router/routes';
+import { Navbar } from 'components/Navbar';
+import { colors } from 'theme/colors';
+import { TextLink } from 'components/TextLinks';
+import { Buttons } from 'components/Buttons';
+import { CommonStyles } from 'theme/common.styles';
+import { OtpCodeField } from 'components/OtpCodeField';
+import { NavigationParamList } from 'types/navigation.types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Routes } from 'router/routes';
 
 console.warn = (message: string) => {
   if (message.includes('Non-serializable')) {
@@ -28,12 +28,12 @@ export const VerificationScreen: React.FC<
 
     navigation.navigate(Routes.modalScreen, {
       title: 'What’s your team name',
-      wrapperStyle: {gap: 24},
+      wrapperStyle: { gap: 24 },
       buttons: [
         {
           text: 'Agree and continue',
           types: 'primary',
-          onPress: () => navigation.navigate(Routes.paymentMethod),
+          onPress: () => navigation.navigate(Routes.paymentScreensTab),
         },
         {
           text: 'Disagree and close',
@@ -48,7 +48,7 @@ export const VerificationScreen: React.FC<
           highlighted={modalHighlighted}
         />
       ),
-      onClose: () => {},
+      onClose: () => { },
       closeable: true,
     });
   };

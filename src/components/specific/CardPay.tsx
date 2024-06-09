@@ -10,7 +10,7 @@ import { SvgImage } from 'components/SvgImages';
 interface ICardPay {
   cardNumber?: string;
   cardHolder?: string;
-  date?: string;
+  cardDate?: string;
   empty?: boolean;
   style?: StyleProp<ViewStyle>
 }
@@ -32,7 +32,7 @@ const TextGenerator = ({
 export const CardPay: React.FC<ICardPay> = ({
   cardNumber,
   cardHolder = '',
-  date = '',
+  cardDate = '',
   style,
   empty
 }) => {
@@ -46,7 +46,7 @@ export const CardPay: React.FC<ICardPay> = ({
       <Text style={styles.number}>{cardNumber}</Text>
       <View style={CommonStyles.alignCenterJustifyBetweenRow}>
         <TextGenerator title='card holder' subtitle={cardHolder} />
-        <TextGenerator title='card save' subtitle={date} />
+        <TextGenerator title='card save' subtitle={cardDate} />
       </View>
     </View>
   );

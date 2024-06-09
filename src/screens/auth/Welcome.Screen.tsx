@@ -1,31 +1,35 @@
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
+import {StyleSheet, Text, View, FlatList, Image} from 'react-native';
 import React from 'react';
-import { CommonStyles } from 'theme/common.styles';
-import { windowWidth } from 'theme/consts.styles';
-import { TypographyStyles } from 'theme/typography';
-import { Buttons } from 'components/Buttons';
-import { colors } from 'theme/colors';
-import { Pagination } from 'components/Pagination';
-import { normalize } from 'theme/metrics';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { onboarding } from 'constants/onboarding';
-import { isIos } from 'constants/common.consts';
+import {CommonStyles} from 'theme/common.styles';
+import {windowWidth} from 'theme/consts.styles';
+import {TypographyStyles} from 'theme/typography';
+import {Buttons} from 'components/Buttons';
+import {colors} from 'theme/colors';
+import {Pagination} from 'components/Pagination';
+import {normalize} from 'theme/metrics';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {onboarding} from 'constants/onboarding';
+import {isIos} from 'constants/common.consts';
 import X from '../../assets/vectors/logo.svg';
 
 export const WelcomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.welcome>
-> = ({ navigation }) => {
+> = ({navigation}) => {
   const navigateToLogin = () => navigation.navigate(Routes.login);
   const navigateToRegister = () => navigation.navigate(Routes.register);
-  const renderItem = ({ item }: { item: (typeof onboarding)[0] }) => {
+  const renderItem = ({item}: {item: (typeof onboarding)[0]}) => {
     return item.id === 0 ? (
       <View style={styles.background}>
         <View style={styles.round}>
-          <X style={styles.logo2} />
+          <X style={styles.logo} />
         </View>
-        <Image source={item.image} resizeMode={isIos ? 'center' : undefined} style={styles.image} />
+        <Image
+          source={item.image}
+          resizeMode={isIos ? 'center' : undefined}
+          style={styles.image}
+        />
 
         <Text style={TypographyStyles.title2}>{item.title}</Text>
         <Pagination selectedIndex={item.id} />
@@ -46,9 +50,13 @@ export const WelcomeScreen: React.FC<
       </View>
     ) : item.id === 1 ? (
       <View style={styles.secondary}>
+<<<<<<< HEAD
         <View style={styles.round2}>
           <X style={styles.logo2} />
         </View>
+=======
+        <X style={[styles.logo, styles.logo2]} />
+>>>>>>> 200f0f079d8506ab8d3672f92d2900c707050e09
         <Image source={item.image} style={styles.smallImage} />
         <View style={styles.main}>
           <Text
@@ -79,9 +87,7 @@ export const WelcomeScreen: React.FC<
       </View>
     ) : (
       <View style={styles.secondary}>
-        <View style={styles.round}>
-          <X style={styles.logo2} />
-        </View>
+        <X style={[styles.logo, styles.logo2]} />
         <Image
           source={item.image}
           style={styles.smallImage}
@@ -151,6 +157,7 @@ const styles = StyleSheet.create({
     top: -197,
     right: 0,
   },
+<<<<<<< HEAD
   round2: {
     width: 461,
     height: 461,
@@ -161,12 +168,16 @@ const styles = StyleSheet.create({
     right: 0,
   },
   logo2: {
+=======
+  logo: {
+>>>>>>> 200f0f079d8506ab8d3672f92d2900c707050e09
     position: 'absolute',
     top: '50%',
     left: '50%',
     color: colors.primary.base,
-    borderWidth: 1,
-    borderColor: 'green',
+  },
+  logo2: {
+    top: 32,
   },
   buttons: {
     gap: normalize('vertical', 16),

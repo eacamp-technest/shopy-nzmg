@@ -1,5 +1,7 @@
 import { create } from 'zustand'
 import { IUserStore } from './user.types'
+import { LocalStorage } from 'store/LocalStorage'
+import { StorageKeys } from 'types/localstorage.types'
 
 const initial: Omit<IUserStore, 'actions'> = {
     user: null,
@@ -10,11 +12,19 @@ const initial: Omit<IUserStore, 'actions'> = {
 export const useUserStore = create<IUserStore>((set, get) => ({
     ...initial,
     actions: {
+        initialize: () => {
+            const cards = LocalStorage.cards('get')
+            if (cards) {
+                set({ cards: cards })
+            }
+        },
         addCard: card => {
             const isExist = get().cards.find(info => info.id === card.id);
 
             if (!isExist) {
-                set(state => ({ cards: [...state.cards, card] }));
+                const updated = [...get().cards, card]
+                set({ cards: updated });
+                LocalStorage.cards('set', updated)
             }
         },
         selectCard: id => {
@@ -26,8 +36,14 @@ export const useUserStore = create<IUserStore>((set, get) => ({
             set({ selectedCard: card })
         },
         removeCard: id => {
-            const state = get().cards.filter(data => data.id === id);
+            const state = get().cards.filter(data => data.id !== id);
             set({ cards: state })
+
+            if (state.length === 0) {
+                LocalStorage.clean(StorageKeys.cards)
+            } else {
+                LocalStorage.cards('set', state)
+            }
         },
         reset: () => set({ ...initial })
     }

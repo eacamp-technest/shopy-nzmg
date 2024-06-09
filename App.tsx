@@ -7,11 +7,12 @@
 
 import React, {useEffect} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import BootSplash from 'react-native-bootsplash';
 import Router from 'router';
 import {colors} from './src/theme/colors';
 import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
+import {Toast} from 'components/Toast';
 
 function App(): React.JSX.Element {
   useEffect(() => {
@@ -27,6 +28,7 @@ function App(): React.JSX.Element {
 
   return (
     <SafeAreaProvider>
+      <Toast />
       <StatusBar barStyle={'dark-content'} backgroundColor={colors.white} />
       <View style={styles.root}>
         <Router />

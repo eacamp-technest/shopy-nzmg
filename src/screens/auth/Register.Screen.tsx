@@ -68,7 +68,7 @@ export const RegisterScreen: React.FC<
       <View style={styles.inputs}>
         <InputControlled
           control={control}
-          name="name"
+          name="fullName"
           label="Full Name"
           errorMessage={errors.fullName?.message}
           rules={FormRules.fullName}
@@ -98,7 +98,7 @@ export const RegisterScreen: React.FC<
       <View style={styles.footer}>
         <Buttons
           text="Create an account"
-          loading={isSubmitted}
+          // loading={isSubmitted}
           onPress={handleSubmit(onSubmit)}
         />
         <TextLink

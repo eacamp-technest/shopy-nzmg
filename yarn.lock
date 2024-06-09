@@ -6394,10 +6394,10 @@ react-native-bootsplash@^5.5.3:
     ts-dedent "^2.2.0"
     xml-formatter "^3.6.0"
 
-react-native-date-picker@^5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/react-native-date-picker/-/react-native-date-picker-5.0.3.tgz#8fc5a3e2dc62ad689cb54f7a1a8083db269212ae"
-  integrity sha512-pA/HcnB7RBac/CigQcqvM95JiD4c7mN5DPie3c/LFBol55ntvpxyxxr5ixAonB5PYLTjop21EIajAHKAP7/JeQ==
+react-native-date-picker@^5.0.2:
+  version "5.0.4"
+  resolved "https://registry.npmjs.org/react-native-date-picker/-/react-native-date-picker-5.0.4.tgz"
+  integrity sha512-UycNfXGd4ipgdU2a+oZGj7h1nvp8Gz49f/Ko+YdWh6nrBKB49MEp0n9eF1QngbxMKqdK0AdY4udb4IdVVWji4g==
 
 react-native-gesture-handler@^2.16.1:
   version "2.16.2"
@@ -6410,9 +6410,14 @@ react-native-gesture-handler@^2.16.1:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
+react-native-mmkv@^2.12.2:
+  version "2.12.2"
+  resolved "https://registry.yarnpkg.com/react-native-mmkv/-/react-native-mmkv-2.12.2.tgz#4bba0f5f04e2cf222494cce3a9794ba6a4894dee"
+  integrity sha512-6058Aq0p57chPrUutLGe9fYoiDVDNMU2PKV+lLFUJ3GhoHvUrLdsS1PDSCLr00yqzL4WJQ7TTzH+V8cpyrNcfg==
+
 react-native-pager-view@^6.3.1:
   version "6.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.3.1.tgz#16ef202248311262e3fffd0191d7043a88e8d5fc"
+  resolved "https://registry.npmjs.org/react-native-pager-view/-/react-native-pager-view-6.3.1.tgz"
   integrity sha512-U7Ep6ukTA5pKMQskSxHpDI9RoESzBHDcBfVFwnK5SRCy9632Dq4a7Jp2m8vA9mK5k6Vi7yaqqKLFVoHnUdC8zA==
 
 react-native-reanimated@^3.11.0:
@@ -6462,7 +6467,7 @@ react-native-svg@^15.2.0:
 
 react-native-tab-view@^3.5.2:
   version "3.5.2"
-  resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.5.2.tgz#2789b8af6148b16835869566bf13dc3b0e6c1b46"
+  resolved "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-3.5.2.tgz"
   integrity sha512-nE5WqjbeEPsWQx4mtz81QGVvgHRhujTNIIZiMCx3Bj6CBFDafbk7XZp9ocmtzXUQaZ4bhtVS43R4FIiR4LboJw==
   dependencies:
     use-latest-callback "^0.1.5"
