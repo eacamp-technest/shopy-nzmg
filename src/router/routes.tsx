@@ -12,4 +12,9 @@ export enum Routes {
   createyourcard = 'createyourcard',
   yourCard = 'yourCardScreen',
   test = 'test',
+  home = 'home',
+  discover = 'discover',
+  bookmark = 'bookmark',
+  nortification = 'nortification',
+  settings = 'settings',
 }
