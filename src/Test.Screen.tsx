@@ -9,7 +9,7 @@ import { Navbar } from 'components/Navbar';
 import { Buttons } from 'components/Buttons';
 import { usecardStore } from 'store/card/card.store';
 
-import Tables from 'components/Tables';
+// import Tables from 'components/Tables';
 // import { useCardStoreActions } from 'store/card';
 
 export const TestScreen: React.FC<
@@ -34,7 +34,7 @@ export const TestScreen: React.FC<
       <Buttons text='Decrement' onPress={decrement} /> */}
       {/* search input  */}
       {/* All stores / In-Store */}
-      
+
     </View>
   );
 };

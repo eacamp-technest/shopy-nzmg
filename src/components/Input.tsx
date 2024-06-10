@@ -6,12 +6,13 @@ import { colors } from 'theme/colors'
 import { standardHitSlopSize } from 'theme/consts.styles'
 import { CommonStyles } from 'theme/common.styles'
 
-type TIcon = {
+export type TIcon = {
     source: NodeRequire;
     color?: string;
     width?: number;
     height?: number;
-    position?: 'left' | 'right'
+    position?: 'left' | 'right';
+
 }
 export interface IInput {
     type?: 'text' | 'phone' | 'password' | 'select';
@@ -28,13 +29,15 @@ export interface IInput {
     setValue?: (value: string) => void;
     onFocus?: () => void;
     onBlur?: () => void;
-    onInputPress?: () => void
+    onInputPress?: () => void;
+    noBorder?: boolean
 }
 export const Input: React.FC<IInput> = ({
     value,
     type = "text",
     setValue,
     icon,
+    noBorder,
     ...props
 }) => {
     const [focused, setFocused] = useState<boolean>(false)
@@ -105,7 +108,8 @@ export const Input: React.FC<IInput> = ({
                     styles.wrapper,
                     focused && styles.focused,
                     props.disabled && styles.wrapperDisabled,
-                    isMoreIcon && CommonStyles.rowReverse
+                    isMoreIcon && CommonStyles.rowReverse,
+                    noBorder && styles.noBorder
                 ]}>
                 {renderIcon}
                 <TextInput
@@ -172,5 +176,8 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         borderColor: 'red',
         ...TypographyStyles.RegularNoneRegular
+    },
+    noBorder: {
+        borderWidth: 0
     }
 })
