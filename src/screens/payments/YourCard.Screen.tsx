@@ -17,6 +17,7 @@ export const YourCardScreen: React.FC<SceneRendererProps> = ({ jumpTo }) => {
     return (
         <View style={CommonStyles.flex}>
             <Navbar
+                mode='light'
                 type='standard'
                 leftActionType="icon"
                 onLeftPress={onLeftPress}
