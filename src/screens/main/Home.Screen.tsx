@@ -10,6 +10,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SearchBar } from 'components/SearchBar';
 import { Input } from 'components/Input';
 import { Category } from 'components/Category';
+import { Buttons } from 'components/Buttons';
+import { useUserStore } from 'store/user/user.store';
+import { useUserStoreActions } from 'store/user';
 
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New']
 
@@ -18,6 +21,7 @@ export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>> = ({ navigation }) => {
 
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const { logout } = useUserStoreActions()
 
     return (
       <SafeAreaProvider style={styles.root}>
@@ -56,6 +60,9 @@ export const HomeScreen: React.FC<
             data={categories}
             renderItem={({ item }) => (<Category item={item} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />)} horizontal={true} keyExtractor={(item) => item} />
         </View>
+
+        <Buttons text="Logout" onPress={logout} />
+
       </SafeAreaProvider>
     );
   };

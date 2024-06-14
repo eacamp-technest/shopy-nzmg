@@ -2,5 +2,6 @@ export type StorageMethodsKeys = 'string' | 'number' | 'boolean' | 'object' | 'a
 export type StorageMethods = string | number | boolean | object | any[]
 export type TFunctionalMethod = 'set' | 'get'
 export enum StorageKeys {
-    cards = 'cards'
+    cards = 'cards',
+    user = 'user'
 }
