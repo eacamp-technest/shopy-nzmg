@@ -2,6 +2,9 @@ import { create } from 'zustand'
 import { IUserStore } from './user.types'
 import { LocalStorage } from 'store/LocalStorage'
 import { StorageKeys } from 'types/localstorage.types'
+import { useToastStore } from 'store/toast/toast.store'
+
+const { showToast } = useToastStore.getState().actions;
 
 const initial: Omit<IUserStore, 'actions'> = {
     user: null,
@@ -14,9 +17,21 @@ export const useUserStore = create<IUserStore>((set, get) => ({
     actions: {
         initialize: () => {
             const cards = LocalStorage.cards('get')
+            const user = LocalStorage.user('get')
+            set({ user })
+
             if (cards) {
-                set({ cards: cards })
+                set({ cards })
             }
+        },
+        logout: () => {
+            LocalStorage.clean([StorageKeys.user, StorageKeys.cards]);
+            get().actions.reset();
+            showToast('success', 'Logged out successfully')
+        },
+        initUser: user => {
+            set({ user });
+            LocalStorage.user('set', user)
         },
         addCard: card => {
             const isExist = get().cards.find(info => info.id === card.id);

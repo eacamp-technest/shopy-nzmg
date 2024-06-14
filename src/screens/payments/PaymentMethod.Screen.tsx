@@ -70,6 +70,7 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
   return (
     <View style={styles.root}>
       <Navbar
+        mode='light'
         type="standard"
         leftActionType="icon"
         onLeftPress={() => navigation.goBack()}
