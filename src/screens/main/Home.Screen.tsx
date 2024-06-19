@@ -10,7 +10,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SearchBar } from 'components/SearchBar';
 import { Input } from 'components/Input';
 import { Category } from 'components/Category';
-
+import ProgressBars from 'components/ProgressBars';
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New']
 
 
@@ -56,6 +56,7 @@ export const HomeScreen: React.FC<
             data={categories}
             renderItem={({ item }) => (<Category item={item} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />)} horizontal={true} keyExtractor={(item) => item} />
         </View>
+        
       </SafeAreaProvider>
     );
   };
