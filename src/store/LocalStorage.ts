@@ -1,6 +1,7 @@
 import { MMKV } from "react-native-mmkv";
 import { ICardInputFrom } from "types/card.types";
 import { StorageKeys, StorageMethods, StorageMethodsKeys, TFunctionalMethod } from "types/localstorage.types";
+import { IUser } from "types/user";
 
 const storage = new MMKV()
 
@@ -36,5 +37,14 @@ export class LocalStorage {
             return cards ? JSON.parse(cards) : null
         }
         this.set(StorageKeys.cards, 'array', data)
+    }
+
+    public static user(method: TFunctionalMethod, data?: IUser) {
+        if (method === 'get') {
+            const user = storage.getString(StorageKeys.user);
+            return user ? JSON.parse(user) : null;
+        }
+
+        this.set(StorageKeys.user, 'object', data)
     }
 }

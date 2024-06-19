@@ -20,7 +20,10 @@ import { FormRules } from 'constants/formRules';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { NavigationParamList } from 'types/navigation.types';
 import { Routes } from 'router/routes';
-import { ParamListBase } from '@react-navigation/native';
+import axios from 'axios';
+import { Endpoints } from 'services/Endpoints';
+import { useUserStoreActions } from 'store/user';
+import { useToast } from 'store/toast';
 
 interface ILoginForm {
   email: string;
@@ -30,18 +33,36 @@ interface ILoginForm {
 export const LoginScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.login>
 > = ({ navigation }) => {
+  const { initUser } = useUserStoreActions();
+  const showToast = useToast()
+
   const {
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ILoginForm>({
     defaultValues: {
-      email: __DEV__ ? 'tecnest@gmail.com' : '',
-      password: __DEV__ ? 'qwe45678!' : '',
+      email: __DEV__ ? 'emilys@gmail.com' : '',
+      password: __DEV__ ? 'emilyspass' : '',
     },
   });
-  const onSubmit = (data: any) => {
-    navigation.navigate(Routes.verification, data);
+  const onSubmit = async (data: ILoginForm) => {
+    const res = await axios({
+      url: Endpoints.auth.login,
+      method: 'POST',
+      data: {
+        username: data.email.replace('@gmail.com', ''),
+        password: data.password
+      },
+    })
+    if (res.status === 200) {
+      initUser(res.data);
+      showToast('success', 'Login succesful');
+
+      // navigation.navigate(Routes.verification, data);
+    } else {
+      showToast('error', 'Login failed');
+    }
   };
 
   const renderSocialButtons = (icon: NodeRequire, index: number) => {
@@ -84,14 +105,14 @@ export const LoginScreen: React.FC<
           name="password"
           label="Password"
           errorMessage={errors.password?.message}
-          rules={FormRules.password}
+          // rules={FormRules.password}
           type="password"
           placeholder="Enter your password"
         />
       </View>
       <View style={styles.footer}>
         <Buttons
-          text="Create an account"
+          text="Login"
           loading={isSubmitting}
           onPress={handleSubmit(onSubmit)}
         />

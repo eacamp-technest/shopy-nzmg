@@ -10,7 +10,14 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { SearchBar } from 'components/SearchBar';
 import { Input } from 'components/Input';
 import { Category } from 'components/Category';
+<<<<<<< HEAD
 import ProgressBars from 'components/ProgressBars';
+=======
+import { Buttons } from 'components/Buttons';
+import { useUserStore } from 'store/user/user.store';
+import { useUserStoreActions } from 'store/user';
+
+>>>>>>> e15f3887b109ca7fafb1976dba0bea48125e215a
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New']
 
 
@@ -18,6 +25,7 @@ export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>> = ({ navigation }) => {
 
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const { logout } = useUserStoreActions()
 
     return (
       <SafeAreaProvider style={styles.root}>
@@ -56,7 +64,13 @@ export const HomeScreen: React.FC<
             data={categories}
             renderItem={({ item }) => (<Category item={item} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />)} horizontal={true} keyExtractor={(item) => item} />
         </View>
+<<<<<<< HEAD
         
+=======
+
+        <Buttons text="Logout" onPress={logout} />
+
+>>>>>>> e15f3887b109ca7fafb1976dba0bea48125e215a
       </SafeAreaProvider>
     );
   };
