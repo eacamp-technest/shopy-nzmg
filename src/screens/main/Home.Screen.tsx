@@ -29,27 +29,11 @@ import {Item} from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
 export const HomeScreen: React.FC<
-  NativeStackScreenProps<NavigationParamList, Routes.home>
-> = ({navigation}) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const {logout} = useUserStoreActions();
-  const Endpoints = 'https://jsonplaceholder.typicode.com/photos';
-  const [product, setProduct] = useState([]);
-  const [value, setValue] = useState('');
+  NativeStackScreenProps<NavigationParamList, Routes.home>> = ({ navigation }) => {
 
-  const fetch = async () => {
-    const remoteData = {
-      method: 'get',
-      url: `${Endpoints}`,
-    };
-    try {
-      const response = await axios(remoteData);
-      const result = response.data;
-      setProduct(result);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+    const [selectedCategory, setSelectedCategory] = useState<string>('All')
+    const [products, setProducts] = useState<IProduct[]>(data.products)
+    const { logout } = useUserStoreActions()
   useEffect(() => {
     fetch();
   }, []);
