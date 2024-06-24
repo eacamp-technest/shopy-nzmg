@@ -7,23 +7,23 @@ import {
   Linking,
 } from 'react-native';
 import React from 'react';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { TextLink } from 'components/TextLinks';
-import { Buttons } from 'components/Buttons';
-import { SvgImage } from 'components/SvgImages';
-import { CommonStyles } from 'theme/common.styles';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {TextLink} from 'components/TextLinks';
+import {Buttons} from 'components/Buttons';
+import {SvgImage} from 'components/SvgImages';
+import {CommonStyles} from 'theme/common.styles';
 
-import { useForm } from 'react-hook-form';
-import { InputControlled } from 'components/InputControlled';
-import { FormRules } from 'constants/formRules';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
+import {useForm} from 'react-hook-form';
+import {InputControlled} from 'components/InputControlled';
+import {FormRules} from 'constants/formRules';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
 import axios from 'axios';
-import { Endpoints } from 'services/Endpoints';
-import { useUserStoreActions } from 'store/user';
-import { useToast } from 'store/toast';
+import {Endpoints} from 'services/Endpoints';
+import {useUserStoreActions} from 'store/user';
+import {useToast} from 'store/toast';
 
 interface ILoginForm {
   email: string;
@@ -32,14 +32,14 @@ interface ILoginForm {
 
 export const LoginScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.login>
-> = ({ navigation }) => {
-  const { initUser } = useUserStoreActions();
-  const showToast = useToast()
+> = ({navigation}) => {
+  const {initUser} = useUserStoreActions();
+  const showToast = useToast();
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: {errors, isSubmitting},
   } = useForm<ILoginForm>({
     defaultValues: {
       email: __DEV__ ? 'emilys@gmail.com' : '',
@@ -47,14 +47,16 @@ export const LoginScreen: React.FC<
     },
   });
   const onSubmit = async (data: ILoginForm) => {
+    console.log(data);
+
     const res = await axios({
       url: Endpoints.auth.login,
       method: 'POST',
       data: {
         username: data.email.replace('@gmail.com', ''),
-        password: data.password
+        password: data.password,
       },
-    })
+    });
     if (res.status === 200) {
       initUser(res.data);
       showToast('success', 'Login succesful');
