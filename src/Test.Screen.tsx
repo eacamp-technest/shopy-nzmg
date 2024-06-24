@@ -1,46 +1,40 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
-import { Navbar } from 'components/Navbar';
-import { Buttons } from 'components/Buttons';
-import { usecardStore } from 'store/card/card.store';
+import { FlatList, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { IProduct, ProductCard } from 'components/ProductCard'
+import { Category } from 'components/Category'
+import data from "data/data.json"
 
-// import Tables from 'components/Tables';
-// import { useCardStoreActions } from 'store/card';
+const categories: string[] = ['Trending Now', 'All', 'New', 'Men', 'Women']
 
-export const TestScreen: React.FC<
-  NativeStackScreenProps<NavigationParamList, Routes.test>
-> = ({ navigation }) => {
-  // const count = usecardStore(state => state.count)
-  // const { increment, decrement } = useCardStoreActions()
+export const TestScreen = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All')
+  const [products, setProducts] = useState<IProduct[]>(data.products)
 
   return (
-    <View style={styles.root}>
-      <Navbar
-        type="standard"
-        title="SHOPPAY"
-        left={require('./assets/vectors/menu.svg')}
-        leftActionType="icon"
-        onLeftPress={navigation.goBack}
-        right={require('./assets/vectors/shopping-bag.svg')}
-        rightActionType='icon'
+    <SafeAreaProvider style={styles.container}>
+      <FlatList
+        numColumns={2}
+        data={products}
+        renderItem={({ item, index }) => (<ProductCard item={item} />)}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponent={
+          <>
+            <FlatList
+              showsHorizontalScrollIndicator={false}
+              data={categories}
+              renderItem={({ item }) => (<Category item={item} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} />)} horizontal={true} keyExtractor={(item) => item} />
+          </>
+        }
+        contentContainerStyle={{ paddingBottom: 150 }}
       />
-      {/* <Text>{count}</Text>
-      <Buttons text='Increment' onPress={increment} />
-      <Buttons text='Decrement' onPress={decrement} /> */}
-      {/* search input  */}
-      {/* All stores / In-Store */}
-
-    </View>
-  );
-};
+    </SafeAreaProvider>
+  )
+}
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1
+  container: {
+    borderColor: "red",
+    borderWidth: 3
   },
-});
+})

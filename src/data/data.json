@@ -1,0 +1,32 @@
+{
+    "products": [
+        {
+            "id": 1,
+            "image": "https://images.pexels.com/photos/1478442/pexels-photo-1478442.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "title": "Nike Air Max 90",
+            "price": 90,
+            "link": "nike.com"
+        },
+        {
+            "id": 2,
+            "image": "https://images.pexels.com/photos/15036819/pexels-photo-15036819/free-photo-of-close-up-shot-of-a-puma-rubber-shoes.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "title": "Mecon 3 Shoes",
+            "price": 88,
+            "link": "puma.com"
+        },
+        {
+            "id": 3,
+            "image": "https://images.pexels.com/photos/2385477/pexels-photo-2385477.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "title": "Acrylic Sweater",
+            "price": 29.99,
+            "link": "nike.com"
+        },
+        {
+            "id": 4,
+            "image": "https://images.pexels.com/photos/15036819/pexels-photo-15036819/free-photo-of-close-up-shot-of-a-puma-rubber-shoes.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            "title": "Winter Coat",
+            "price": 99.99,
+            "link": "puma.com"
+        }
+    ]
+}
