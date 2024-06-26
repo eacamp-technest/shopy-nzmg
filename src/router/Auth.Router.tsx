@@ -17,6 +17,7 @@ import {
 import {TestScreen} from '../Test.Screen';
 import {PaymentScreensTab} from 'screens/payments';
 import {HomeScreen} from 'screens/main/Home.Screen';
+import {ItemListScreen} from 'screens/main/ItemList.Screen';
 
 const AuthStack = createNativeStackNavigator<NavigationParamList>();
 
@@ -52,6 +53,7 @@ export const AuthRouter = () => {
           options={modalScreenOptions}
         />
         <AuthStack.Screen name={Routes.home} component={HomeScreen} />
+
         <AuthStack.Screen name={Routes.test} component={TestScreen} />
       </AuthStack.Navigator>
     </SafeAreaView>

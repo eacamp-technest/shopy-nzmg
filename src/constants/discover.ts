@@ -21,7 +21,7 @@ export const discover = [
   },
   {
     id: 3,
-    title: 'KIDS',
+    title: 'TEENS',
     image: require('../assets/images/Image3.png'),
     background: colors.lavender.base,
   },

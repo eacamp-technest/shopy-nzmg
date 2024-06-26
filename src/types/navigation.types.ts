@@ -26,4 +26,5 @@ export type NavigationParamList = {
   [Routes.yourCard]: undefined;
   [Routes.test]: undefined;
   [Routes.home]: undefined;
+  [Routes.itemlist]: undefined;
 };

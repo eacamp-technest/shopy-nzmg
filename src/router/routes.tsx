@@ -17,4 +17,5 @@ export enum Routes {
   bookmark = 'bookmark',
   nortification = 'nortification',
   settings = 'settings',
+  itemlist = 'Itemlist.Screen',
 }

@@ -9,80 +9,37 @@ import {SettingsScreen} from 'screens/main/Settings.Screen';
 import {NortificationScreen} from 'screens/main/Nortification.Screen';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {CommonStyles} from 'theme/common.styles';
-import {SvgImage} from 'components/SvgImages';
-import {colors} from 'theme/colors';
+import {tabBarOption, tabBarScreenOptions} from 'configs/navigation.configs';
 
 export const MainRouter = () => {
   const Main = createBottomTabNavigator();
   return (
     <SafeAreaView style={CommonStyles.flex}>
       <Main.Navigator
-        screenOptions={{
-          tabBarStyle: {
-            alignItems: 'center',
-            justifyContent: 'center',
-          },
-          headerShown: false,
-          tabBarShowLabel: false,
-        }}
+        screenOptions={tabBarScreenOptions}
         initialRouteName={Routes.home}>
         <Main.Screen
-          options={{
-            tabBarIcon: ({focused}) => (
-              <SvgImage
-                color={focused ? colors.primary.base : colors.sky.dark}
-                source={require('../assets/vectors/home.svg')}
-              />
-            ),
-          }}
+          options={tabBarOption[Routes.home]}
           name={Routes.home}
           component={HomeScreen}
         />
         <Main.Screen
-          options={{
-            tabBarIcon: ({focused}) => (
-              <SvgImage
-                color={focused ? colors.primary.base : colors.sky.dark}
-                source={require('../assets/vectors/search.svg')}
-              />
-            ),
-          }}
+          options={tabBarOption[Routes.discover]}
           name={Routes.discover}
           component={DiscoverScreen}
         />
         <Main.Screen
-          options={{
-            tabBarIcon: ({focused}) => (
-              <SvgImage
-                color={focused ? colors.primary.base : colors.sky.dark}
-                source={require('../assets/vectors/heart.svg')}
-              />
-            ),
-          }}
+          options={tabBarOption[Routes.bookmark]}
           name={Routes.bookmark}
           component={BookmarkScreen}
         />
         <Main.Screen
           name={Routes.nortification}
           component={NortificationScreen}
-          options={{
-            tabBarIcon: ({focused}) => (
-              <SvgImage
-                color={focused ? colors.primary.base : colors.sky.dark}
-                source={require('../assets/vectors/bell.svg')}
-              />
-            ),
-          }}
+          options={tabBarOption[Routes.nortification]}
         />
         <Main.Screen
-          options={{
-            tabBarIcon: ({focused}) => (
-              <SvgImage
-                color={focused ? colors.primary.base : colors.sky.dark}
-                source={require('../assets/vectors/align-justify.svg')}
-              />
-            ),
-          }}
+          options={tabBarOption[Routes.settings]}
           name={Routes.settings}
           component={SettingsScreen}
         />

@@ -1,13 +1,17 @@
 import {View, FlatList, Image, StyleSheet, Text, Pressable} from 'react-native';
 import React from 'react';
 import {discover} from 'constants/discover';
-import {Item} from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
 import {CommonStyles} from 'theme/common.styles';
 import {TypographyStyles} from 'theme/typography';
 import {colors} from 'theme/colors';
 import {normalize} from 'theme/metrics';
+import {Routes} from 'router/routes';
+import {NavigationParamList} from 'types/navigation.types';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-export const DiscoverScreen = () => {
+export const DiscoverScreen: React.FC<
+  NativeStackScreenProps<NavigationParamList, Routes.itemlist>
+> = ({navigation}) => {
   return (
     <View style={styles.root}>
       <FlatList
@@ -16,6 +20,7 @@ export const DiscoverScreen = () => {
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
           <Pressable
+            onPress={() => navigation.navigate(Routes.itemlist)}
             style={[
               {
                 backgroundColor: `${item.background}`,
