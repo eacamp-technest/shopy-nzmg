@@ -25,15 +25,32 @@ import {Buttons} from 'components/Buttons';
 import {useUserStore} from 'store/user/user.store';
 import {useUserStoreActions} from 'store/user';
 import {Item} from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
+import {IProduct} from 'components/ProductCard';
 
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
 export const HomeScreen: React.FC<
-  NativeStackScreenProps<NavigationParamList, Routes.home>> = ({ navigation }) => {
+  NativeStackScreenProps<NavigationParamList, Routes.home>
+> = ({navigation}) => {
+  const {logout} = useUserStoreActions();
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const Endpoints = 'https://jsonplaceholder.typicode.com/photos';
+  const [product, setProduct] = useState([]);
+  const [value, setValue] = useState('');
 
-    const [selectedCategory, setSelectedCategory] = useState<string>('All')
-    const [products, setProducts] = useState<IProduct[]>(data.products)
-    const { logout } = useUserStoreActions()
+  const fetch = async () => {
+    const remoteData = {
+      method: 'get',
+      url: `${Endpoints}`,
+    };
+    try {
+      const response = await axios(remoteData);
+      const result = response.data;
+      setProduct(result);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
   useEffect(() => {
     fetch();
   }, []);
