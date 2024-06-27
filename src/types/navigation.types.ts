@@ -27,4 +27,11 @@ export type NavigationParamList = {
   [Routes.test]: undefined;
   [Routes.home]: undefined;
   [Routes.itemlist]: undefined;
+  [Routes.discover]: undefined;
+  [Routes.discoverNested]: undefined;
+  [Routes.womenList]: undefined;
+  [Routes.discoverRouter]: undefined;
+  [Routes.menList]: undefined;
+  [Routes.kidslist]: undefined;
+  [Routes.teensList]: undefined;
 };

@@ -8,19 +8,20 @@ import {normalize} from 'theme/metrics';
 import {Routes} from 'router/routes';
 import {NavigationParamList} from 'types/navigation.types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export const DiscoverScreen: React.FC<
-  NativeStackScreenProps<NavigationParamList, Routes.itemlist>
+  NativeStackScreenProps<NavigationParamList, Routes.discover>
 > = ({navigation}) => {
   return (
-    <View style={styles.root}>
+    <SafeAreaProvider style={styles.root}>
       <FlatList
         data={discover}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) => (
           <Pressable
-            onPress={() => navigation.navigate(Routes.itemlist)}
+            onPress={() => navigation.navigate(item.onPress)}
             style={[
               {
                 backgroundColor: `${item.background}`,
@@ -35,7 +36,7 @@ export const DiscoverScreen: React.FC<
           </Pressable>
         )}
       />
-    </View>
+    </SafeAreaProvider>
   );
 };
 const styles = StyleSheet.create({

@@ -20,6 +20,12 @@ export const authStackScreenOption: NativeStackNavigationOptions = {
     paddingHorizontal: normalize('horizontal', 24),
   },
 };
+export const NestedStackScreenOption: NativeStackNavigationOptions = {
+  ...defaultScreenOptions,
+  contentStyle: {
+    backgroundColor: colors.white,
+  },
+};
 export const tabBarScreenOptions: BottomTabNavigationOptions = {
   headerShown: false,
   tabBarShowLabel: false,

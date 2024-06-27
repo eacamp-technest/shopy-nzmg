@@ -17,7 +17,7 @@ import {
 import {TestScreen} from '../Test.Screen';
 import {PaymentScreensTab} from 'screens/payments';
 import {HomeScreen} from 'screens/main/Home.Screen';
-import {ItemListScreen} from 'screens/main/ItemList.Screen';
+import {DiscoverScreen} from 'screens/main/Discover.Screen';
 
 const AuthStack = createNativeStackNavigator<NavigationParamList>();
 

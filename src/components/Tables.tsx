@@ -1,27 +1,44 @@
-import { View, Text, Image, StyleSheet } from 'react-native';
-import React, { ReactNode } from 'react';
-import { CommonStyles } from 'theme/common.styles';
-import { TypographyStyles } from 'theme/typography';
-import { colors } from 'theme/colors';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
+import React, {ReactNode} from 'react';
+import {CommonStyles} from 'theme/common.styles';
+import {TypographyStyles} from 'theme/typography';
+import {colors} from 'theme/colors';
 
 interface ITables {
   title?: string;
   subTitle?: string;
   children?: ReactNode;
   avatar?: string;
+  style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
 }
 export const Tables: React.FC<ITables> = ({
   title,
   subTitle,
   children,
   avatar,
+  style,
+  titleStyle,
 }) => {
   return (
-    <View style={[CommonStyles.alignCenterJustifyBetweenRow, styles.root]}>
+    <View style={[styles.root, style]}>
       <View style={CommonStyles.row}>
-        {avatar ? <Image style={styles.image} source={{ uri: avatar }} /> : null}
-        <View style={{ gap: 4 }}>
-          <Text style={[TypographyStyles.RegularTightRegular, styles.title]}>
+        {avatar ? <Image style={styles.image} source={{uri: avatar}} /> : null}
+        <View style={{gap: 4}}>
+          <Text
+            style={[
+              TypographyStyles.RegularTightRegular,
+              styles.title,
+              titleStyle,
+            ]}>
             {title}
           </Text>
           <Text style={[TypographyStyles.SmallTightRegular, styles.subTitle]}>
@@ -36,6 +53,7 @@ export const Tables: React.FC<ITables> = ({
 
 const styles = StyleSheet.create({
   root: {
+    ...CommonStyles.alignCenterJustifyBetweenRow,
     paddingHorizontal: 24,
     paddingVertical: 16,
   },

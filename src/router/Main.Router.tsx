@@ -1,22 +1,40 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {HomeScreen} from 'screens/main/Home.Screen';
 import {Routes} from './routes';
-import {DiscoverScreen} from 'screens/main/Discover.Screen';
 import {BookmarkScreen} from 'screens/main/Bookmark.Screen';
 import {SettingsScreen} from 'screens/main/Settings.Screen';
 import {NortificationScreen} from 'screens/main/Nortification.Screen';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {CommonStyles} from 'theme/common.styles';
 import {tabBarOption, tabBarScreenOptions} from 'configs/navigation.configs';
+import {DiscoverRouter} from './Discover.Router';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 export const MainRouter = () => {
   const Main = createBottomTabNavigator();
+  const shownTabRoutes: Routes[] = [
+    Routes.home,
+    Routes.discover,
+    Routes.bookmark,
+    Routes.nortification,
+    Routes.settings,
+  ];
   return (
     <SafeAreaView style={CommonStyles.flex}>
       <Main.Navigator
-        screenOptions={tabBarScreenOptions}
+        screenOptions={({route}) => {
+          const routeName = getFocusedRouteNameFromRoute(route);
+          const routeKey = routeName as keyof typeof Routes;
+          const displayTabBar = shownTabRoutes.includes(Routes[routeKey]);
+          return {
+            ...tabBarScreenOptions,
+            tabBarStyle: {
+              display:
+                displayTabBar || routeName === undefined ? 'flex' : 'none',
+            },
+          };
+        }}
         initialRouteName={Routes.home}>
         <Main.Screen
           options={tabBarOption[Routes.home]}
@@ -25,8 +43,8 @@ export const MainRouter = () => {
         />
         <Main.Screen
           options={tabBarOption[Routes.discover]}
-          name={Routes.discover}
-          component={DiscoverScreen}
+          name={Routes.discoverNested}
+          component={DiscoverRouter}
         />
         <Main.Screen
           options={tabBarOption[Routes.bookmark]}
