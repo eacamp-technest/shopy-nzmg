@@ -1,6 +1,7 @@
 export enum Routes {
   authRouter = 'Auth.Router',
   mainRouter = 'Main.Router',
+  discoverRouter = 'Discover.Router',
   welcome = 'welcome',
   register = 'register',
   login = 'Login.Screen',
@@ -18,4 +19,9 @@ export enum Routes {
   nortification = 'nortification',
   settings = 'settings',
   itemlist = 'Itemlist.Screen',
+  discoverNested = 'DiscoverRouter',
+  womenList = 'WomenList',
+  kidslist = 'Kidslist',
+  menList = 'MenList',
+  teensList = 'TeensList',
 }

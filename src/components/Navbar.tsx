@@ -8,12 +8,12 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import { TypographyStyles } from 'theme/typography';
-import { CommonStyles } from 'theme/common.styles';
-import { SvgImage } from './SvgImages';
-import { colors } from 'theme/colors';
-import { Buttons } from './Buttons';
-import { normalize } from 'theme/metrics';
+import {TypographyStyles} from 'theme/typography';
+import {CommonStyles} from 'theme/common.styles';
+import {SvgImage} from './SvgImages';
+import {colors} from 'theme/colors';
+import {Buttons} from './Buttons';
+import {normalize} from 'theme/metrics';
 
 type TIcon = {
   icon: NodeRequire;
@@ -45,7 +45,7 @@ interface INavBar {
   style?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle> | undefined;
   rootStyle?: StyleProp<ViewStyle>;
-  titleColor?: string
+  titleColor?: string;
 }
 
 export const Navbar: React.FC<INavBar> = ({
@@ -61,7 +61,7 @@ export const Navbar: React.FC<INavBar> = ({
   textStyle,
   onLeftPress,
   onRightPress,
-  titleColor
+  titleColor,
 }) => {
   if (type === 'large') {
     return (
@@ -100,10 +100,10 @@ export const Navbar: React.FC<INavBar> = ({
 
       case 'icon':
         if (hasIcon) {
-          const { icon, ...restOfIcon } = data as TIcon;
+          const {icon, ...restOfIcon} = data as TIcon;
           return (
             <SvgImage
-              color={mode === "light" ? colors.ink.darkest : colors.white}
+              color={mode === 'light' ? colors.ink.darkest : colors.white}
               source={icon}
               {...restOfIcon}
             />
@@ -111,12 +111,15 @@ export const Navbar: React.FC<INavBar> = ({
         }
 
         return (
-          <SvgImage color={mode === "light" ? colors.ink.darkest : colors.white} source={data as NodeRequire} />
+          <SvgImage
+            color={mode === 'light' ? colors.ink.darkest : colors.white}
+            source={data as NodeRequire}
+          />
         );
 
       case 'icon-text':
         if (hasIcon) {
-          const { icon, text, ...restOfIcon } = data as TIcon;
+          const {icon, text, ...restOfIcon} = data as TIcon;
           return (
             <View
               style={[
@@ -132,7 +135,7 @@ export const Navbar: React.FC<INavBar> = ({
         }
       case 'icon-subText':
         if (hasIcon) {
-          const { icon, text, subText, ...restOfIcon } = data as TIcon;
+          const {icon, text, subText, ...restOfIcon} = data as TIcon;
           return (
             <View
               style={[
@@ -174,7 +177,9 @@ export const Navbar: React.FC<INavBar> = ({
         style={[styles.action, !leftActionType && styles.hide, style]}>
         {renderActions(leftActionType, left, 'left')}
       </Pressable>
-      <Text style={[TypographyStyles.title3, { color: titleColor }]}>{title}</Text>
+      <Text style={[TypographyStyles.title3, {color: titleColor}, textStyle]}>
+        {title}
+      </Text>
       <Pressable
         disabled={!onRightPress || rightActionType === 'button'}
         onPress={onRightPress}
@@ -199,7 +204,7 @@ const styles = StyleSheet.create({
     paddingVertical: normalize('vertical', 16),
   },
   action: {
-    flex: 0.4,
+    flex: 0.5,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
