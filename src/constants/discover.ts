@@ -1,12 +1,20 @@
+import {ImageSourcePropType} from 'react-native';
 import {Routes} from 'router/routes';
 import {colors} from 'theme/colors';
 
-export const discover = [
+interface IDiscover {
+  id: number;
+  title: string;
+  image: ImageSourcePropType;
+  background: string;
+  onPress: string;
+}
+
+export const discover: IDiscover[] = [
   {
     id: 0,
     title: 'WOMEN',
     image: require('../assets/images/Image.png'),
-    placeholder: require('../assets/images/Placeholder.png'),
     background: colors.primary.base,
     onPress: Routes.womenList,
   },
@@ -14,7 +22,6 @@ export const discover = [
     id: 1,
     title: 'MEN',
     image: require('../assets/images/Image1.png'),
-    placeholder1: require('../assets/images/Placeholder1.png'),
     background: colors.blue.base,
     onPress: Routes.menList,
   },
@@ -22,7 +29,6 @@ export const discover = [
     id: 2,
     title: 'KIDS',
     image: require('../assets/images/Image2.png'),
-    placeholder2: require('../assets/images/Placeholder2.png'),
     background: colors.skyBlue.base,
     onPress: Routes.kidslist,
   },
@@ -30,13 +36,16 @@ export const discover = [
     id: 3,
     title: 'TEENS',
     image: require('../assets/images/Image3.png'),
-    placeholder3: require('../assets/images/Placeholder3.png'),
     background: colors.lavender.base,
     onPress: Routes.teensList,
   },
 ];
 
-export const WOMEN = [
+export interface IGenderItem {
+  id: string;
+  title: string;
+}
+export const WOMEN: IGenderItem[] = [
   {id: '1', title: 'A-Line Dresses'},
   {id: '2', title: 'Active T-shirts'},
   {id: '3', title: 'Chiffon Tops'},
@@ -47,7 +56,7 @@ export const WOMEN = [
   {id: '8', title: 'Shoes'},
 ];
 
-export const MEN = [
+export const MEN: IGenderItem[] = [
   {id: '1', title: 'Long T-Shirts'},
   {id: '2', title: 'Premium T-Shirts'},
   {id: '3', title: 'Pullover Hoodies'},
@@ -58,7 +67,7 @@ export const MEN = [
   {id: '8', title: 'Zipped Hoodies'},
 ];
 
-export const KIDS = [
+export const KIDS: IGenderItem[] = [
   {id: '1', title: 'Dresses'},
   {id: '2', title: 'Shirts & Blouses'},
   {id: '3', title: 'Tops'},
@@ -69,7 +78,7 @@ export const KIDS = [
   {id: '8', title: 'Premium Quality'},
 ];
 
-export const TEENS = [
+export const TEENS: IGenderItem[] = [
   {id: '1', title: 'Tops'},
   {id: '2', title: 'Jackets'},
   {id: '3', title: 'Sportwear'},

@@ -28,6 +28,7 @@ export type NavigationParamList = {
   [Routes.home]: undefined;
   [Routes.itemlist]: undefined;
   [Routes.discover]: undefined;
+  [Routes.settings]: undefined;
   [Routes.discoverNested]: undefined;
   [Routes.womenList]: undefined;
   [Routes.discoverRouter]: undefined;

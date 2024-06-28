@@ -3,14 +3,26 @@ import React from 'react';
 import {NavigationParamList} from 'types/navigation.types';
 import {Routes} from 'router/routes';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {TEENS, discover} from 'constants/discover';
+import {IGenderItem, TEENS, discover} from 'constants/discover';
 import {Navbar} from 'components/Navbar';
 import {colors} from 'theme/colors';
 import {Tables} from 'components/Tables';
 import {SvgImage} from 'components/SvgImages';
 import {normalize} from 'theme/metrics';
 import {TypographyStyles} from 'theme/typography';
-
+const renderTeens = ({item}: {item: IGenderItem}) => (
+  <Tables
+    title={item.title}
+    style={styles.table}
+    titleStyle={TypographyStyles.RegularTightSemiBold}
+    Right={
+      <SvgImage
+        color={colors.sky.dark}
+        source={require('../../assets/vectors/chevron-right.svg')}
+      />
+    }
+  />
+);
 export const TeensList: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.teensList>
 > = ({navigation}) => {
@@ -25,25 +37,16 @@ export const TeensList: React.FC<
           title={discover[3]?.title}
           rootStyle={styles.header}
         />
-        <Image style={styles.image} source={discover[3]?.placeholder3} />
+        <Image
+          style={styles.image}
+          source={require('../../assets/images/Placeholder3.png')}
+        />
       </View>
       <FlatList
         data={TEENS}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <Tables
-            title={item.title}
-            style={styles.table}
-            titleStyle={TypographyStyles.RegularTightSemiBold}
-            Right={
-              <SvgImage
-                color={colors.sky.dark}
-                source={require('../../assets/vectors/chevron-right.svg')}
-              />
-            }
-          />
-        )}
+        renderItem={renderTeens}
       />
     </View>
   );

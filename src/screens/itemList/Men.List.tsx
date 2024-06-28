@@ -3,7 +3,7 @@ import React from 'react';
 import {NavigationParamList} from 'types/navigation.types';
 import {Routes} from 'router/routes';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {MEN, discover} from 'constants/discover';
+import {IGenderItem, MEN, discover} from 'constants/discover';
 import {Navbar} from 'components/Navbar';
 import {colors} from 'theme/colors';
 import {Tables} from 'components/Tables';
@@ -11,6 +11,19 @@ import {SvgImage} from 'components/SvgImages';
 import {normalize} from 'theme/metrics';
 import {TypographyStyles} from 'theme/typography';
 
+const renderMen = ({item}: {item: IGenderItem}) => (
+  <Tables
+    title={item.title}
+    style={styles.table}
+    titleStyle={TypographyStyles.RegularTightSemiBold}
+    Right={
+      <SvgImage
+        color={colors.sky.dark}
+        source={require('../../assets/vectors/chevron-right.svg')}
+      />
+    }
+  />
+);
 export const MenList: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.menList>
 > = ({navigation}) => {
@@ -25,25 +38,16 @@ export const MenList: React.FC<
           title={discover[1]?.title}
           rootStyle={styles.header}
         />
-        <Image style={styles.image} source={discover[1]?.placeholder1} />
+        <Image
+          style={styles.image}
+          source={require('../../assets/images/Placeholder1.png')}
+        />
       </View>
       <FlatList
         data={MEN}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
-        renderItem={({item}) => (
-          <Tables
-            title={item.title}
-            style={styles.table}
-            titleStyle={TypographyStyles.RegularTightSemiBold}
-            Right={
-              <SvgImage
-                color={colors.sky.dark}
-                source={require('../../assets/vectors/chevron-right.svg')}
-              />
-            }
-          />
-        )}
+        renderItem={renderMen}
       />
     </View>
   );
