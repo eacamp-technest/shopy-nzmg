@@ -127,7 +127,11 @@ export const Navbar: React.FC<INavBar> = ({
                 side === 'right' && CommonStyles.rowReverse,
                 styles.text,
               ]}>
-              <SvgImage source={icon} {...restOfIcon} />
+              <SvgImage
+                color={mode === 'light' ? colors.ink.darkest : colors.white}
+                source={icon}
+                {...restOfIcon}
+              />
 
               <Text style={TypographyStyles.RegularNoneSemiBold}>{text}</Text>
             </View>
@@ -177,7 +181,7 @@ export const Navbar: React.FC<INavBar> = ({
         style={[styles.action, !leftActionType && styles.hide, style]}>
         {renderActions(leftActionType, left, 'left')}
       </Pressable>
-      <Text style={[TypographyStyles.title3, {color: titleColor}, textStyle]}>
+      <Text style={[TypographyStyles.title3, {color: titleColor}]}>
         {title}
       </Text>
       <Pressable

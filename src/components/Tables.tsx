@@ -6,33 +6,38 @@ import {
   StyleProp,
   ViewStyle,
   TextStyle,
+  Pressable,
 } from 'react-native';
 import React, {ReactNode} from 'react';
 import {CommonStyles} from 'theme/common.styles';
 import {TypographyStyles} from 'theme/typography';
 import {colors} from 'theme/colors';
-
+import {SvgImage} from './SvgImages';
 interface ITables {
   title?: string;
   subTitle?: string;
-  children?: ReactNode;
-  avatar?: string;
+  onPress?: () => void;
+  Left?: ReactNode;
+  Right?: ReactNode;
+  key?: string;
   style?: StyleProp<ViewStyle>;
   titleStyle?: StyleProp<TextStyle>;
 }
 export const Tables: React.FC<ITables> = ({
   title,
   subTitle,
-  children,
-  avatar,
+  Left,
+  onPress,
+  Right,
   style,
+  key,
   titleStyle,
 }) => {
   return (
-    <View style={[styles.root, style]}>
-      <View style={CommonStyles.row}>
-        {avatar ? <Image style={styles.image} source={{uri: avatar}} /> : null}
-        <View style={{gap: 4}}>
+    <Pressable key={key} onPress={onPress} style={[styles.root, style]}>
+      <View style={[CommonStyles.row, styles.contain]}>
+        {Left}
+        <View style={styles.text}>
           <Text
             style={[
               TypographyStyles.RegularTightRegular,
@@ -41,13 +46,15 @@ export const Tables: React.FC<ITables> = ({
             ]}>
             {title}
           </Text>
-          <Text style={[TypographyStyles.SmallTightRegular, styles.subTitle]}>
-            {subTitle}
-          </Text>
+          {subTitle ? (
+            <Text style={[TypographyStyles.SmallTightRegular, styles.subTitle]}>
+              {subTitle}
+            </Text>
+          ) : null}
         </View>
       </View>
-      {children}
-    </View>
+      {Right}
+    </Pressable>
   );
 };
 
@@ -70,4 +77,9 @@ const styles = StyleSheet.create({
   subTitle: {
     color: colors.ink.lighter,
   },
+  contain: {
+    gap: 8,
+    ...CommonStyles.alignJustifyCenter,
+  },
+  text: {gap: 4},
 });

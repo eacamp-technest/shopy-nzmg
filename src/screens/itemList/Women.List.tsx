@@ -21,7 +21,7 @@ export const WomenList: React.FC<
           leftActionType="icon"
           onLeftPress={() => navigation.goBack()}
           left={require('../../assets/vectors/left.svg')}
-          textStyle={styles.text}
+          titleColor={colors.white}
           title={discover[0]?.title}
           rootStyle={styles.header}
         />
@@ -36,7 +36,7 @@ export const WomenList: React.FC<
             title={item.title}
             style={styles.table}
             titleStyle={TypographyStyles.RegularTightSemiBold}
-            children={
+            Right={
               <SvgImage
                 color={colors.sky.dark}
                 source={require('../../assets/vectors/chevron-right.svg')}
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize('horizontal', 24),
   },
   table: {
-    paddingVertical: normalize('vertical', 12),
+    paddingVertical: normalize('vertical', 20),
   },
-  text: {color: colors.white},
 });
