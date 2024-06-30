@@ -13,34 +13,7 @@ import {NavigationParamList} from 'types/navigation.types';
 import {Routes} from 'router/routes';
 import {ISettings, SETTINGS} from 'constants/settings';
 import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
-import {useNavigation} from '@react-navigation/native';
-const navigation = useNavigation();
 
-const renderItem = ({item}: {item: ISettings}) => (
-  <View>
-    {item.id === '5' ? (
-      <View
-        style={{
-          backgroundColor: colors.sky.lightest,
-          height: 12,
-          width: '100%',
-        }}></View>
-    ) : null}
-    <Tables
-      onPress={() => navigation.navigate(item.onPress)}
-      Left={<SvgImage source={item.icon} color={colors.primary.base} />}
-      title={item.title}
-      titleStyle={TypographyStyles.RegularTightSemiBold}
-      style={styles.table}
-      Right={
-        <SvgImage
-          source={require('../../assets/vectors/chevron-right.svg')}
-          color={colors.sky.dark}
-        />
-      }
-    />
-  </View>
-);
 export const SettingsScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.settings>
 > = ({navigation}) => {
@@ -53,13 +26,37 @@ export const SettingsScreen: React.FC<
         leftActionType="icon"
         mode="light"
         onLeftPress={() => navigation.goBack()}
-        style={styles.header}
+        rootStyle={styles.header}
         left={require('../../assets/vectors/left.svg')}
       />
       <FlatList
         data={SETTINGS}
         keyExtractor={item => item.id}
-        renderItem={renderItem}
+        renderItem={({item}: {item: ISettings}) => (
+          <View>
+            {item.id === '5' ? (
+              <View
+                style={{
+                  backgroundColor: colors.sky.lightest,
+                  height: 12,
+                  width: '100%',
+                }}></View>
+            ) : null}
+            <Tables
+              onPress={() => navigation.navigate(item.onPress)}
+              Left={<SvgImage source={item.icon} color={colors.primary.base} />}
+              title={item.title}
+              titleStyle={TypographyStyles.RegularTightSemiBold}
+              style={styles.table}
+              Right={
+                <SvgImage
+                  source={require('../../assets/vectors/chevron-right.svg')}
+                  color={colors.sky.dark}
+                />
+              }
+            />
+          </View>
+        )}
       />
     </SafeAreaProvider>
   );
