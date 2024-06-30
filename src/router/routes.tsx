@@ -20,8 +20,10 @@ export enum Routes {
   settings = 'settings',
   itemlist = 'Itemlist.Screen',
   discoverNested = 'DiscoverRouter',
+  settingsNested = 'SettingsRouter',
   womenList = 'WomenList',
   kidslist = 'Kidslist',
   menList = 'MenList',
   teensList = 'TeensList',
+  profile = 'profile',
 }

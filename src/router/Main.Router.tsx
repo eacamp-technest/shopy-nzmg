@@ -10,6 +10,7 @@ import {CommonStyles} from 'theme/common.styles';
 import {tabBarOption, tabBarScreenOptions} from 'configs/navigation.configs';
 import {DiscoverRouter} from './Discover.Router';
 import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
+import {SettingsRouter} from './Settings.Router';
 
 export const MainRouter = () => {
   const Main = createBottomTabNavigator();
@@ -58,8 +59,8 @@ export const MainRouter = () => {
         />
         <Main.Screen
           options={tabBarOption[Routes.settings]}
-          name={Routes.settings}
-          component={SettingsScreen}
+          name={Routes.settingsNested}
+          component={SettingsRouter}
         />
       </Main.Navigator>
     </SafeAreaView>

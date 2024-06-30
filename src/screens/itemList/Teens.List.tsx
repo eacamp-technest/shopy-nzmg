@@ -3,7 +3,7 @@ import React from 'react';
 import {NavigationParamList} from 'types/navigation.types';
 import {Routes} from 'router/routes';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {IGenderItem, TEENS, discover} from 'constants/discover';
+import {IGenderItem, TEENS} from 'constants/discover';
 import {Navbar} from 'components/Navbar';
 import {colors} from 'theme/colors';
 import {Tables} from 'components/Tables';
@@ -34,7 +34,7 @@ export const TeensList: React.FC<
           onLeftPress={() => navigation.goBack()}
           left={require('../../assets/vectors/left.svg')}
           titleColor={colors.white}
-          title={discover[3]?.title}
+          title={'TEENS'}
           rootStyle={styles.header}
         />
         <Image
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contain: {
-    backgroundColor: discover[3]?.background,
+    backgroundColor: colors.lavender.base,
     marginBottom: 16,
   },
   image: {
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     paddingHorizontal: normalize('horizontal', 24),
+    zIndex: 1,
   },
   table: {
     paddingVertical: normalize('vertical', 20),
