@@ -13,17 +13,13 @@ import {
 import {SearchBar} from 'components/SearchBar';
 import {Input} from 'components/Input';
 import {Category} from 'components/Category';
-import axios from 'axios';
 import {SceneMap, TabView, TabBar} from 'react-native-tab-view';
 
-import ProgressBars from 'components/ProgressBars';
 import {Buttons} from 'components/Buttons';
-import {useUserStore} from 'store/user/user.store';
 import {useUserStoreActions} from 'store/user';
-import {Item} from 'react-native-paper/lib/typescript/components/Drawer/Drawer';
-import {IProduct, ProductCard} from 'components/ProductCard';
 import {TypographyStyles} from 'theme/typography';
 import {useFocusEffect} from '@react-navigation/native';
+import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
 
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
@@ -31,9 +27,7 @@ export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>
 > = ({navigation}) => {
   const {logout} = useUserStoreActions();
-  // const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  // const Endpoints = 'https://jsonplaceholder.typicode.com/photos';
-  // const [product, setProduct] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [value, setValue] = useState('');
   const [index, setIndex] = useState<number>(0);
   const {top} = useSafeAreaInsets();
@@ -49,6 +43,19 @@ export const HomeScreen: React.FC<
           onRightPress={() => console.log('--->')}
           right={'See All'}
         />
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          data={categories}
+          renderItem={({item}) => (
+            <Category
+              item={item}
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+            />
+          )}
+          horizontal={true}
+          keyExtractor={item => item}
+        />
       </View>
     );
   };
@@ -63,36 +70,18 @@ export const HomeScreen: React.FC<
     allStore: AllStore,
     inStore: InStore,
   });
-
-  // const fetch = async () => {
-  //   const remoteData = {
-  //     method: 'get',
-  //     url: `${Endpoints}`,
-  //   };
-  //   try {
-  //     const response = await axios(remoteData);
-  //     const result = response.data;
-  //     setProduct(result);
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   fetch();
-  // }, []);
-  // const filteredProduct = useMemo(() => {
-  //   return product.filter((val: any) =>
-  //     val.title.toLocaleLowerCase().includes(value.toLocaleLowerCase()),
-  //   );
-  // }, [value, product]);
-  useFocusEffect(
-    useCallback(() => {
-      StatusBar.setBarStyle('light-content');
-      return () => {
-        StatusBar.setBarStyle('dark-content');
-      };
-    }, []),
-  );
+  useCustomStatusBar({
+    backgroundColor: colors.bdazzleBlue.darkest,
+    barStyle: 'light-content',
+  });
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     StatusBar.setBarStyle('light-content');
+  //     return () => {
+  //       StatusBar.setBarStyle('dark-content');
+  //     };
+  //   }, []),
+  // );
 
   return (
     <SafeAreaProvider style={styles.root}>
@@ -103,7 +92,7 @@ export const HomeScreen: React.FC<
           titleColor="white"
           left={vectors.menu}
           leftActionType="icon"
-          onLeftPress={navigation.goBack} //  it's temporarily added . change it
+          onLeftPress={navigation.goBack}
           right={vectors.shoppingBag}
           onRightPress={() => console.log('shopping bag pressed')}
           rightActionType="icon"
@@ -166,6 +155,7 @@ const vectors = {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    backgroundColor: colors.white,
   },
   header: {
     paddingHorizontal: normalize('horizontal', 24),

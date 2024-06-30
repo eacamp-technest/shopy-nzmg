@@ -35,4 +35,6 @@ export type NavigationParamList = {
   [Routes.menList]: undefined;
   [Routes.kidslist]: undefined;
   [Routes.teensList]: undefined;
+  [Routes.settingsNested]: undefined;
+  [Routes.profile]: undefined;
 };

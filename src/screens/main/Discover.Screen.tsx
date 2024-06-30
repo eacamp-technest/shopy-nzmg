@@ -9,10 +9,12 @@ import {Routes} from 'router/routes';
 import {NavigationParamList} from 'types/navigation.types';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
 
 export const DiscoverScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.discover>
 > = ({navigation}) => {
+  useCustomStatusBar({backgroundColor: colors.white, barStyle: 'dark-content'});
   return (
     <SafeAreaProvider style={styles.root}>
       <FlatList

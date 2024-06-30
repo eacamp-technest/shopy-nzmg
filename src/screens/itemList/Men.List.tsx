@@ -13,7 +13,7 @@ import {TypographyStyles} from 'theme/typography';
 
 const renderMen = ({item}: {item: IGenderItem}) => (
   <Tables
-    title={item.title}
+    title={'MEN'}
     style={styles.table}
     titleStyle={TypographyStyles.RegularTightSemiBold}
     Right={
@@ -35,7 +35,7 @@ export const MenList: React.FC<
           onLeftPress={() => navigation.goBack()}
           left={require('../../assets/vectors/left.svg')}
           titleColor={colors.white}
-          title={discover[1]?.title}
+          title={'MEN'}
           rootStyle={styles.header}
         />
         <Image
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contain: {
-    backgroundColor: discover[1]?.background,
+    backgroundColor: colors.blue.base,
     marginBottom: 16,
   },
   image: {
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   header: {
     position: 'absolute',
     paddingHorizontal: normalize('horizontal', 24),
+    zIndex: 1,
   },
   table: {
     paddingVertical: normalize('vertical', 20),

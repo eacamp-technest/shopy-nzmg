@@ -12,6 +12,9 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {NavigationParamList} from 'types/navigation.types';
 import {Routes} from 'router/routes';
 import {ISettings, SETTINGS} from 'constants/settings';
+import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
+import {useNavigation} from '@react-navigation/native';
+const navigation = useNavigation();
 
 const renderItem = ({item}: {item: ISettings}) => (
   <View>
@@ -24,7 +27,7 @@ const renderItem = ({item}: {item: ISettings}) => (
         }}></View>
     ) : null}
     <Tables
-      onPress={() => console.log(item.title)}
+      onPress={() => navigation.navigate(item.onPress)}
       Left={<SvgImage source={item.icon} color={colors.primary.base} />}
       title={item.title}
       titleStyle={TypographyStyles.RegularTightSemiBold}
@@ -41,6 +44,7 @@ const renderItem = ({item}: {item: ISettings}) => (
 export const SettingsScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.settings>
 > = ({navigation}) => {
+  useCustomStatusBar({backgroundColor: colors.white, barStyle: 'dark-content'});
   return (
     <SafeAreaProvider style={styles.root}>
       <Navbar
@@ -64,6 +68,7 @@ export const SettingsScreen: React.FC<
 const styles = StyleSheet.create({
   root: {
     gap: 16,
+    backgroundColor: colors.white,
   },
   header: {
     paddingHorizontal: normalize('horizontal', 24),
