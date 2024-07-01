@@ -13,7 +13,7 @@ import {TypographyStyles} from 'theme/typography';
 
 const renderMen = ({item}: {item: IGenderItem}) => (
   <Tables
-    title={'MEN'}
+    title={item.title}
     style={styles.table}
     titleStyle={TypographyStyles.RegularTightSemiBold}
     Right={

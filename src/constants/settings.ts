@@ -18,7 +18,7 @@ export const SETTINGS: ISettings[] = [
     id: '2',
     title: 'Order',
     icon: require('../assets/vectors/shopping-bag.svg'),
-    onPress: Routes.profile,
+    onPress: Routes.order,
   },
   {
     id: '3',
@@ -46,6 +46,12 @@ export const SETTINGS: ISettings[] = [
   },
   {
     id: '7',
+    title: 'QR Scan',
+    icon: require('../assets/vectors/maximize.svg'),
+    onPress: Routes.scanner,
+  },
+  {
+    id: '8',
     title: 'Logout',
     icon: require('../assets/vectors/log-out.svg'),
     onPress: Routes.profile,
@@ -88,5 +94,33 @@ export const PROFILE: IProfile[] = [
     subTitle: '*****************',
     icon: require('../assets/vectors/lock'),
     right: require('../assets/vectors/chevron-right.svg'),
+  },
+];
+
+export interface IOrder {
+  orderNo: string;
+  date: string;
+  trackingNumber: string;
+  quantiy: number;
+  total: string;
+  status: string;
+}
+
+export const ORDER: IOrder[] = [
+  {
+    orderNo: '19342567',
+    date: '25-01-2022',
+    trackingNumber: 'IWCDFGWETE3456',
+    quantiy: 4,
+    total: `$231`,
+    status: 'Delivered',
+  },
+  {
+    orderNo: '19342567',
+    date: '25-01-2022',
+    trackingNumber: 'IWCDFGWETE3456',
+    quantiy: 4,
+    total: `$231`,
+    status: 'Delivered',
   },
 ];

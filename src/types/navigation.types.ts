@@ -37,4 +37,6 @@ export type NavigationParamList = {
   [Routes.teensList]: undefined;
   [Routes.settingsNested]: undefined;
   [Routes.profile]: undefined;
+  [Routes.order]: undefined;
+  [Routes.scanner]: undefined;
 };
