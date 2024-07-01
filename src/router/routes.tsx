@@ -26,4 +26,6 @@ export enum Routes {
   menList = 'MenList',
   teensList = 'TeensList',
   profile = 'profile',
+  order = 'order',
+  scanner = 'scanner',
 }
