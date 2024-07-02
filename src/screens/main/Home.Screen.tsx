@@ -26,7 +26,6 @@ const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>
 > = ({navigation}) => {
-  const {logout} = useUserStoreActions();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [value, setValue] = useState('');
   const [index, setIndex] = useState<number>(0);
@@ -37,7 +36,7 @@ export const HomeScreen: React.FC<
       <View style={styles.allStore}>
         <Navbar
           left={'CATEGORIES'}
-          textStyle={{color: colors.ink.darkest}}
+          leftTextStyle={{color: colors.ink.darkest}}
           leftActionType="text"
           rightActionType="text"
           onRightPress={() => console.log('--->')}
@@ -126,8 +125,6 @@ export const HomeScreen: React.FC<
         onIndexChange={setIndex}
         sceneContainerStyle={styles.sceneContainerStyle}
       />
-
-      <Buttons text="Logout" onPress={logout} />
     </SafeAreaProvider>
   );
 };
