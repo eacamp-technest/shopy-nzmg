@@ -39,4 +39,5 @@ export type NavigationParamList = {
   [Routes.profile]: undefined;
   [Routes.order]: undefined;
   [Routes.scanner]: undefined;
+  [Routes.success]: undefined;
 };

@@ -28,4 +28,5 @@ export enum Routes {
   profile = 'profile',
   order = 'order',
   scanner = 'scanner',
+  success = 'success',
 }

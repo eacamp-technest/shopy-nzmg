@@ -123,6 +123,7 @@ export const ORDER: IOrder[] = [
     total: '$298',
     status: 'Delivered',
   },
+
   {
     orderNo: '19342569',
     date: '15-02-2023',

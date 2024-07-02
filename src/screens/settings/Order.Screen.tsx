@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, Button} from 'react-native';
 import React, {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {NavigationParamList} from 'types/navigation.types';
@@ -11,6 +11,7 @@ import {TypographyStyles} from 'theme/typography';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {OrderCard} from 'components/specific/OrderCard';
 import {ORDER} from 'constants/settings';
+import {Buttons} from 'components/Buttons';
 
 export const OrderScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.order>
@@ -104,6 +105,7 @@ export const OrderScreen: React.FC<
           title="MY ORDER"
           titleColor={colors.white}
           leftActionType="icon"
+          onLeftPress={() => navigation.goBack()}
           left={require('../../assets/vectors/left.svg')}
           rootStyle={styles.header}
         />
@@ -128,6 +130,11 @@ export const OrderScreen: React.FC<
         animationEnabled={true}
         onIndexChange={setIndex}
         sceneContainerStyle={styles.sceneContainerStyle}
+      />
+      <Buttons
+        text="Cleaner"
+        onPress={() => navigation.navigate(Routes.success)}
+        style={styles.button}
       />
     </SafeAreaProvider>
   );
@@ -160,5 +167,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 1,
     marginTop: 18,
+  },
+  button: {
+    paddingTop: 10,
+    marginHorizontal: normalize('horizontal', 24),
   },
 });
