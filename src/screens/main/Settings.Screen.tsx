@@ -43,7 +43,11 @@ export const SettingsScreen: React.FC<
                 }}></View>
             ) : null}
             <Tables
-              onPress={() => navigation.navigate(item.onPress)}
+              onPress={() => {
+                return item.id === '8'
+                  ? item.onPress
+                  : navigation.navigate(item.onPress);
+              }}
               Left={<SvgImage source={item.icon} color={colors.primary.base} />}
               title={item.title}
               titleStyle={TypographyStyles.RegularTightSemiBold}
