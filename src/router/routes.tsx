@@ -29,4 +29,5 @@ export enum Routes {
   order = 'order',
   scanner = 'scanner',
   success = 'success',
+  reset = 'reset',
 }
