@@ -9,6 +9,7 @@ import {NestedStackScreenOption} from 'configs/navigation.configs';
 import {OrderScreen} from 'screens/settings/Order.Screen';
 import {ScannerScreen} from 'screens/settings/Scanner.Screen';
 import {SuccessScreen} from 'screens/settings/Success.Screen';
+import {ResetScreen} from 'screens/settings/Reset.Screen';
 
 const SettingsStack = createNativeStackNavigator<NavigationParamList>();
 export const SettingsRouter = () => {
@@ -20,6 +21,7 @@ export const SettingsRouter = () => {
       <SettingsStack.Screen name={Routes.profile} component={ProfileScreen} />
       <SettingsStack.Screen name={Routes.order} component={OrderScreen} />
       <SettingsStack.Screen name={Routes.success} component={SuccessScreen} />
+      <SettingsStack.Screen name={Routes.reset} component={ResetScreen} />
       <SettingsStack.Screen name={Routes.scanner} component={ScannerScreen} />
     </SettingsStack.Navigator>
   );

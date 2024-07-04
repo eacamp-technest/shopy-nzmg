@@ -4,7 +4,7 @@ export interface ISettings {
   id: string;
   title: string;
   icon: NodeRequire;
-  onPress: any;
+  onPress?: string;
 }
 
 export const SETTINGS: ISettings[] = [
@@ -54,7 +54,6 @@ export const SETTINGS: ISettings[] = [
     id: '8',
     title: 'Logout',
     icon: require('../assets/vectors/log-out.svg'),
-    onPress: Routes.profile,
   },
 ];
 
