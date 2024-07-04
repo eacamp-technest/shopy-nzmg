@@ -19,6 +19,7 @@ export const NewPasswordScreen: React.FC<
       <Navbar
         mode="light"
         leftActionType="icon"
+        onLeftPress={() => navigation.goBack()}
         left={require('assets/vectors/left.svg')}
       />
       <Text style={styles.title}>create new password</Text>
@@ -39,7 +40,10 @@ export const NewPasswordScreen: React.FC<
           label="Confirm Password"
         />
       </View>
-      <Buttons text="Reset password" />
+      <Buttons
+        onPress={() => navigation.navigate(Routes.resetPassword)}
+        text="Reset password"
+      />
     </View>
   );
 };
