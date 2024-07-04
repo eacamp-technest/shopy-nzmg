@@ -41,4 +41,5 @@ export type NavigationParamList = {
   [Routes.scanner]: undefined;
   [Routes.success]: undefined;
   [Routes.reset]: undefined;
+  [Routes.checkEmail]: undefined;
 };

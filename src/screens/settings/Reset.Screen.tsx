@@ -32,7 +32,10 @@ export const ResetScreen: React.FC<
         style={styles.input}
         label="Email address"
       />
-      <Buttons text="Send instructions" />
+      <Buttons
+        text="Send instructions"
+        onPress={() => navigation.navigate(Routes.checkEmail)}
+      />
     </View>
   );
 };
