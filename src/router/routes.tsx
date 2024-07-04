@@ -30,4 +30,5 @@ export enum Routes {
   scanner = 'scanner',
   success = 'success',
   reset = 'reset',
+  checkEmail = 'checkEmail',
 }
