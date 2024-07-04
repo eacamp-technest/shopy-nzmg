@@ -27,7 +27,11 @@ export const CheckEmailScreen: React.FC<
           We have sent a password recover instructions to your email.
         </Text>
       </View>
-      <Buttons text="Open email app" style={styles.button} />
+      <Buttons
+        text="Open email app"
+        onPress={() => navigation.navigate(Routes.newPassword)}
+        style={styles.button}
+      />
       <Buttons text="Skip, I’ll confirm later" types="outlined" />
       <TextLink
         content="Did not receive the email? Check your spam filter, or try another email address"

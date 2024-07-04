@@ -46,7 +46,7 @@ export const ProfileScreen: React.FC<
           <Tables
             Left={<SvgImage color={colors.primary.base} source={item.icon} />}
             onPress={() =>
-              item.id === '1'
+              item.id === '4'
                 ? navigation.navigate(Routes.reset)
                 : console.log(item.title)
             }

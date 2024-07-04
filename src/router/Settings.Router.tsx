@@ -11,6 +11,7 @@ import {ScannerScreen} from 'screens/settings/Scanner.Screen';
 import {SuccessScreen} from 'screens/settings/Success.Screen';
 import {ResetScreen} from 'screens/settings/Reset.Screen';
 import {CheckEmailScreen} from 'screens/settings/CheckEmail.Screen';
+import {NewPasswordScreen} from 'screens/settings/NewPassword.Screen';
 
 const SettingsStack = createNativeStackNavigator<NavigationParamList>();
 export const SettingsRouter = () => {
@@ -26,6 +27,10 @@ export const SettingsRouter = () => {
       <SettingsStack.Screen
         name={Routes.checkEmail}
         component={CheckEmailScreen}
+      />
+      <SettingsStack.Screen
+        name={Routes.newPassword}
+        component={NewPasswordScreen}
       />
       <SettingsStack.Screen name={Routes.scanner} component={ScannerScreen} />
     </SettingsStack.Navigator>
