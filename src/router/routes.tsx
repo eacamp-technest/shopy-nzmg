@@ -32,4 +32,5 @@ export enum Routes {
   reset = 'reset',
   checkEmail = 'checkEmail',
   newPassword = 'newPassword',
+  resetPassword = 'resetPassword',
 }
