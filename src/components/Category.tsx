@@ -7,14 +7,15 @@ import { normalize } from 'theme/metrics';
 interface ICategory {
     item: string;
     selectedCategory: string | null;
+    backgroundColor: string;
     setSelectedCategory: (category: string) => void
 }
 
 
-export function Category({ item, selectedCategory, setSelectedCategory }: ICategory) {
+export function Category({ item, selectedCategory, setSelectedCategory, backgroundColor }: ICategory) {
     return (
         <TouchableOpacity style={styles.main} onPress={() => setSelectedCategory(item)}>
-            <Text style={[styles.categoryText, selectedCategory === item && { color: colors.white, backgroundColor: colors.primary.base }]}>{item}</Text>
+            <Text style={[styles.categoryText, selectedCategory === item && { color: colors.white, backgroundColor: backgroundColor }]}>{item}</Text>
         </TouchableOpacity>
     )
 }
@@ -28,9 +29,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         textAlign: 'center',
         borderRadius: 16,
-        marginHorizontal: 8
+        marginHorizontal: 8,
     },
     main: {
-        paddingVertical: normalize('vertical', 32)
+        marginBottom: 20
     }
 })

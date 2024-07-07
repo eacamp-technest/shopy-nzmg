@@ -1,4 +1,5 @@
-import {Routes} from 'router/routes';
+import { Routes } from 'router/routes';
+import { useUserStoreActions } from 'store/user';
 
 export interface ISettings {
   id: string;
@@ -6,6 +7,8 @@ export interface ISettings {
   icon: NodeRequire;
   onPress: any;
 }
+
+const { logout } = useUserStoreActions();
 
 export const SETTINGS: ISettings[] = [
   {
@@ -54,7 +57,7 @@ export const SETTINGS: ISettings[] = [
     id: '8',
     title: 'Logout',
     icon: require('../assets/vectors/log-out.svg'),
-    onPress: Routes.profile,
+    onPress: logout,
   },
 ];
 
