@@ -36,7 +36,7 @@ export const HomeScreen: React.FC<
       <View style={styles.allStore}>
         <Navbar
           left={'CATEGORIES'}
-          textStyle={{ color: colors.ink.darkest }}
+          leftTextStyle={{color: colors.ink.darkest}}
           leftActionType="text"
           rightActionType="text"
           onRightPress={() => console.log('--->')}

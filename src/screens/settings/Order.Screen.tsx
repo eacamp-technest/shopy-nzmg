@@ -1,16 +1,17 @@
-import { View, Text, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
-import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
-import { TypographyStyles } from 'theme/typography';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { FlatList } from 'react-native-gesture-handler';
-import { ORDER } from 'constants/settings';
+import {View, Text, StyleSheet, FlatList, Button} from 'react-native';
+import React, {useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {normalize} from 'theme/metrics';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
+import {TypographyStyles} from 'theme/typography';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
+import {OrderCard} from 'components/specific/OrderCard';
+import {ORDER} from 'constants/settings';
+import {Buttons} from 'components/Buttons';
 
 export const OrderScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.order>
@@ -18,34 +19,76 @@ export const OrderScreen: React.FC<
   const [index, setIndex] = useState<number>(0);
 
   const Processing: React.FC = () => {
+    const processing = ORDER.filter(order => order.status === 'Processing');
+
     return (
       <View>
-        <Text>Prosessing</Text>
+        <FlatList
+          data={processing}
+          keyExtractor={item => item.orderNo}
+          renderItem={({item, index}) => (
+            <View style={styles.delivered}>
+              {index !== 0 ? <View style={styles.line} /> : null}
+              <OrderCard
+                orderNo={item.orderNo}
+                status={item.status}
+                trackingNumber={item.trackingNumber}
+                quantiy={item.quantiy}
+                total={item.total}
+                date={item.date}
+              />
+            </View>
+          )}
+        />
       </View>
     );
   };
   const Delivered: React.FC = () => {
+    const deivered = ORDER.filter(order => order.status === 'Delivered');
     return (
       <View>
         <FlatList
-          data={ORDER}
-          renderItem={({ item }) => (
-            <View>
-              <View>
-                <Text>Order No {item.orderNo}</Text>
-                <Text> {item.date}</Text>
-              </View>
-              <Text>Tracking Number</Text>
+          data={deivered}
+          keyExtractor={item => item.orderNo}
+          renderItem={({item, index}) => (
+            <View style={styles.delivered}>
+              {index !== 0 ? <View style={styles.line} /> : null}
+              <OrderCard
+                orderNo={item.orderNo}
+                status={item.status}
+                trackingNumber={item.trackingNumber}
+                quantiy={item.quantiy}
+                total={item.total}
+                date={item.date}
+              />
             </View>
-          )} />
+          )}
+        />
       </View>
     );
   };
 
   const Cancelled: React.FC = () => {
+    const cancelled = ORDER.filter(order => order.status === 'Cancelled');
     return (
       <View>
-        <Text>Cancelled</Text>
+        <FlatList
+          data={cancelled}
+          keyExtractor={item => item.orderNo}
+          renderItem={({item, index}) => (
+            <View style={styles.delivered}>
+              {index !== 0 ? <View style={styles.line} /> : null}
+              <OrderCard
+                orderNo={item.orderNo}
+                status={item.status}
+                trackingNumber={item.trackingNumber}
+                quantiy={item.quantiy}
+                total={item.total}
+                date={item.date}
+              />
+            </View>
+          )}
+        />
       </View>
     );
   };
@@ -62,6 +105,7 @@ export const OrderScreen: React.FC<
           title="MY ORDER"
           titleColor={colors.white}
           leftActionType="icon"
+          onLeftPress={() => navigation.goBack()}
           left={require('../../assets/vectors/left.svg')}
           onLeftPress={() => navigation.goBack()}
           rootStyle={styles.header}
@@ -88,6 +132,11 @@ export const OrderScreen: React.FC<
         onIndexChange={setIndex}
         sceneContainerStyle={styles.sceneContainerStyle}
       />
+      <Buttons
+        text="Cleaner"
+        onPress={() => navigation.navigate(Routes.success)}
+        style={styles.button}
+      />
     </SafeAreaProvider>
   );
 };
@@ -110,5 +159,18 @@ const styles = StyleSheet.create({
   },
   sceneContainerStyle: {
     paddingTop: 10,
+  },
+  delivered: {
+    gap: 32,
+  },
+  line: {
+    backgroundColor: colors.sky.lighter,
+    width: '100%',
+    height: 1,
+    marginTop: 18,
+  },
+  button: {
+    paddingTop: 10,
+    marginHorizontal: normalize('horizontal', 24),
   },
 });

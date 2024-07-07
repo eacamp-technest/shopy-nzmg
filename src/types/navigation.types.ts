@@ -34,6 +34,7 @@ export type NavigationParamList = {
   [Routes.home]: undefined;
   [Routes.bookmark]: undefined;
   [Routes.discover]: undefined;
+  [Routes.bookmark]: undefined;
   [Routes.settings]: undefined;
   [Routes.nortification]: undefined;
   [Routes.search]: ISearchProps;
@@ -50,4 +51,9 @@ export type NavigationParamList = {
   [Routes.profile]: undefined;
   [Routes.order]: undefined;
   [Routes.scanner]: undefined;
+  [Routes.success]: undefined;
+  [Routes.reset]: undefined;
+  [Routes.checkEmail]: undefined;
+  [Routes.newPassword]: undefined;
+  [Routes.resetPassword]: undefined;
 };

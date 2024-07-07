@@ -43,7 +43,8 @@ interface INavBar {
   leftActionType?: NavbarActions;
   rightActionType?: NavbarActions;
   style?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<TextStyle> | undefined;
+  rightTextStyle?: StyleProp<TextStyle> | undefined;
+  leftTextStyle?: StyleProp<TextStyle> | undefined;
   rootStyle?: StyleProp<ViewStyle>;
   titleColor?: string;
 }
@@ -58,7 +59,8 @@ export const Navbar: React.FC<INavBar> = ({
   style,
   rootStyle,
   mode,
-  textStyle,
+  rightTextStyle,
+  leftTextStyle,
   onLeftPress,
   onRightPress,
   titleColor,
@@ -93,7 +95,11 @@ export const Navbar: React.FC<INavBar> = ({
         return (
           <Text
             numberOfLines={2}
-            style={[styles.textType, side === 'left' && textStyle]}>
+            style={[
+              styles.textType,
+              side === 'left' && leftTextStyle,
+              side === 'right' && rightTextStyle,
+            ]}>
             {data as string}
           </Text>
         );

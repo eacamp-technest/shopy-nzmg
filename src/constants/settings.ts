@@ -5,7 +5,7 @@ export interface ISettings {
   id: string;
   title: string;
   icon: NodeRequire;
-  onPress: any;
+  onPress?: string;
 }
 
 const { logout } = useUserStoreActions();
@@ -57,7 +57,6 @@ export const SETTINGS: ISettings[] = [
     id: '8',
     title: 'Logout',
     icon: require('../assets/vectors/log-out.svg'),
-    onPress: logout,
   },
 ];
 
@@ -106,7 +105,7 @@ export interface IOrder {
   trackingNumber: string;
   quantiy: number;
   total: string;
-  status: string;
+  status: 'Delivered' | 'Cancelled' | 'Processing';
 }
 
 export const ORDER: IOrder[] = [
@@ -115,15 +114,32 @@ export const ORDER: IOrder[] = [
     date: '25-01-2022',
     trackingNumber: 'IWCDFGWETE3456',
     quantiy: 4,
-    total: `$231`,
+    total: '$231',
     status: 'Delivered',
   },
   {
-    orderNo: '19342567',
-    date: '25-01-2022',
-    trackingNumber: 'IWCDFGWETE3456',
-    quantiy: 4,
-    total: `$231`,
+    orderNo: '19342568',
+    date: '12-07-2022',
+    trackingNumber: 'YUBNFGWETE3457',
+    quantiy: 8,
+    total: '$298',
     status: 'Delivered',
+  },
+
+  {
+    orderNo: '19342569',
+    date: '15-02-2023',
+    trackingNumber: 'ZXCVBNWETE3458',
+    quantiy: 2,
+    total: '$150',
+    status: 'Cancelled',
+  },
+  {
+    orderNo: '19342570',
+    date: '20-03-2023',
+    trackingNumber: 'QWERTYWETE3459',
+    quantiy: 5,
+    total: '$275',
+    status: 'Processing',
   },
 ];

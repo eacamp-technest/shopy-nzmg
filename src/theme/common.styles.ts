@@ -110,4 +110,7 @@ export const CommonStyles = StyleSheet.create({
   overflowHidden: {
     overflow: 'hidden',
   } as ViewStyle,
+  textAlignCenter: {
+    textAlign: 'center',
+  } as ViewStyle,
 });

@@ -31,4 +31,9 @@ export enum Routes {
   profile = 'profile',
   order = 'order',
   scanner = 'scanner',
+  success = 'success',
+  reset = 'reset',
+  checkEmail = 'checkEmail',
+  newPassword = 'newPassword',
+  resetPassword = 'resetPassword',
 }
