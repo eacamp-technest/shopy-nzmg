@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Navbar} from 'components/Navbar';
@@ -35,7 +35,7 @@ export const SettingsScreen: React.FC<
       <FlatList
         data={SETTINGS}
         keyExtractor={item => item.id}
-        renderItem={({item}: {item: ISettings}) => (
+        renderItem={({ item }: { item: ISettings }) => (
           <View>
             {item.id === '5' ? (
               <View

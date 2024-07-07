@@ -1,4 +1,5 @@
-import {Routes} from 'router/routes';
+import { Routes } from 'router/routes';
+import { useUserStoreActions } from 'store/user';
 
 export interface ISettings {
   id: string;
@@ -6,6 +7,8 @@ export interface ISettings {
   icon: NodeRequire;
   onPress?: string;
 }
+
+const { logout } = useUserStoreActions();
 
 export const SETTINGS: ISettings[] = [
   {
