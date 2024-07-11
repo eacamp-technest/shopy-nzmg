@@ -14,7 +14,7 @@ import {SearchBar} from 'components/SearchBar';
 import {Input} from 'components/Input';
 import {Category} from 'components/Category';
 import {SceneMap, TabView, TabBar} from 'react-native-tab-view';
-
+import { ProductCard } from 'components/ProductCard';
 import {Buttons} from 'components/Buttons';
 import {useUserStoreActions} from 'store/user';
 import {TypographyStyles} from 'theme/typography';
@@ -31,7 +31,7 @@ export const HomeScreen: React.FC<
   const [value, setValue] = useState('');
   const [index, setIndex] = useState<number>(0);
   const {top} = useSafeAreaInsets();
-
+  const [Categorys,setCategorys]=useState()
   const AllStore: React.FC = () => {
     return (
       <View style={styles.allStore}>
@@ -82,6 +82,13 @@ export const HomeScreen: React.FC<
   //     };
   //   }, []),
   // );
+  useEffect(()=>{
+    fetch('https://fakestoreapi.com/products')
+            .then(res=>res.json())
+            .then(json=>setCategorys(json))
+
+  })
+
 
   return (
     <SafeAreaProvider style={styles.root}>
@@ -126,7 +133,16 @@ export const HomeScreen: React.FC<
         onIndexChange={setIndex}
         sceneContainerStyle={styles.sceneContainerStyle}
       />
-
+      <FlatList 
+         data={Categorys}
+         renderItem={({item})=>{
+          <ProductCard 
+             item={{title:item.price}}
+           />
+         }}
+      />
+     
+      
       <Buttons text="Logout" onPress={logout} />
     </SafeAreaProvider>
   );
