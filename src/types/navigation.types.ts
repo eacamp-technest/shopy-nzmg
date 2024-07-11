@@ -1,12 +1,14 @@
-import { NativeStackNavigationOptions, NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { Routes } from 'router/routes';
-import { IModal } from 'components/Modal';
+import {
+  NativeStackNavigationOptions,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
+import {Routes} from 'router/routes';
+import {IModal} from 'components/Modal';
 export type AppNavigation = NativeStackNavigationProp<NavigationParamList>;
-
 
 interface ISearchProps extends NativeStackNavigationOptions {
   items?: string[] | null;
-  onItemPress?: (item: string) => void
+  onItemPress?: (item: string) => void;
 }
 
 export type NavigationParamList = {
@@ -41,7 +43,6 @@ export type NavigationParamList = {
   [Routes.filters]: undefined;
   [Routes.tab]: undefined;
   [Routes.itemlist]: undefined;
-  [Routes.discoverNested]: undefined;
   [Routes.womenList]: undefined;
   [Routes.discoverRouter]: undefined;
   [Routes.menList]: undefined;
@@ -56,4 +57,6 @@ export type NavigationParamList = {
   [Routes.checkEmail]: undefined;
   [Routes.newPassword]: undefined;
   [Routes.resetPassword]: undefined;
+  [Routes.productDetail]: undefined;
+  [Routes.bookmarkRouter]: undefined;
 };

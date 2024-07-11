@@ -2,10 +2,6 @@ import {View, Text, StyleSheet, FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
 import {colors} from 'theme/colors';
-<<<<<<< HEAD
-import ProductDetails from 'components/ProductDetails';
-export const BookmarkScreen = () => {
-=======
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {NavigationParamList} from 'types/navigation.types';
 import {Routes} from 'router/routes';
@@ -19,6 +15,7 @@ import {
 import {normalize} from 'theme/metrics';
 import {ProductCard} from 'components/ProductCard';
 import axios from 'axios';
+import {Buttons} from 'components/Buttons';
 interface IData {
   id?: number;
   title?: string;
@@ -62,6 +59,10 @@ export const BookmarkScreen: React.FC<
     return (
       <View>
         <Text>Boards</Text>
+        <Buttons
+          text="Product Detail"
+          onPress={() => navigation.navigate(Routes.productDetail)}
+        />
       </View>
     );
   };
@@ -69,7 +70,6 @@ export const BookmarkScreen: React.FC<
     allItems: AllItems,
     boards: Boards,
   });
->>>>>>> b9bdd1490dedb14c4ec91cb274b83efd0e345bf9
   useCustomStatusBar({
     backgroundColor: colors.bdazzleBlue.darkest,
     barStyle: 'light-content',
@@ -78,11 +78,6 @@ export const BookmarkScreen: React.FC<
     fetch(Endpoints);
   }, []);
   return (
-<<<<<<< HEAD
-    <View>
-     
-    </View>
-=======
     <SafeAreaProvider style={styles.root}>
       <View style={[styles.header, {paddingTop: top}]}>
         <Navbar mode="dark" titleColor="white" title="saved items" />
@@ -109,7 +104,6 @@ export const BookmarkScreen: React.FC<
         sceneContainerStyle={styles.sceneContainerStyle}
       />
     </SafeAreaProvider>
->>>>>>> b9bdd1490dedb14c4ec91cb274b83efd0e345bf9
   );
 };
 
