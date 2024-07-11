@@ -13,7 +13,7 @@ export const TestScreen = () => {
 
   return (
     <SafeAreaProvider style={styles.container}>
-      <FlatList
+      {/* <FlatList
         numColumns={2}
         data={products}
         renderItem={({ item, index }) => (<ProductCard item={item} />)}
@@ -27,7 +27,7 @@ export const TestScreen = () => {
           </>
         }
         contentContainerStyle={{ paddingBottom: 150 }}
-      />
+      /> */}
     </SafeAreaProvider>
   )
 }

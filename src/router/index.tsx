@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {MainRouter} from './Main.Router';
-import {AuthRouter} from './Auth.Router';
-import {NavigationContainer} from '@react-navigation/native';
-import {useUserStore} from 'store/user/user.store';
+import React, { useCallback, useEffect, useState } from 'react';
+import { MainStackRouter } from './Main.Router';
+import { AuthRouter } from './Auth.Router';
+import { NavigationContainer } from '@react-navigation/native';
+import { useUserStore } from 'store/user/user.store';
 import BootSplash from 'react-native-bootsplash';
 
 const delay = (ms: number, cb?: any) =>
@@ -12,12 +12,12 @@ const Router = () => {
   const [ready, setReady] = useState<boolean>(false);
   const {
     user,
-    actions: {initialize},
+    actions: { initialize },
   } = useUserStore(state => state);
   const init = useCallback(async () => {
     await delay(1500, initialize());
     setReady(true);
-    await BootSplash.hide({fade: true});
+    await BootSplash.hide({ fade: true });
   }, [initialize]);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Router = () => {
 
   return (
     <NavigationContainer>
-      {user ? <MainRouter /> : <AuthRouter />}
+      {user ? <MainStackRouter /> : <AuthRouter />}
     </NavigationContainer>
   );
 };

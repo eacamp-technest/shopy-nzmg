@@ -1,9 +1,9 @@
-import {BottomTabNavigationOptions} from '@react-navigation/bottom-tabs';
-import {NativeStackNavigationOptions} from '@react-navigation/native-stack';
-import {SvgImage} from 'components/SvgImages';
-import {Routes} from 'router/routes';
-import {colors} from 'theme/colors';
-import {normalize} from 'theme/metrics';
+import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs';
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
+import { SvgImage } from 'components/SvgImages';
+import { Routes } from 'router/routes';
+import { colors } from 'theme/colors';
+import { normalize } from 'theme/metrics';
 
 export const defaultScreenOptions: NativeStackNavigationOptions = {
   headerShown: false,
@@ -41,26 +41,41 @@ export const modalScreenOptions: NativeStackNavigationOptions = {
     backgroundColor: 'transparent',
   },
 };
-const tabIconConfig: {[key: string]: NodeRequire} = {
+const tabIconConfig: { [key: string]: NodeRequire } = {
   [Routes.home]: require('../assets/vectors/home.svg'),
   [Routes.discover]: require('../assets/vectors/search.svg'),
   [Routes.bookmark]: require('../assets/vectors/heart.svg'),
   [Routes.nortification]: require('../assets/vectors/bell.svg'),
   [Routes.settings]: require('../assets/vectors/settings.svg'),
 };
+interface SearchScreenOptions extends NativeStackNavigationOptions {
+  items?: string[] | null;
+}
+export const searchScreenOptions: SearchScreenOptions = {
+  ...defaultScreenOptions,
+  headerTitle: 'Search products',
+  presentation: 'formSheet',
+  headerLargeTitle: true,
+  headerSearchBarOptions: {
+    inputType: 'text',
+    autoFocus: true,
+    hideWhenScrolling: false,
+  },
+  headerShown: true,
+};
 
 const renderTabIcon =
   (routeName: Routes) =>
-  ({color}: {color: string}) => {
-    return (
-      <SvgImage
-        source={tabIconConfig[routeName]}
-        width={24}
-        height={24}
-        color={color}
-      />
-    );
-  };
+    ({ color }: { color: string }) => {
+      return (
+        <SvgImage
+          source={tabIconConfig[routeName]}
+          width={24}
+          height={24}
+          color={color}
+        />
+      );
+    };
 
 export const tabBarOption = {
   [Routes.home]: {

@@ -45,6 +45,11 @@ export const ProfileScreen: React.FC<
         renderItem={({item}: {item: IProfile}) => (
           <Tables
             Left={<SvgImage color={colors.primary.base} source={item.icon} />}
+            onPress={() =>
+              item.id === '4'
+                ? navigation.navigate(Routes.reset)
+                : console.log(item.title)
+            }
             title={item.title}
             subTitle={item.subTitle}
             style={styles.table}

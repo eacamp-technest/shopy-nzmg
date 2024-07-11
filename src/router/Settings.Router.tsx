@@ -8,6 +8,11 @@ import {Routes} from './routes';
 import {NestedStackScreenOption} from 'configs/navigation.configs';
 import {OrderScreen} from 'screens/settings/Order.Screen';
 import {ScannerScreen} from 'screens/settings/Scanner.Screen';
+import {SuccessScreen} from 'screens/settings/Success.Screen';
+import {ResetScreen} from 'screens/settings/Reset.Screen';
+import {CheckEmailScreen} from 'screens/settings/CheckEmail.Screen';
+import {NewPasswordScreen} from 'screens/settings/NewPassword.Screen';
+import {ResetPasswordScreen} from 'screens/settings/ResetPassword.Screen';
 
 const SettingsStack = createNativeStackNavigator<NavigationParamList>();
 export const SettingsRouter = () => {
@@ -18,6 +23,20 @@ export const SettingsRouter = () => {
       <SettingsStack.Screen name={Routes.settings} component={SettingsScreen} />
       <SettingsStack.Screen name={Routes.profile} component={ProfileScreen} />
       <SettingsStack.Screen name={Routes.order} component={OrderScreen} />
+      <SettingsStack.Screen name={Routes.success} component={SuccessScreen} />
+      <SettingsStack.Screen name={Routes.reset} component={ResetScreen} />
+      <SettingsStack.Screen
+        name={Routes.checkEmail}
+        component={CheckEmailScreen}
+      />
+      <SettingsStack.Screen
+        name={Routes.newPassword}
+        component={NewPasswordScreen}
+      />
+      <SettingsStack.Screen
+        name={Routes.resetPassword}
+        component={ResetPasswordScreen}
+      />
       <SettingsStack.Screen name={Routes.scanner} component={ScannerScreen} />
     </SettingsStack.Navigator>
   );

@@ -7,13 +7,14 @@ import {
   StyleProp,
   ViewStyle,
   Pressable,
+  TextStyle,
 } from 'react-native';
-import React, {useMemo, useState} from 'react';
-import {SvgImage} from './SvgImages';
-import {TypographyStyles} from 'theme/typography';
-import {colors} from 'theme/colors';
-import {standardHitSlopSize} from 'theme/consts.styles';
-import {CommonStyles} from 'theme/common.styles';
+import React, { useMemo, useState } from 'react';
+import { SvgImage } from './SvgImages';
+import { TypographyStyles } from 'theme/typography';
+import { colors } from 'theme/colors';
+import { standardHitSlopSize } from 'theme/consts.styles';
+import { CommonStyles } from 'theme/common.styles';
 
 export type TIcon = {
   source: NodeRequire;
