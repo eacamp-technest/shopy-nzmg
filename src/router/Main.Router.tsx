@@ -6,6 +6,7 @@ import { TabRouter } from './Tab.Router';
 import { SearchScreen } from 'screens/Search.Screens';
 import { NavigationParamList } from 'types/navigation.types';
 import { FilterScreen } from 'screens/main/Filters.Screen';
+import { ProductDetailScreen } from 'screens/bookmark/ProductDetail.Screen';
 
 const MainStack = createNativeStackNavigator<NavigationParamList>()
 export const MainStackRouter = () => {
@@ -16,6 +17,7 @@ export const MainStackRouter = () => {
       <MainStack.Screen name={Routes.tab} component={TabRouter} />
       <MainStack.Screen options={searchScreenOptions} name={Routes.search} component={SearchScreen} />
       <MainStack.Screen name={Routes.filters} component={FilterScreen} />
+      <MainStack.Screen name={Routes.productDetail} component={ProductDetailScreen} />
     </MainStack.Navigator>
   );
 };
