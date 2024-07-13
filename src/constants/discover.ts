@@ -8,6 +8,7 @@ interface IDiscover {
   image: ImageSourcePropType;
   background: string;
   onPress: string;
+  placeholder?: ImageSourcePropType;
 }
 
 export const discover: IDiscover[] = [
@@ -15,6 +16,7 @@ export const discover: IDiscover[] = [
     id: 0,
     title: 'WOMEN',
     image: require('../assets/images/Image.png'),
+    placeholder: require('assets/images/Placeholder.png'),
     background: colors.primary.base,
     onPress: Routes.womenList,
   },
@@ -22,6 +24,8 @@ export const discover: IDiscover[] = [
     id: 1,
     title: 'MEN',
     image: require('../assets/images/Image1.png'),
+    placeholder: require('assets/images/Placeholder1.png'),
+
     background: colors.blue.base,
     onPress: Routes.menList,
   },
@@ -29,6 +33,7 @@ export const discover: IDiscover[] = [
     id: 2,
     title: 'KIDS',
     image: require('../assets/images/Image2.png'),
+    placeholder: require('assets/images/Placeholder2.png'),
     background: colors.skyBlue.base,
     onPress: Routes.kidslist,
   },
@@ -36,6 +41,7 @@ export const discover: IDiscover[] = [
     id: 3,
     title: 'TEENS',
     image: require('../assets/images/Image3.png'),
+    placeholder: require('assets/images/Placeholder3.png'),
     background: colors.lavender.base,
     onPress: Routes.teensList,
   },
