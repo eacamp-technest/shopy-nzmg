@@ -1,81 +1,114 @@
-import { View, Text, StyleSheet, StatusBar, FlatList } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
-import { NavigationParamList } from 'types/navigation.types';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Routes } from 'router/routes';
+import {
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {normalize} from 'theme/metrics';
+import {NavigationParamList} from 'types/navigation.types';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Routes} from 'router/routes';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { Input } from 'components/Input';
-import { Category } from 'components/Category';
-import { SceneMap, TabView, TabBar } from 'react-native-tab-view';
-import { useUserStoreActions } from 'store/user';
-import { TypographyStyles } from 'theme/typography';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCustomStatusBar } from 'helpers/useCustomStatusBar';
-import { IProduct, ProductCard } from 'components/ProductCard';
+import {Input} from 'components/Input';
+import {Category} from 'components/Category';
+import {SceneMap, TabView, TabBar} from 'react-native-tab-view';
+import {useUserStoreActions} from 'store/user';
+import {TypographyStyles} from 'theme/typography';
+import {useFocusEffect} from '@react-navigation/native';
+import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
+import {IProduct, ProductCard} from 'components/ProductCard';
 import data from 'data/data.json';
+import axios from 'axios';
 
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
 export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>
-> = ({ navigation }) => {
-  const [products, setProducts] = useState<IProduct[]>(data.products);
+> = ({navigation}) => {
+  const [products, setProducts] = useState<IProduct[]>();
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [value, setValue] = useState('');
   const [index, setIndex] = useState<number>(0);
-  const { top } = useSafeAreaInsets();
+  const {top} = useSafeAreaInsets();
+  const [loading, setLoading] = useState(true);
 
-  const renderCards = ({ item, index }: { item: IProduct, index: number }) => {
-    return <ProductCard id={index} title={item.title} image={item.image} price={item.price} link={item.link} onPress={() => navigation.navigate(Routes.productDetail)} />
-  }
+  const renderCards = ({item}: {item: IProduct}) => {
+    return (
+      <ProductCard
+        id={item.id}
+        title={item.title}
+        image={item.image}
+        price={item.price}
+        category={item.category}
+        onPress={() => navigation.navigate(Routes.productDetail)}
+      />
+    );
+  };
 
   const AllStore: React.FC = () => {
-
     return (
       <View style={styles.allStore}>
         <Navbar
           left={'CATEGORIES'}
-          leftTextStyle={{ color: colors.ink.darkest }}
+          leftTextStyle={styles.leftColor}
           leftActionType="text"
           rightActionType="text"
           onRightPress={() => console.log('--->')}
           right={'See All'}
         />
-        <FlatList
-          numColumns={2}
-          data={products}
-          renderItem={renderCards}
-          horizontal={false}
-          showsVerticalScrollIndicator={false}
-          ListHeaderComponent={
-            <>
-              <FlatList
-                showsHorizontalScrollIndicator={false}
-                data={categories}
-                renderItem={({ item }) => (
-                  <Category
-                    item={item}
-                    backgroundColor={colors.primary.base}
-                    selectedCategory={selectedCategory}
-                    setSelectedCategory={setSelectedCategory}
-                  />
-                )}
-                horizontal={true}
-                keyExtractor={item => item}
-              />
-            </>
-          }
-          contentContainerStyle={{ paddingBottom: 150 }}
-        />
+        {loading ? (
+          <ActivityIndicator size="large" color={colors.ink.base} />
+        ) : (
+          <FlatList
+            numColumns={2}
+            data={products}
+            renderItem={renderCards}
+            horizontal={false}
+            showsVerticalScrollIndicator={false}
+            ListHeaderComponent={
+              <>
+                <FlatList
+                  showsHorizontalScrollIndicator={false}
+                  data={categories}
+                  renderItem={({item}) => (
+                    <Category
+                      item={item}
+                      backgroundColor={colors.primary.base}
+                      selectedCategory={selectedCategory}
+                      setSelectedCategory={setSelectedCategory}
+                    />
+                  )}
+                  horizontal={true}
+                  keyExtractor={item => item}
+                />
+              </>
+            }
+            contentContainerStyle={styles.contentStyle}
+          />
+        )}
       </View>
     );
   };
+  useEffect(() => {
+    axios
+      .get('https://fakestoreapi.com/products')
+      .then(response => {
+        const shoes = response.data;
+        setProducts(shoes);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, []);
   const InStore: React.FC = () => {
     return (
       <View>
@@ -102,7 +135,7 @@ export const HomeScreen: React.FC<
 
   return (
     <SafeAreaProvider style={styles.root}>
-      <View style={[styles.header, { paddingTop: top }]}>
+      <View style={[styles.header, {paddingTop: top}]}>
         <Navbar
           mode="dark"
           title="SHOPPAY"
@@ -131,19 +164,19 @@ export const HomeScreen: React.FC<
               headerTitle: 'Flowers',
             })
           }
-        // value={value}
-        // setValue={text => setValue(text)}
+          // value={value}
+          // setValue={text => setValue(text)}
         />
       </View>
       <TabView
-        navigationState={{ index, routes }}
+        navigationState={{index, routes}}
         renderScene={renderScene}
         swipeEnabled={true}
         renderTabBar={props => (
           <TabBar
             {...props}
-            renderLabel={({ route, color }) => (
-              <Text style={[TypographyStyles.RegularNoneSemiBold, { color }]}>
+            renderLabel={({route, color}) => (
+              <Text style={[TypographyStyles.RegularNoneSemiBold, {color}]}>
                 {route.title}
               </Text>
             )}
@@ -160,8 +193,8 @@ export const HomeScreen: React.FC<
   );
 };
 const routes = [
-  { key: 'allStore', title: 'All Stores' },
-  { key: 'inStore', title: 'In-Store' },
+  {key: 'allStore', title: 'All Stores'},
+  {key: 'inStore', title: 'In-Store'},
 ];
 const vectors = {
   search: {
@@ -208,4 +241,6 @@ const styles = StyleSheet.create({
   allStore: {
     marginHorizontal: normalize('horizontal', 24),
   },
+  contentStyle: {paddingBottom: 150},
+  leftColor: {color: colors.ink.darkest},
 });
