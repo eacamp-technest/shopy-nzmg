@@ -1,12 +1,30 @@
-import React, {useEffect} from 'react';
-import {View, Text, StyleSheet, Animated, Pressable} from 'react-native';
+import React, {ReactNode, useEffect} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Animated,
+  Pressable,
+  ViewStyle,
+  StyleProp,
+} from 'react-native';
 import {
   GestureHandlerRootView,
   PanGestureHandler,
 } from 'react-native-gesture-handler';
 import {colors} from 'theme/colors';
 
-export const BottomSheet = ({setStatus}: {setStatus: any}) => {
+interface IBottomSheet {
+  setStatus?: any;
+  style?: StyleProp<ViewStyle>;
+  Children?: ReactNode;
+}
+
+export const BottomSheet: React.FC<IBottomSheet> = ({
+  setStatus,
+  style,
+  Children,
+}) => {
   const slide = React.useRef(new Animated.Value(300)).current;
   const lastOffset = React.useRef(0);
   const onGestureEvent = Animated.event(
@@ -52,7 +70,7 @@ export const BottomSheet = ({setStatus}: {setStatus: any}) => {
 
   return (
     <Pressable onPress={closeModal} style={styles.backdrop}>
-      <Pressable style={{width: '100%', height: '60%'}}>
+      <Pressable style={[styles.size, style]}>
         <GestureHandlerRootView>
           <PanGestureHandler
             onGestureEvent={onGestureEvent}
@@ -75,10 +93,8 @@ export const BottomSheet = ({setStatus}: {setStatus: any}) => {
                   ],
                 },
               ]}>
-              <Text style={{fontSize: 25, fontWeight: 'bold'}}>
-                Login / SignUp
-              </Text>
-              <View style={{marginTop: 20}}></View>
+              {Children}
+              <View style={styles.foot} />
             </Animated.View>
           </PanGestureHandler>
         </GestureHandlerRootView>
@@ -100,15 +116,16 @@ const styles = StyleSheet.create({
   },
   size: {
     width: '100%',
-    height: '60%',
+    height: '40%',
   },
   bottomSheet: {
     width: '100%',
     height: '100%',
     backgroundColor: 'white',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
+    borderTopRightRadius: 16,
+    borderTopLeftRadius: 16,
     paddingHorizontal: 15,
     paddingVertical: 20,
   },
+  foot: {marginTop: 20},
 });
