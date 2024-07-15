@@ -59,4 +59,5 @@ export type NavigationParamList = {
   [Routes.resetPassword]: undefined;
   [Routes.productDetail]: undefined;
   [Routes.bookmarkRouter]: undefined;
+  [Routes.popular]: undefined;
 };

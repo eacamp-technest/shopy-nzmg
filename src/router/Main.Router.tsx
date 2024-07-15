@@ -10,6 +10,11 @@ import {SearchScreen} from 'screens/settings/Search.Screens';
 import {NavigationParamList} from 'types/navigation.types';
 import {FilterScreen} from 'screens/main/Filters.Screen';
 import {ProductDetailScreen} from 'screens/bookmark/ProductDetail.Screen';
+import {PopularScreen} from 'screens/home/Popular.Screen';
+import {MenList} from 'screens/itemList/Men.List';
+import {WomenList} from 'screens/itemList/Women.List';
+import {KidsList} from 'screens/itemList/Kids.List';
+import {TeensList} from 'screens/itemList/Teens.List';
 
 const MainStack = createNativeStackNavigator<NavigationParamList>();
 export const MainStackRouter = () => {
@@ -24,10 +29,11 @@ export const MainStackRouter = () => {
         component={SearchScreen}
       />
       <MainStack.Screen name={Routes.filters} component={FilterScreen} />
-      <MainStack.Screen
-        name={Routes.productDetail}
-        component={ProductDetailScreen}
-      />
+      <MainStack.Screen name={Routes.menList} component={MenList} />
+      <MainStack.Screen name={Routes.womenList} component={WomenList} />
+      <MainStack.Screen name={Routes.kidslist} component={KidsList} />
+      <MainStack.Screen name={Routes.teensList} component={TeensList} />
+      <MainStack.Screen name={Routes.popular} component={PopularScreen} />
     </MainStack.Navigator>
   );
 };
