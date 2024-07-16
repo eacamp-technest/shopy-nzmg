@@ -23,7 +23,7 @@ export enum Routes {
   nortification = 'nortification',
   settings = 'settings',
   filters = 'filters',
-  itemlist = 'Itemlist.Screen',
+  itemlist = 'itemlistScreen',
   settingsNested = 'SettingsRouter',
   womenList = 'WomenList',
   kidslist = 'Kidslist',

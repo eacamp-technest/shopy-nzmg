@@ -1,11 +1,11 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Routes } from './routes';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Routes} from './routes';
 import {
   searchScreenOptions,
   defaultScreenOptions,
 } from 'configs/navigation.configs';
-import { CartScreen } from 'screens/Cart.Screen';
+import {CartScreen} from 'screens/Cart.Screen';
 import {TabRouter} from './Tab.Router';
 import {SearchScreen} from 'screens/settings/Search.Screens';
 import {NavigationParamList} from 'types/navigation.types';
@@ -16,6 +16,7 @@ import {MenList} from 'screens/itemList/Men.List';
 import {WomenList} from 'screens/itemList/Women.List';
 import {KidsList} from 'screens/itemList/Kids.List';
 import {TeensList} from 'screens/itemList/Teens.List';
+import {ItemListScreen} from 'screens/home/ItemList.Screen';
 const MainStack = createNativeStackNavigator<NavigationParamList>();
 export const MainStackRouter = () => {
   return (
@@ -33,6 +34,7 @@ export const MainStackRouter = () => {
         name={Routes.productDetail}
         component={ProductDetailScreen}
       />
+      <MainStack.Screen name={Routes.itemlist} component={ItemListScreen} />
       <MainStack.Screen name={Routes.cart} component={CartScreen} />
       <MainStack.Screen name={Routes.menList} component={MenList} />
       <MainStack.Screen name={Routes.womenList} component={WomenList} />

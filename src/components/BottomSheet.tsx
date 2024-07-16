@@ -7,23 +7,36 @@ import {
   Pressable,
   ViewStyle,
   StyleProp,
+  TextStyle,
 } from 'react-native';
 import {
   GestureHandlerRootView,
   PanGestureHandler,
 } from 'react-native-gesture-handler';
 import {colors} from 'theme/colors';
+import {Buttons} from './Buttons';
+import {TypographyStyles} from 'theme/typography';
+import {normalize} from 'theme/metrics';
+import {CommonStyles} from 'theme/common.styles';
 
 interface IBottomSheet {
   setStatus?: any;
   style?: StyleProp<ViewStyle>;
+  titleStyle?: StyleProp<TextStyle>;
   Children?: ReactNode;
+  buttonText?: string;
+  title?: string;
+  onPress?: () => void;
 }
 
 export const BottomSheet: React.FC<IBottomSheet> = ({
   setStatus,
   style,
   Children,
+  buttonText,
+  title,
+  onPress,
+  titleStyle,
 }) => {
   const slide = React.useRef(new Animated.Value(300)).current;
   const lastOffset = React.useRef(0);
@@ -70,7 +83,7 @@ export const BottomSheet: React.FC<IBottomSheet> = ({
 
   return (
     <Pressable onPress={closeModal} style={styles.backdrop}>
-      <Pressable style={[styles.size, style]}>
+      <Pressable style={[styles.size]}>
         <GestureHandlerRootView>
           <PanGestureHandler
             onGestureEvent={onGestureEvent}
@@ -92,8 +105,12 @@ export const BottomSheet: React.FC<IBottomSheet> = ({
                     {translateY: Animated.add(slide, lastOffset.current)},
                   ],
                 },
+                style,
               ]}>
+              <View style={[styles.handle, CommonStyles.alginSelfCenter]} />
+              <Text style={[TypographyStyles.title3, titleStyle]}>{title}</Text>
               {Children}
+              <Buttons onPress={onPress} text={buttonText} />
               <View style={styles.foot} />
             </Animated.View>
           </PanGestureHandler>
@@ -104,6 +121,12 @@ export const BottomSheet: React.FC<IBottomSheet> = ({
 };
 
 const styles = StyleSheet.create({
+  handle: {
+    backgroundColor: colors.sky.base,
+    width: 48,
+    height: 5,
+    marginVertical: normalize('vertical', 8),
+  },
   backdrop: {
     position: 'absolute',
     flex: 1,
@@ -114,6 +137,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'flex-end',
   },
+
   size: {
     width: '100%',
     height: '40%',
@@ -124,8 +148,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16,
-    paddingHorizontal: 15,
-    paddingVertical: 20,
+    paddingHorizontal: normalize('horizontal', 24),
   },
   foot: {marginTop: 20},
 });
