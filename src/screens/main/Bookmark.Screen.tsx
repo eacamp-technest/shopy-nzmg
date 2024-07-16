@@ -1,19 +1,25 @@
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { useCustomStatusBar } from 'helpers/useCustomStatusBar';
-import { colors } from 'theme/colors';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
-import { TypographyStyles } from 'theme/typography';
-import { Navbar } from 'components/Navbar';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
+import {colors} from 'theme/colors';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
+import {TypographyStyles} from 'theme/typography';
+import {Navbar} from 'components/Navbar';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { normalize } from 'theme/metrics';
-import { ProductCard } from 'components/ProductCard';
+import {normalize} from 'theme/metrics';
+import {IProduct, ProductCard} from 'components/ProductCard';
 import axios from 'axios';
 import { Buttons } from 'components/Buttons';
 interface IData {
@@ -27,34 +33,67 @@ export const BookmarkScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.bookmark>
 > = ({ navigation }) => {
   const [index, setIndex] = useState(0);
-  const { top } = useSafeAreaInsets();
-  const [data, setData] = useState([]);
-  const Endpoints = 'https://fakestoreapi.com/products';
+  const {top} = useSafeAreaInsets();
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  const EndPoints = 'https://fakestoreapi.com/products';
+  const renderItem = useCallback(
+    ({item}: {item: IProduct}) => {
+      return (
+        <ProductCard
+          horizontal={true}
+          isLiked={true}
+          id={item.id}
+          title={item.title}
+          image={item.image}
+          price={item.price}
+          size="m"
+          onPress={() => navigation.navigate(Routes.productDetail)}
+        />
+      );
+    },
+    [navigation],
+  );
 
   const fetch = async (data: any) => {
     await axios({
       url: data,
       method: 'GET',
     })
-      .then(response => setData(response.data))
-      .catch(err => console.log(err));
+      .then(response => {
+        setProducts(response.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+      });
   };
 
   const AllItems: React.FC = () => {
     return (
-      <View>
-        <Text>AllItems</Text>
-        <FlatList
-          data={data}
-          renderItem={({ item }: { item: IData }) => (
-            <View>
-              <Text>{item.id}</Text>
-            </View>
-          )}
-        />
+      <View
+        style={{
+          paddingHorizontal: normalize('horizontal', 24),
+          paddingTop: 12,
+        }}>
+        {loading ? (
+          <ActivityIndicator size="large" color={colors.ink.base} />
+        ) : (
+          <View>
+            <FlatList
+              data={products}
+              renderItem={renderItem}
+              horizontal={false}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={item => item.id.toString()}
+            />
+          </View>
+        )}
       </View>
     );
   };
+
   const Boards: React.FC = () => {
     return (
       <View>
@@ -75,7 +114,7 @@ export const BookmarkScreen: React.FC<
     barStyle: 'light-content',
   });
   useEffect(() => {
-    fetch(Endpoints);
+    fetch(EndPoints);
   }, []);
   return (
     <SafeAreaProvider style={styles.root}>

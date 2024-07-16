@@ -38,4 +38,5 @@ export enum Routes {
   newPassword = 'newPassword',
   resetPassword = 'resetPassword',
   productDetail = 'productDetail',
+  popular = 'popularScreen',
 }

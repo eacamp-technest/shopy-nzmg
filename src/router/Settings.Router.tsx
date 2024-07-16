@@ -13,6 +13,10 @@ import {ResetScreen} from 'screens/settings/Reset.Screen';
 import {CheckEmailScreen} from 'screens/settings/CheckEmail.Screen';
 import {NewPasswordScreen} from 'screens/settings/NewPassword.Screen';
 import {ResetPasswordScreen} from 'screens/settings/ResetPassword.Screen';
+import {MenList} from 'screens/itemList/Men.List';
+import {WomenList} from 'screens/itemList/Women.List';
+import {TeensList} from 'screens/itemList/Teens.List';
+import {KidsList} from 'screens/itemList/Kids.List';
 
 const SettingsStack = createNativeStackNavigator<NavigationParamList>();
 export const SettingsRouter = () => {
@@ -37,6 +41,11 @@ export const SettingsRouter = () => {
         name={Routes.resetPassword}
         component={ResetPasswordScreen}
       />
+
+      <SettingsStack.Screen name={Routes.menList} component={MenList} />
+      <SettingsStack.Screen name={Routes.womenList} component={WomenList} />
+      <SettingsStack.Screen name={Routes.kidslist} component={KidsList} />
+      <SettingsStack.Screen name={Routes.teensList} component={TeensList} />
       <SettingsStack.Screen name={Routes.scanner} component={ScannerScreen} />
     </SettingsStack.Navigator>
   );

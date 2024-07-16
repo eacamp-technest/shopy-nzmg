@@ -6,7 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Navbar} from 'components/Navbar';
 import {colors} from 'theme/colors';
 import {normalize} from 'theme/metrics';
@@ -33,82 +33,116 @@ const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>
 > = ({navigation}) => {
-  const [products, setProducts] = useState<IProduct[]>();
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [index, setIndex] = useState<number>(0);
   const {top} = useSafeAreaInsets();
-  const [loading, setLoading] = useState(true);
-
-  const renderCards = ({item}: {item: IProduct}) => {
-    return (
-      <ProductCard
-        id={item.id}
-        title={item.title}
-        image={item.image}
-        price={item.price}
-        category={item.category}
-        onPress={() => navigation.navigate(Routes.productDetail)}
-      />
-    );
-  };
+  const [seeAll, setSeeAll] = useState<boolean>(false);
+  const EndPoint = 'https://fakestoreapi.com/products';
+  const renderItem = useCallback(
+    ({item}: {item: IProduct}) => {
+      return (
+        <ProductCard
+          id={item.id}
+          title={item.title}
+          image={item.image}
+          price={item.price}
+          category={item.category}
+          onPress={() => navigation.navigate(Routes.productDetail)}
+        />
+      );
+    },
+    [navigation],
+  );
 
   const AllStore: React.FC = () => {
     return (
       <View style={styles.allStore}>
         <Navbar
           left={'CATEGORIES'}
-          leftTextStyle={styles.leftColor}
+          leftTextStyle={[styles.leftColor, TypographyStyles.title3]}
           leftActionType="text"
           rightActionType="text"
-          onRightPress={() => console.log('--->')}
+          onRightPress={() => setSeeAll(!seeAll)}
           right={'See All'}
         />
         {loading ? (
           <ActivityIndicator size="large" color={colors.ink.base} />
         ) : (
-          <FlatList
-            numColumns={2}
-            data={products}
-            renderItem={renderCards}
-            horizontal={false}
-            showsVerticalScrollIndicator={false}
-            ListHeaderComponent={
-              <>
-                <FlatList
-                  showsHorizontalScrollIndicator={false}
-                  data={categories}
-                  renderItem={({item}) => (
-                    <Category
-                      item={item}
-                      backgroundColor={colors.primary.base}
-                      selectedCategory={selectedCategory}
-                      setSelectedCategory={setSelectedCategory}
-                    />
-                  )}
-                  horizontal={true}
-                  keyExtractor={item => item}
-                />
-              </>
-            }
-            contentContainerStyle={styles.contentStyle}
-          />
+          <View>
+            <FlatList
+              numColumns={2}
+              data={seeAll ? products.slice(0, 12) : products.slice(0, 2)}
+              renderItem={renderItem}
+              horizontal={false}
+              showsVerticalScrollIndicator={false}
+              ListHeaderComponent={
+                <>
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    data={categories}
+                    renderItem={({item}) => (
+                      <Category
+                        item={item}
+                        backgroundColor={colors.primary.base}
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={setSelectedCategory}
+                      />
+                    )}
+                    horizontal={true}
+                    keyExtractor={item => item}
+                  />
+                </>
+              }
+              ListFooterComponent={
+                <View>
+                  <Navbar
+                    style={{flex: 0.7}}
+                    left={'POPULAR PRODUCTS'}
+                    leftTextStyle={[styles.leftColor, TypographyStyles.title3]}
+                    leftActionType="text"
+                    rightActionType="text"
+                    onRightPress={() => navigation.navigate(Routes.popular)}
+                    right={'See All'}
+                  />
+                  <FlatList
+                    numColumns={2}
+                    data={products.slice(12)}
+                    renderItem={renderItem}
+                    horizontal={false}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={item => item.id.toString()}
+                  />
+                </View>
+              }
+              contentContainerStyle={styles.contentStyle}
+              keyExtractor={item => item.id.toString()}
+            />
+          </View>
         )}
       </View>
     );
   };
-  useEffect(() => {
-    axios
-      .get('https://fakestoreapi.com/products')
+  const fetch = async (data: any) => {
+    await axios({
+      url: data,
+      method: 'GET',
+    })
       .then(response => {
-        const shoes = response.data;
-        setProducts(shoes);
+        setProducts(response.data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error(error);
+      .catch(err => {
+        console.log(err);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetch(EndPoint);
   }, []);
+
   const InStore: React.FC = () => {
     return (
       <View>
@@ -116,22 +150,16 @@ export const HomeScreen: React.FC<
       </View>
     );
   };
+
   const renderScene = SceneMap({
     allStore: AllStore,
     inStore: InStore,
   });
+
   useCustomStatusBar({
     backgroundColor: colors.bdazzleBlue.darkest,
     barStyle: 'light-content',
   });
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     StatusBar.setBarStyle('light-content');
-  //     return () => {
-  //       StatusBar.setBarStyle('dark-content');
-  //     };
-  //   }, []),
-  // );
 
   return (
     <SafeAreaProvider style={styles.root}>
@@ -164,8 +192,6 @@ export const HomeScreen: React.FC<
               headerTitle: 'Flowers',
             })
           }
-          // value={value}
-          // setValue={text => setValue(text)}
         />
       </View>
       <TabView
@@ -192,10 +218,12 @@ export const HomeScreen: React.FC<
     </SafeAreaProvider>
   );
 };
+
 const routes = [
   {key: 'allStore', title: 'All Stores'},
   {key: 'inStore', title: 'In-Store'},
 ];
+
 const vectors = {
   search: {
     source: require('assets/vectors/search.svg'),
