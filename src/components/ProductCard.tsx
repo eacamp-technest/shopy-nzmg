@@ -9,13 +9,15 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React, {useState} from 'react';
-import {TypographyStyles} from 'theme/typography';
-import {colors} from 'theme/colors';
-import {normalize} from 'theme/metrics';
-import {SvgImage} from './SvgImages';
-import {CommonStyles} from 'theme/common.styles';
-import {Buttons} from './Buttons';
+import React, { useState } from 'react';
+import { TypographyStyles } from 'theme/typography';
+import { colors } from 'theme/colors';
+import { normalize } from 'theme/metrics';
+import { SvgImage } from './SvgImages';
+import { CommonStyles } from 'theme/common.styles';
+import { Buttons } from './Buttons';
+import { useNavigation } from '@react-navigation/native';
+import { Routes } from 'router/routes';
 
 export interface IProduct {
   horizontal?: boolean;
@@ -43,12 +45,17 @@ export const ProductCard: React.FC<IProduct> = ({
   category,
 }) => {
   const [counter, setCounter] = useState(0);
+  const navigation = useNavigation()
+
+  const handlePress = () => {
+    navigation.navigate(Routes.productDetail, { item: { id, title, price, image, size, isLiked, category } });
+  };
 
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={handlePress}
       style={[horizontal && CommonStyles.row, styles.container]}>
-      <Image style={[styles[size], styles.img]} source={{uri: image}} />
+      <Image style={[styles[size], styles.img]} source={{ uri: image }} />
       <View>
         {title ? (
           <Text
@@ -85,7 +92,7 @@ export const ProductCard: React.FC<IProduct> = ({
             </View>
           ) : null}
           {price ? (
-            <Text style={[styles.price, horizontal && {paddingTop: 8}]}>
+            <Text style={[styles.price, horizontal && { paddingTop: 8 }]}>
               ${price}
             </Text>
           ) : null}
@@ -93,7 +100,7 @@ export const ProductCard: React.FC<IProduct> = ({
             <View style={styles.liked}>
               <Buttons
                 style={styles.button}
-                textColor={{color: colors.ink.base}}
+                textColor={{ color: colors.ink.base }}
                 text="Move to Bag"
               />
               <SvgImage

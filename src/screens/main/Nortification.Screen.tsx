@@ -15,7 +15,7 @@ export const NortificationScreen: React.FC<
   const [products, setProducts] = useState<IProduct[]>(data.products);
 
   const renderCards = ({ item, index }: { item: IProduct, index: number }) => {
-    return <ProductCard id={index} title={item.title} image={item.image} link={item.link} price={item.price} onPress={() => navigation.navigate(Routes.productDetail)} />
+    return <ProductCard id={index} title={item.title} image={item.image} category={item.category} price={item.price} onPress={() => navigation.navigate(Routes.productDetail)} />
   }
   const renderList = ({ item, index }: { item: IProduct, index: number }) => {
     return <ProductCard id={index} title={item.title} image={item.image} size='s' price={item.price} horizontal={true} onPress={() => navigation.navigate(Routes.productDetail)} />
@@ -36,7 +36,7 @@ export const NortificationScreen: React.FC<
         numColumns={1}
         data={products}
         // keyExtractor={(item: IProduct) => item.id.toString()}
-        renderItem={renderInCart}
+        renderItem={renderList}
         showsHorizontalScrollIndicator={false}
       />
     </View>

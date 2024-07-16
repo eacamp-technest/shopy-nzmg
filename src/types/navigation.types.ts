@@ -2,8 +2,8 @@ import {
   NativeStackNavigationOptions,
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
-import {Routes} from 'router/routes';
-import {IModal} from 'components/Modal';
+import { Routes } from 'router/routes';
+import { IModal } from 'components/Modal';
 export type AppNavigation = NativeStackNavigationProp<NavigationParamList>;
 
 interface ISearchProps extends NativeStackNavigationOptions {
@@ -33,6 +33,7 @@ export type NavigationParamList = {
   [Routes.createyourcard]: undefined;
   [Routes.yourCard]: undefined;
   [Routes.test]: undefined;
+  [Routes.cart]: undefined;
   [Routes.home]: undefined;
   [Routes.bookmark]: undefined;
   [Routes.discover]: undefined;

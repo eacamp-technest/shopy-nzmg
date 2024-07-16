@@ -21,7 +21,7 @@ import {
 import {normalize} from 'theme/metrics';
 import {IProduct, ProductCard} from 'components/ProductCard';
 import axios from 'axios';
-import {Buttons} from 'components/Buttons';
+import { Buttons } from 'components/Buttons';
 interface IData {
   id?: number;
   title?: string;
@@ -31,7 +31,7 @@ interface IData {
 }
 export const BookmarkScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.bookmark>
-> = ({navigation}) => {
+> = ({ navigation }) => {
   const [index, setIndex] = useState(0);
   const {top} = useSafeAreaInsets();
   const [products, setProducts] = useState<IProduct[]>([]);
@@ -118,18 +118,18 @@ export const BookmarkScreen: React.FC<
   }, []);
   return (
     <SafeAreaProvider style={styles.root}>
-      <View style={[styles.header, {paddingTop: top}]}>
+      <View style={[styles.header, { paddingTop: top }]}>
         <Navbar mode="dark" titleColor="white" title="saved items" />
       </View>
       <TabView
-        navigationState={{index, routes}}
+        navigationState={{ index, routes }}
         renderScene={renderScene}
         swipeEnabled={true}
         renderTabBar={props => (
           <TabBar
             {...props}
-            renderLabel={({route, color}) => (
-              <Text style={[TypographyStyles.RegularNoneSemiBold, {color}]}>
+            renderLabel={({ route, color }) => (
+              <Text style={[TypographyStyles.RegularNoneSemiBold, { color }]}>
                 {route.title}
               </Text>
             )}
@@ -147,8 +147,8 @@ export const BookmarkScreen: React.FC<
 };
 
 const routes = [
-  {key: 'allItems', title: 'All Items'},
-  {key: 'boards', title: 'Boards'},
+  { key: 'allItems', title: 'All Items' },
+  { key: 'boards', title: 'Boards' },
 ];
 const styles = StyleSheet.create({
   root: {
