@@ -1,21 +1,21 @@
-import {View, Text, StyleSheet, FlatList} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
-import {colors} from 'theme/colors';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationParamList} from 'types/navigation.types';
-import {Routes} from 'router/routes';
-import {SceneMap, TabBar, TabView} from 'react-native-tab-view';
-import {TypographyStyles} from 'theme/typography';
-import {Navbar} from 'components/Navbar';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { useCustomStatusBar } from 'helpers/useCustomStatusBar';
+import { colors } from 'theme/colors';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationParamList } from 'types/navigation.types';
+import { Routes } from 'router/routes';
+import { SceneMap, TabBar, TabView } from 'react-native-tab-view';
+import { TypographyStyles } from 'theme/typography';
+import { Navbar } from 'components/Navbar';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import {normalize} from 'theme/metrics';
-import {ProductCard} from 'components/ProductCard';
+import { normalize } from 'theme/metrics';
+import { ProductCard } from 'components/ProductCard';
 import axios from 'axios';
-import {Buttons} from 'components/Buttons';
+import { Buttons } from 'components/Buttons';
 interface IData {
   id?: number;
   title?: string;
@@ -25,9 +25,9 @@ interface IData {
 }
 export const BookmarkScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.bookmark>
-> = ({navigation}) => {
+> = ({ navigation }) => {
   const [index, setIndex] = useState(0);
-  const {top} = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
   const [data, setData] = useState([]);
   const Endpoints = 'https://fakestoreapi.com/products';
 
@@ -46,7 +46,7 @@ export const BookmarkScreen: React.FC<
         <Text>AllItems</Text>
         <FlatList
           data={data}
-          renderItem={({item}: {item: IData}) => (
+          renderItem={({ item }: { item: IData }) => (
             <View>
               <Text>{item.id}</Text>
             </View>
@@ -79,18 +79,18 @@ export const BookmarkScreen: React.FC<
   }, []);
   return (
     <SafeAreaProvider style={styles.root}>
-      <View style={[styles.header, {paddingTop: top}]}>
+      <View style={[styles.header, { paddingTop: top }]}>
         <Navbar mode="dark" titleColor="white" title="saved items" />
       </View>
       <TabView
-        navigationState={{index, routes}}
+        navigationState={{ index, routes }}
         renderScene={renderScene}
         swipeEnabled={true}
         renderTabBar={props => (
           <TabBar
             {...props}
-            renderLabel={({route, color}) => (
-              <Text style={[TypographyStyles.RegularNoneSemiBold, {color}]}>
+            renderLabel={({ route, color }) => (
+              <Text style={[TypographyStyles.RegularNoneSemiBold, { color }]}>
                 {route.title}
               </Text>
             )}
@@ -108,8 +108,8 @@ export const BookmarkScreen: React.FC<
 };
 
 const routes = [
-  {key: 'allItems', title: 'All Items'},
-  {key: 'boards', title: 'Boards'},
+  { key: 'allItems', title: 'All Items' },
+  { key: 'boards', title: 'Boards' },
 ];
 const styles = StyleSheet.create({
   root: {
