@@ -55,8 +55,8 @@ export const ProductCard: React.FC<IProduct> = ({
             numberOfLines={1}
             style={[
               TypographyStyles.RegularTightSemiBold,
-              size === 'l' && styles.title,
-              {width: styles[size].width},
+              styles.title,
+              {width: styles['l'].width},
             ]}>
             {title}
           </Text>
@@ -98,8 +98,8 @@ export const ProductCard: React.FC<IProduct> = ({
               />
               <SvgImage
                 fill={colors.red.light}
-                width={16}
-                height={16}
+                width={26}
+                height={24}
                 source={require('../assets/vectors/heart.svg')}
               />
             </View>
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
   },
   liked: {
     ...CommonStyles.alignCenterJustifyBetweenRow,
+    gap: 54,
   },
   horizontal: {
     flexDirection: 'row',

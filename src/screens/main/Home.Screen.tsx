@@ -34,12 +34,12 @@ export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>
 > = ({navigation}) => {
   const [products, setProducts] = useState<IProduct[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [index, setIndex] = useState<number>(0);
   const {top} = useSafeAreaInsets();
-  const [loading, setLoading] = useState(true);
   const [seeAll, setSeeAll] = useState<boolean>(false);
-
+  const EndPoint = 'https://fakestoreapi.com/products';
   const renderItem = useCallback(
     ({item}: {item: IProduct}) => {
       return (
@@ -124,19 +124,23 @@ export const HomeScreen: React.FC<
       </View>
     );
   };
-
-  useEffect(() => {
-    axios
-      .get('https://fakestoreapi.com/products')
+  const fetch = async (data: any) => {
+    await axios({
+      url: data,
+      method: 'GET',
+    })
       .then(response => {
-        const shoes = response.data;
-        setProducts(shoes);
+        setProducts(response.data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error(error);
+      .catch(err => {
+        console.log(err);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetch(EndPoint);
   }, []);
 
   const InStore: React.FC = () => {
