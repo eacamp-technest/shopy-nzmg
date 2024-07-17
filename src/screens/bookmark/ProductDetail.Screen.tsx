@@ -5,19 +5,18 @@ import { NavigationParamList } from 'types/navigation.types';
 import { Routes } from 'router/routes';
 import { Navbar } from 'components/Navbar';
 import { colors } from 'theme/colors';
-import { IProduct } from 'components/ProductCard';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { normalize } from 'theme/metrics';
 import { SvgImage } from 'components/SvgImages';
 import { TypographyStyles } from 'theme/typography';
 import { Buttons } from 'components/Buttons';
-import { windowWidth } from 'theme/Const.styles';
 import { Tables } from 'components/Tables';
 import { Rating } from 'components/Rating';
 // import React, { useContext, useState } from 'react';
 // import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 // import { CartContext } from 'context/CartContextType';
 
+const plusIcon = require('../../assets/vectors/plus.svg');
+const minusIcon = require('../../assets/vectors/minus.svg');
 
 export const ProductDetailScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.productDetail>
@@ -41,8 +40,10 @@ export const ProductDetailScreen: React.FC<
   //   //   navigation.navigate(Routes.cart)
   //   // }
 
-  const sizes = ['S', 'M', 'L', 'XL'];
+  const sizes = ['S', 'M', 'L', 'XL', 'XXL', 36, 38];
   const colorsArr = [colors.sky.lighter, colors.red.darkest, colors.mellowApricot.base, colors.bdazzleBlue.base];
+  const [showAllSizes, setShowAllSizes] = useState(false);
+  const sizesToShow = showAllSizes ? sizes : sizes.slice(0, 3);
 
   return (
     <View style={styles.container}>
@@ -72,6 +73,7 @@ export const ProductDetailScreen: React.FC<
       </View>
       <View style={styles.priceContainer}>
         <Rating rating={4} numberOfRates={24} />
+        {/* <Rating rating={item.rating.rate} numberOfRates={item.rating.count} /> */}
         <Text style={[styles.title, styles.price]}>{item.price}</Text>
       </View>
       <Tables
@@ -79,21 +81,28 @@ export const ProductDetailScreen: React.FC<
           <View>
             <Text style={styles.header}>Size</Text>
             <View style={styles.size}>
-              {sizes.map((size, index) => {
+              {sizesToShow.map((size, index) => {
                 return (
-                  <TouchableOpacity key={index} onPress={() => setSelectedSize(size)} style={styles.sizeValueContainer}>
-                    <Text style={[styles.sizeValue, selectedSize === size && { color: '#e55b5b' }]}>{size}</Text>
+                  <TouchableOpacity key={index} onPress={() => setSelectedSize(size)} style={[styles.sizeValueContainer, selectedSize === size && { backgroundColor: colors.blue.base }]}>
+                    <Text style={[styles.sizeValue, selectedSize === size && { color: colors.white }]}>{size}</Text>
                   </TouchableOpacity>
                 );
               })}
             </View>
           </View>}
-        Right={<SvgImage
-          color={colors.ink.base}
-          width={24}
-          height={24}
-          source={require('../../assets/vectors/plus.svg')}
-        />}
+        Right={
+          <TouchableOpacity onPress={() => {
+            setShowAllSizes(!showAllSizes)
+            console.log("pressed")
+          }}>
+            <SvgImage
+              color={colors.ink.base}
+              width={24}
+              height={24}
+              source={showAllSizes ? minusIcon : plusIcon}
+            />
+          </TouchableOpacity>
+        }
       />
 
 
@@ -174,20 +183,20 @@ const styles = StyleSheet.create({
   },
   size: {
     flexDirection: "row",
-    gap: 10,
-    marginTop: 8
+    gap: 12,
+    marginTop: 12
   },
   sizeValueContainer: {
-    height: 40,
-    width: 40,
-    borderRadius: 20,
+    height: 32,
+    width: 32,
+    borderRadius: 16,
     backgroundColor: colors.sky.lightest,
     justifyContent: 'center',
     alignItems: 'center',
   },
   sizeValue: {
     ...TypographyStyles.SmallTightRegular,
-    color: "#72777A"
+    color: colors.ink.base
   },
   header: {
     ...TypographyStyles.RegularNoneSemiBold,
@@ -197,8 +206,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: "space-between",
-    marginBottom: 16,
-    marginTop: 21,
+    marginVertical: 16,
     paddingHorizontal: 24,
   },
   colors: {
@@ -212,7 +220,6 @@ const styles = StyleSheet.create({
     height: 40,
     width: 40,
     marginHorizontal: 5,
-    // padding: 5
   },
   circle: {
     flex: 1,

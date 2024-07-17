@@ -2,6 +2,8 @@ import { StyleSheet, View, Text } from "react-native";
 import React from "react";
 import { SvgImage } from "./SvgImages";
 import { colors } from "theme/colors";
+import { TypographyStyles } from "theme/typography";
+import { CommonStyles } from "theme/common.styles";
 
 interface RatingProps {
     rating: number;
@@ -11,8 +13,8 @@ export const Rating: React.FC<RatingProps> = ({ rating = 0, numberOfRates = 0 })
     const totalStars = 5;
     const stars = Array(totalStars).fill(0)
     return (
-        <View style={styles.container}>
-            <View style={styles.stars}>
+        <View style={{ ...CommonStyles.alignCenterRow }}>
+            <View style={{ ...CommonStyles.alignCenterRow }}>
                 {stars.map((_, index) => (
                     <SvgImage
                         key={index}
@@ -31,16 +33,8 @@ export const Rating: React.FC<RatingProps> = ({ rating = 0, numberOfRates = 0 })
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    stars: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
     text: {
-        marginLeft: 4,
+        marginLeft: 8,
         color: colors.sky.dark,
     },
 });
