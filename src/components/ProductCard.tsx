@@ -29,6 +29,10 @@ export interface IProduct {
   isCounter?: boolean;
   isLiked?: boolean;
   category?: string;
+  rating?: {
+    rate: number;
+    count: number
+  }
   onPress?: () => void;
 }
 
@@ -39,8 +43,8 @@ export const ProductCard: React.FC<IProduct> = ({
   isCounter,
   title,
   price,
+  rating,
   image,
-  onPress,
   size = 'l',
   category,
 }) => {
@@ -58,7 +62,7 @@ export const ProductCard: React.FC<IProduct> = ({
             style={[
               TypographyStyles.RegularTightSemiBold,
               styles.title,
-              {width: styles['l'].width},
+              { width: styles['l'].width },
             ]}>
             {title}
           </Text>

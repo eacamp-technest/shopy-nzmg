@@ -45,6 +45,7 @@ export type NavigationParamList = {
   [Routes.filters]: undefined;
   [Routes.tab]: undefined;
   [Routes.itemlist]: undefined;
+  [Routes.itemlistScreen]: undefined;
   [Routes.womenList]: undefined;
   [Routes.discoverRouter]: undefined;
   [Routes.menList]: undefined;

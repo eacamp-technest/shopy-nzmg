@@ -7,9 +7,10 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {colors} from 'theme/colors';
-import {TypographyStyles} from 'theme/typography';
-import {normalize} from 'theme/metrics';
+import { colors } from 'theme/colors';
+import { TypographyStyles } from 'theme/typography';
+import { normalize } from 'theme/metrics';
+import { useNavigation } from '@react-navigation/native';
 
 interface ICategory {
   item: string;
