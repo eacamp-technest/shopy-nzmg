@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import { useCustomStatusBar } from 'helpers/useCustomStatusBar';
 import { colors } from 'theme/colors';
@@ -7,6 +7,8 @@ import { Routes } from 'router/routes';
 import data from 'data/data.json';
 import { NavigationParamList } from 'types/navigation.types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { IReview, reviews } from 'data/reviewData';
+import { Rating } from 'components/Rating';
 
 export const NortificationScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.nortification>
@@ -14,12 +16,6 @@ export const NortificationScreen: React.FC<
 
   const [products, setProducts] = useState<IProduct[]>(data.products);
 
-  const renderCards = ({ item, index }: { item: IProduct, index: number }) => {
-    return <ProductCard id={index} title={item.title} image={item.image} category={item.category} price={item.price} onPress={() => navigation.navigate(Routes.productDetail)} />
-  }
-  const renderList = ({ item, index }: { item: IProduct, index: number }) => {
-    return <ProductCard id={index} title={item.title} image={item.image} size='s' price={item.price} horizontal={true} onPress={() => navigation.navigate(Routes.productDetail)} />
-  }
   const renderLiked = ({ item, index }: { item: IProduct, index: number }) => {
     return <ProductCard id={index} title={item.title} image={item.image} size='m' price={item.price} horizontal={true} isCounter={item.isCounter} isLiked={true} onPress={() => navigation.navigate(Routes.productDetail)} />
   }
@@ -36,7 +32,7 @@ export const NortificationScreen: React.FC<
         numColumns={1}
         data={products}
         // keyExtractor={(item: IProduct) => item.id.toString()}
-        renderItem={renderList}
+        renderItem={renderInCart}
         showsHorizontalScrollIndicator={false}
       />
     </View>
@@ -48,5 +44,5 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     backgroundColor: "white"
-  }
+  },
 })

@@ -17,6 +17,7 @@ export enum Routes {
   search = 'search',
   tab = 'tab',
   cart = 'cart',
+  review = 'review',
   home = 'home',
   discover = 'discover',
   bookmark = 'bookmark',
