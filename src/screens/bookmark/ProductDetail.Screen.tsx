@@ -1,16 +1,24 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image, StatusBar } from 'react-native';
-import React, { useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
-import { SvgImage } from 'components/SvgImages';
-import { TypographyStyles } from 'theme/typography';
-import { Buttons } from 'components/Buttons';
-import { Tables } from 'components/Tables';
-import { Rating } from 'components/Rating';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  StatusBar,
+} from 'react-native';
+import React, {useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {normalize} from 'theme/metrics';
+import {SvgImage} from 'components/SvgImages';
+import {TypographyStyles} from 'theme/typography';
+import {Buttons} from 'components/Buttons';
+import {Tables} from 'components/Tables';
+import {Rating} from 'components/Rating';
+import {IProduct} from 'components/ProductCard';
 // import React, { useContext, useState } from 'react';
 // import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 // import { CartContext } from 'context/CartContextType';
@@ -20,11 +28,11 @@ const minusIcon = require('../../assets/vectors/minus.svg');
 
 export const ProductDetailScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.productDetail>
-> = ({ navigation, route }) => {
-  const { item } = route.params;
+> = ({navigation, route}) => {
+  const item: IProduct = route.params.product;
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
-
+  
   //   //     const { addToCart } = useContext<any>(CartContext)
   //   type ProductDetailsRouteProp = RouteProp<RootStackParamList, Routes.productDetail>;
   //   const route = useRoute<ProductDetailsRouteProp>();
@@ -55,11 +63,11 @@ export const ProductDetailScreen: React.FC<
           leftActionType="icon"
           left={vectors.leftArrow}
           right={vectors.shoppingBag}
-          onRightPress={() => console.log("shopping bag pressed")}
+          onRightPress={() => console.log('shopping bag pressed')}
           rightActionType="icon"
           rootStyle={styles.nav}
         />
-        <Image style={styles.coverImage} source={{ uri: item.image }} />
+        <Image style={styles.coverImage} source={{uri: item.image}} />
       </View>
       <Text style={styles.category}>{item.category}</Text>
       <View style={styles.titleContainer}>
@@ -105,20 +113,29 @@ export const ProductDetailScreen: React.FC<
         }
       />
 
-
       <View style={styles.colorContainer}>
         <Text style={styles.header}>Colors</Text>
         <View style={styles.colors}>
           {colorsArr.map((color, index) => {
             return (
-              <TouchableOpacity key={index} onPress={() => setSelectedColor(color)} style={[styles.circleBorder, selectedColor === color && { borderRadius: 24, borderWidth: 2, borderColor: colors.black }]}>
-                <View style={[styles.circle, { backgroundColor: color }]}></View>
+              <TouchableOpacity
+                key={index}
+                onPress={() => setSelectedColor(color)}
+                style={[
+                  styles.circleBorder,
+                  selectedColor === color && {
+                    borderRadius: 24,
+                    borderWidth: 2,
+                    borderColor: colors.black,
+                  },
+                ]}>
+                <View style={[styles.circle, {backgroundColor: color}]}></View>
               </TouchableOpacity>
             );
           })}
         </View>
       </View>
-      <Buttons style={styles.button} text='Add to Cart' />
+      <Buttons style={styles.button} text="Add to Cart" />
     </View>
   );
 };
@@ -127,20 +144,19 @@ const vectors = {
   leftArrow: {
     icon: require('assets/vectors/left.svg'),
     color: colors.ink.base,
-
   },
   shoppingBag: {
     icon: require('assets/vectors/shopping-bag.svg'),
     color: colors.ink.base,
   },
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   main: {
-    marginBottom: 32
+    marginBottom: 32,
   },
   nav: {
     position: 'absolute',
@@ -157,21 +173,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 24,
-    marginBottom: 20
+    marginBottom: 20,
   },
   category: {
     ...TypographyStyles.RegularTightSemiBold,
     color: colors.primary.base,
     paddingHorizontal: 24,
     marginBottom: 12,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   title: {
     ...TypographyStyles.title3,
@@ -179,7 +195,7 @@ const styles = StyleSheet.create({
   },
   price: {
     ...TypographyStyles.LargeNoneBold,
-    color: colors.ink.base
+    color: colors.ink.base,
   },
   size: {
     flexDirection: "row",
@@ -200,7 +216,7 @@ const styles = StyleSheet.create({
   },
   header: {
     ...TypographyStyles.RegularNoneSemiBold,
-    color: colors.ink.base
+    color: colors.ink.base,
   },
   colorContainer: {
     flexDirection: 'row',
@@ -211,7 +227,7 @@ const styles = StyleSheet.create({
   },
   colors: {
     flexDirection: 'row',
-    gap: 16
+    gap: 16,
   },
   button: {
     marginHorizontal: 24,
@@ -225,4 +241,4 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 20,
   },
-})
+});

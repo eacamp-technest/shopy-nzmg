@@ -49,7 +49,9 @@ export const HomeScreen: React.FC<
           image={item.image}
           price={item.price}
           category={item.category}
-          onPress={() => navigation.navigate(Routes.productDetail)}
+          onPress={() =>
+            navigation.navigate(Routes.productDetail, {product: item})
+          }
         />
       );
     },

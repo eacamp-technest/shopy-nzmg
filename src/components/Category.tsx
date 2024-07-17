@@ -29,14 +29,12 @@ export function Category({
 }: ICategory) {
   return (
     <TouchableOpacity
-      style={[styles.main, style]}
-      onPress={() => {
-        setSelectedCategory(item)
-      }
-      }>
+      style={[styles.main]}
+      onPress={() => setSelectedCategory(item)}>
       <Text
         style={[
           styles.categoryText,
+          style,
           selectedCategory === item && {
             color: colors.white,
             backgroundColor: backgroundColor,
