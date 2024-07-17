@@ -5,24 +5,24 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationParamList} from 'types/navigation.types';
-import {Routes} from 'router/routes';
-import {Buttons} from 'components/Buttons';
-import {BottomSheet} from 'components/BottomSheet';
-import {CommonStyles} from 'theme/common.styles';
-import {Navbar} from 'components/Navbar';
-import {colors} from 'theme/colors';
-import {normalize} from 'theme/metrics';
-import {IProduct, ProductCard} from 'components/ProductCard';
-import {Category} from 'components/Category';
+import React, { useCallback, useEffect, useState } from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationParamList } from 'types/navigation.types';
+import { Routes } from 'router/routes';
+import { Buttons } from 'components/Buttons';
+import { BottomSheet } from 'components/BottomSheet';
+import { CommonStyles } from 'theme/common.styles';
+import { Navbar } from 'components/Navbar';
+import { colors } from 'theme/colors';
+import { normalize } from 'theme/metrics';
+import { IProduct, ProductCard } from 'components/ProductCard';
+import { Category } from 'components/Category';
 import axios from 'axios';
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
 export const PopularScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.popular>
-> = ({navigation}) => {
+> = ({ navigation }) => {
   const [status, setStatus] = useState<boolean>(false);
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ export const PopularScreen: React.FC<
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
   const renderItem = useCallback(
-    ({item}: {item: IProduct}) => {
+    ({ item }: { item: IProduct }) => {
       return (
         <ProductCard
           id={item.id}
@@ -39,7 +39,7 @@ export const PopularScreen: React.FC<
           price={item.price}
           category={item.category}
           onPress={() =>
-            navigation.navigate(Routes.productDetail, {product: item})
+            navigation.navigate(Routes.productDetail, { product: item })
           }
         />
       );
@@ -95,7 +95,7 @@ export const PopularScreen: React.FC<
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     data={categories}
-                    renderItem={({item}) => (
+                    renderItem={({ item }) => (
                       <Category
                         style={styles.category}
                         item={item}
@@ -120,7 +120,7 @@ export const PopularScreen: React.FC<
         <BottomSheet
           buttonText="Apply"
           title="Sort By"
-          onPress={() => navigation.navigate(Routes.itemlist)}
+          onPress={() => navigation.navigate(Routes.itemlistScreen)}
           setStatus={setStatus}
         />
       )}
@@ -146,5 +146,5 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bdazzleBlue.base,
     color: colors.white,
   },
-  product: {marginTop: 72},
+  product: { marginTop: 72 },
 });

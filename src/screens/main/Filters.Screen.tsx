@@ -64,8 +64,8 @@ export const FilterScreen = () => {
             <View style={styles.colorContainer}>
                 {colorArr.map((color, index) => {
                     return (
-                        <TouchableOpacity key={index} onPress={() => setSelectedColor(color)} style={[styles.circleBorder, selectedColor === color && { borderRadius: 24, borderWidth: 2, borderColor: color }]}>
-                            <View style={[styles.circle, { backgroundColor: color }]}></View>
+                        <TouchableOpacity key={index} onPress={() => setSelectedColor(color)} style={[styles.circleBorder, selectedColor === color && { borderRadius: 24, borderWidth: 2, borderColor: colors.black }]}>
+                            <View style={[styles.circle, { backgroundColor: color }]} />
 
                         </TouchableOpacity>
                     )
@@ -131,13 +131,12 @@ const styles = StyleSheet.create({
         marginBottom: 32
     },
     circleBorder: {
-        height: 44,
-        width: 44,
-        padding: 2
+        height: 40,
+        width: 40,
     },
     circle: {
         flex: 1,
-        borderRadius: 22,
+        borderRadius: 20,
     },
     sizeContainer: {
         flexDirection: 'row',

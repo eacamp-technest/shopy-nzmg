@@ -9,18 +9,24 @@ interface IDivider {
 
 export const Divider: React.FC<IDivider> = ({ height, style }) => {
     return (
-        <View style={[{ backgroundColor: colors.sky.lightest }, styles[height], style]} />
+        <View style={[styles[height], style]} />
     )
 }
 
 const styles = StyleSheet.create({
     S: {
-        height: 1
-    },
-    M: {
-        height: 12
+        height: 1,
+        width: 375,
+        backgroundColor: colors.sky.lighter
     },
     L: {
-        height: 20
+        height: 12,
+        width: 375,
+        backgroundColor: colors.sky.lightest
+    },
+    M: {
+        height: 1,
+        width: 327,
+        backgroundColor: colors.sky.lighter
     }
 })

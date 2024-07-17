@@ -25,9 +25,9 @@ export const Rating: React.FC<RatingProps> = ({ rating = 0, numberOfRates = 0 })
                     />
                 ))}
             </View>
-            {numberOfRates !== undefined && (
+            {numberOfRates ? (
                 <Text style={styles.text}>({numberOfRates})</Text>
-            )}
+            ) : null}
         </View>
     )
 }

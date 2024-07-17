@@ -50,7 +50,7 @@ export const HomeScreen: React.FC<
           price={item.price}
           category={item.category}
           onPress={() =>
-            navigation.navigate(Routes.productDetail, {product: item})
+            navigation.navigate(Routes.productDetail, { product: item })
           }
         />
       );
@@ -174,7 +174,7 @@ export const HomeScreen: React.FC<
           leftActionType="icon"
           onLeftPress={navigation.goBack}
           right={vectors.shoppingBag}
-          onRightPress={() => navigation.navigate(Routes.itemlistScreen)}
+          onRightPress={() => navigation.navigate(Routes.review)}
           rightActionType="icon"
         />
         <Input
