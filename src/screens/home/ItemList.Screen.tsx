@@ -1,41 +1,52 @@
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
-import { IProduct, ProductCard } from 'components/ProductCard';
-import { useNavigation } from '@react-navigation/native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {IProduct, ProductCard} from 'components/ProductCard';
+import {Router, useNavigation} from '@react-navigation/native';
 import axios from 'axios';
-import { colors } from 'theme/colors';
-import { Navbar } from 'components/Navbar';
-import { TypographyStyles } from 'theme/typography';
-import { Routes } from 'router/routes';
-import { IBrand, brands } from 'data/brands';
-import { normalize } from 'theme/metrics';
+import {colors} from 'theme/colors';
+import {Navbar} from 'components/Navbar';
+import {TypographyStyles} from 'theme/typography';
+import {Routes} from 'router/routes';
+import {IBrand, brands} from 'data/brands';
+import {normalize} from 'theme/metrics';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
 
-
-export const ItemListScreen = () => {
-  const navigation = useNavigation()
+export const ItemListScreen: React.FC<
+  NativeStackScreenProps<NavigationParamList, Routes.itemlistScreen>
+> = ({navigation}) => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const EndPoints = 'https://fakestoreapi.com/products';
 
-  const renderBrand = ({ item }: { item: IBrand }) => {
+  const renderBrand = ({item}: {item: IBrand}) => {
     return (
       <View style={styles.brandContainer}>
         <Image style={styles.img} source={item.image} />
         <Text style={styles.text}>{item.name}</Text>
       </View>
-    )
-  }
+    );
+  };
   const renderList = useCallback(
-    ({ item }: { item: IProduct }) => {
+    ({item}: {item: IProduct}) => {
       return (
         <ProductCard
           id={item.id}
-          size='s'
+          size="s"
           title={item.title}
           image={item.image}
           horizontal={true}
           price={item.price}
-          onPress={() => navigation.navigate(Routes.productDetail)}
+          onPress={() =>
+            navigation.navigate(Routes.productDetail, {product: item})
+          }
         />
       );
     },
@@ -61,7 +72,7 @@ export const ItemListScreen = () => {
   return (
     <View style={styles.container}>
       <Navbar
-        mode='light'
+        mode="light"
         title="SHOES"
         titleColor={colors.ink.base}
         left={vectors.leftVector}
@@ -73,12 +84,12 @@ export const ItemListScreen = () => {
       />
       <View>
         <Navbar
-          style={{ flex: 0.7 }}
+          style={{flex: 0.7}}
           left={'BRAND'}
           leftTextStyle={styles.leftStyle}
           leftActionType="text"
           rightActionType="text"
-          onRightPress={() => console.log("aa")}
+          onRightPress={() => console.log('aa')}
           right={'See All'}
         />
 
@@ -90,7 +101,6 @@ export const ItemListScreen = () => {
             showsHorizontalScrollIndicator={false}
           />
         </View>
-
       </View>
       {loading ? (
         <ActivityIndicator size="large" color={colors.ink.base} />
@@ -105,12 +115,12 @@ export const ItemListScreen = () => {
             ListHeaderComponent={
               <>
                 <Navbar
-                  style={{ flex: 0.7 }}
+                  style={{flex: 0.7}}
                   left={'PRODUCT'}
                   leftTextStyle={styles.leftStyle}
                   leftActionType="text"
                   rightActionType="text"
-                  onRightPress={() => console.log("aa")}
+                  onRightPress={() => console.log('aa')}
                   right={'See All'}
                 />
               </>
@@ -119,8 +129,8 @@ export const ItemListScreen = () => {
         </View>
       )}
     </View>
-  )
-}
+  );
+};
 const vectors = {
   leftVector: {
     icon: require('assets/vectors/left.svg'),
@@ -133,7 +143,7 @@ const vectors = {
 };
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
   },
   leftStyle: {
     ...TypographyStyles.title3,
@@ -141,11 +151,11 @@ const styles = StyleSheet.create({
   },
   brand: {
     marginBottom: normalize('vertical', 26),
-    marginTop: normalize('vertical', 10)
+    marginTop: normalize('vertical', 10),
   },
   img: {
     height: normalize('width', 70),
-    width: normalize('width', 70)
+    width: normalize('width', 70),
   },
   brandContainer: {
     alignItems: 'center',
@@ -154,10 +164,10 @@ const styles = StyleSheet.create({
   text: {
     ...TypographyStyles.TinyNoneSemiBold,
     color: colors.ink.base,
-    marginTop: normalize('vertical', 12)
+    marginTop: normalize('vertical', 12),
   },
 
   products: {
-    marginTop: normalize('vertical', 10)
-  }
-})
+    marginTop: normalize('vertical', 10),
+  },
+});

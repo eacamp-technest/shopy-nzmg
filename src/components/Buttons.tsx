@@ -7,13 +7,13 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import React, { useMemo, useState } from 'react';
-import { SvgImage } from './SvgImages';
-import { TypographyStyles } from '../theme/typography';
-import { normalize } from '../theme/metrics';
-import { CommonStyles } from 'theme/common.styles';
-import { ButtonTheme } from '../helpers/buttonTheme';
-import { colors } from 'theme/colors';
+import React, {useMemo, useState} from 'react';
+import {SvgImage} from './SvgImages';
+import {TypographyStyles} from '../theme/typography';
+import {normalize} from '../theme/metrics';
+import {CommonStyles} from 'theme/common.styles';
+import {ButtonTheme} from '../helpers/buttonTheme';
+import {colors} from 'theme/colors';
 
 type TPosition = 'left' | 'right';
 type TSize = 'small' | 'block' | 'large';
@@ -42,11 +42,11 @@ export const Buttons: React.FC<IButton> = ({
   size = 'block',
   style,
   types = 'primary',
-  textColor
+  textColor,
 }) => {
   const [pressed, setPressed] = useState<boolean>(false);
 
-  const { component: rootStyles, text: textStyles } = ButtonTheme(types, {
+  const {component: rootStyles, text: textStyles} = ButtonTheme(types, {
     disabled,
     press: pressed,
   });
@@ -80,7 +80,7 @@ export const Buttons: React.FC<IButton> = ({
       onPressOut={onPressOut}
       disabled={disabled || loading}
       onPress={onPress}>
-      <Text style={[styles.text, textStyles, textColor,]}>{text}</Text>
+      <Text style={[styles.text, textStyles, textColor]}>{text}</Text>
       {icon ? (
         <SvgImage
           width={svgSize}

@@ -17,6 +17,8 @@ import {MenList} from 'screens/itemList/Men.List';
 import {WomenList} from 'screens/itemList/Women.List';
 import {TeensList} from 'screens/itemList/Teens.List';
 import {KidsList} from 'screens/itemList/Kids.List';
+import {NortificationScreen} from 'screens/main/Nortification.Screen';
+import {AboutScreen} from 'screens/settings/About.Screen';
 
 const SettingsStack = createNativeStackNavigator<NavigationParamList>();
 export const SettingsRouter = () => {
@@ -38,10 +40,14 @@ export const SettingsRouter = () => {
         component={NewPasswordScreen}
       />
       <SettingsStack.Screen
+        name={Routes.nortification}
+        component={NortificationScreen}
+      />
+      <SettingsStack.Screen name={Routes.about} component={AboutScreen} />
+      <SettingsStack.Screen
         name={Routes.resetPassword}
         component={ResetPasswordScreen}
       />
-
       <SettingsStack.Screen name={Routes.menList} component={MenList} />
       <SettingsStack.Screen name={Routes.womenList} component={WomenList} />
       <SettingsStack.Screen name={Routes.kidslist} component={KidsList} />

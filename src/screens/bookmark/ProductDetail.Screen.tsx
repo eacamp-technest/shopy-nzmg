@@ -6,19 +6,19 @@ import {
   Image,
   StatusBar,
 } from 'react-native';
-import React, { useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
-import { SvgImage } from 'components/SvgImages';
-import { TypographyStyles } from 'theme/typography';
-import { Buttons } from 'components/Buttons';
-import { Tables } from 'components/Tables';
-import { Rating } from 'components/Rating';
-import { IProduct } from 'components/ProductCard';
+import React, {useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {normalize} from 'theme/metrics';
+import {SvgImage} from 'components/SvgImages';
+import {TypographyStyles} from 'theme/typography';
+import {Buttons} from 'components/Buttons';
+import {Tables} from 'components/Tables';
+import {Rating} from 'components/Rating';
+import {IProduct} from 'components/ProductCard';
 // import React, { useContext, useState } from 'react';
 // import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
 // import { CartContext } from 'context/CartContextType';
@@ -28,7 +28,7 @@ const minusIcon = require('../../assets/vectors/minus.svg');
 
 export const ProductDetailScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.productDetail>
-> = ({ navigation, route }) => {
+> = ({navigation, route}) => {
   const item: IProduct = route.params.product;
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
@@ -48,8 +48,13 @@ export const ProductDetailScreen: React.FC<
   //   //   navigation.navigate(Routes.cart)
   //   // }
 
-  const sizes = ['S', 'M', 'L', 'XL', 'XXL', "36", "38"];
-  const colorsArr = [colors.sky.lighter, colors.red.darkest, colors.mellowApricot.base, colors.bdazzleBlue.base];
+  const sizes = ['S', 'M', 'L', 'XL', 'XXL', '36', '38'];
+  const colorsArr = [
+    colors.sky.lighter,
+    colors.red.darkest,
+    colors.mellowApricot.base,
+    colors.bdazzleBlue.base,
+  ];
   const [showAllSizes, setShowAllSizes] = useState(false);
   const sizesToShow = showAllSizes ? sizes : sizes.slice(0, 3);
 
@@ -67,7 +72,7 @@ export const ProductDetailScreen: React.FC<
           rightActionType="icon"
           rootStyle={styles.nav}
         />
-        <Image style={styles.coverImage} source={{ uri: item.image }} />
+        <Image style={styles.coverImage} source={{uri: item.image}} />
       </View>
       <Text style={styles.category}>{item.category}</Text>
       <View style={styles.titleContainer}>
@@ -79,11 +84,11 @@ export const ProductDetailScreen: React.FC<
           source={require('../../assets/vectors/heart.svg')}
         />
       </View>
-      <View style={styles.priceContainer}>
-        <Rating rating={4} numberOfRates={24} />
-        {/* <Rating rating={item.rating.rate} numberOfRates={item.rating.count} /> */}
-        <Text style={[styles.title, styles.price]}>{item.price}</Text>
-      </View>
+      <Tables
+        onPress={() => navigation.navigate(Routes.review)}
+        Left={<Rating rating={4} numberOfRates={24} />}
+        Right={<Text style={[styles.price]}>{item.price}</Text>}
+      />
       <Tables
         Left={
           <View>
@@ -91,18 +96,34 @@ export const ProductDetailScreen: React.FC<
             <View style={styles.size}>
               {sizesToShow.map((size, index) => {
                 return (
-                  <TouchableOpacity key={index} onPress={() => setSelectedSize(size)} style={[styles.sizeValueContainer, selectedSize === size && { backgroundColor: colors.blue.base }]}>
-                    <Text style={[styles.sizeValue, selectedSize === size && { color: colors.white }]}>{size}</Text>
+                  <TouchableOpacity
+                    key={index}
+                    onPress={() => setSelectedSize(size)}
+                    style={[
+                      styles.sizeValueContainer,
+                      selectedSize === size && {
+                        backgroundColor: colors.blue.base,
+                      },
+                    ]}>
+                    <Text
+                      style={[
+                        styles.sizeValue,
+                        selectedSize === size && {color: colors.white},
+                      ]}>
+                      {size}
+                    </Text>
                   </TouchableOpacity>
                 );
               })}
             </View>
-          </View>}
+          </View>
+        }
         Right={
-          <TouchableOpacity onPress={() => {
-            setShowAllSizes(!showAllSizes)
-            console.log("pressed")
-          }}>
+          <TouchableOpacity
+            onPress={() => {
+              setShowAllSizes(!showAllSizes);
+              console.log('pressed');
+            }}>
             <SvgImage
               color={colors.ink.base}
               width={24}
@@ -129,7 +150,7 @@ export const ProductDetailScreen: React.FC<
                     borderColor: colors.black,
                   },
                 ]}>
-                <View style={[styles.circle, { backgroundColor: color }]}></View>
+                <View style={[styles.circle, {backgroundColor: color}]}></View>
               </TouchableOpacity>
             );
           })}
@@ -168,13 +189,6 @@ const styles = StyleSheet.create({
     resizeMode: 'stretch',
     height: normalize('vertical', 392),
   },
-
-  priceContainer: {
-    paddingHorizontal: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -198,9 +212,9 @@ const styles = StyleSheet.create({
     color: colors.ink.base,
   },
   size: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 12,
-    marginTop: 12
+    marginTop: 12,
   },
   sizeValueContainer: {
     height: 32,
@@ -212,7 +226,7 @@ const styles = StyleSheet.create({
   },
   sizeValue: {
     ...TypographyStyles.SmallTightRegular,
-    color: colors.ink.base
+    color: colors.ink.base,
   },
   header: {
     ...TypographyStyles.RegularNoneSemiBold,
@@ -221,7 +235,7 @@ const styles = StyleSheet.create({
   colorContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     marginVertical: 16,
     paddingHorizontal: 24,
   },

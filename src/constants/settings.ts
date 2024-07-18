@@ -1,5 +1,5 @@
-import { Routes } from 'router/routes';
-import { useUserStoreActions } from 'store/user';
+import {Routes} from 'router/routes';
+import {useUserStoreActions} from 'store/user';
 
 export interface ISettings {
   id: string;
@@ -8,7 +8,7 @@ export interface ISettings {
   onPress?: string;
 }
 
-const { logout } = useUserStoreActions();
+const {logout} = useUserStoreActions();
 
 export const SETTINGS: ISettings[] = [
   {
@@ -39,13 +39,13 @@ export const SETTINGS: ISettings[] = [
     id: '5',
     title: 'Notification',
     icon: require('../assets/vectors/bell.svg'),
-    onPress: Routes.profile,
+    onPress: Routes.nortification,
   },
   {
     id: '6',
     title: 'About',
     icon: require('../assets/vectors/info.svg'),
-    onPress: Routes.profile,
+    onPress: Routes.about,
   },
   {
     id: '7',
