@@ -24,7 +24,6 @@ export enum Routes {
   nortification = 'nortification',
   settings = 'settings',
   filters = 'filters',
-  itemlist = 'Itemlist',
   itemlistScreen = 'Itemlist.Screen',
   settingsNested = 'SettingsRouter',
   womenList = 'WomenList',
@@ -41,4 +40,5 @@ export enum Routes {
   resetPassword = 'resetPassword',
   productDetail = 'productDetail',
   popular = 'popularScreen',
+  about = 'aboutScreen',
 }

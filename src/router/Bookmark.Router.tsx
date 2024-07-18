@@ -5,6 +5,7 @@ import {Routes} from './routes';
 import {NestedStackScreenOption} from 'configs/navigation.configs';
 import {BookmarkScreen} from 'screens/main/Bookmark.Screen';
 import {ProductDetailScreen} from 'screens/bookmark/ProductDetail.Screen';
+import {ProductReviewScreen} from 'screens/bookmark/ProductReview.Screen';
 
 const BookmarkStack = createNativeStackNavigator<NavigationParamList>();
 export const BookmarkRouter = () => {
@@ -16,6 +17,10 @@ export const BookmarkRouter = () => {
       <BookmarkStack.Screen
         name={Routes.productDetail}
         component={ProductDetailScreen}
+      />
+      <BookmarkStack.Screen
+        name={Routes.review}
+        component={ProductReviewScreen}
       />
     </BookmarkStack.Navigator>
   );
