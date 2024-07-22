@@ -20,7 +20,7 @@ type TSize = 'small' | 'block' | 'large';
 type TTypes = 'primary' | 'secondary' | 'outlined' | 'transparent';
 
 export interface IButton {
-  text: string | undefined;
+  text?: string | undefined;
   size?: TSize;
   types?: TTypes;
   disabled?: boolean;
@@ -30,6 +30,7 @@ export interface IButton {
   onPress?: () => void;
   textColor?: StyleProp<TextStyle> | undefined;
   style?: StyleProp<ViewStyle>;
+  iconColor?: string;
 }
 
 export const Buttons: React.FC<IButton> = ({
@@ -43,6 +44,7 @@ export const Buttons: React.FC<IButton> = ({
   style,
   types = 'primary',
   textColor,
+  iconColor = '#fff',
 }) => {
   const [pressed, setPressed] = useState<boolean>(false);
 
@@ -85,7 +87,7 @@ export const Buttons: React.FC<IButton> = ({
         <SvgImage
           width={svgSize}
           height={svgSize}
-          color={'#fff'}
+          color={iconColor}
           source={icon}
         />
       ) : null}

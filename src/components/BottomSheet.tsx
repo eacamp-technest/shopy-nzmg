@@ -27,12 +27,14 @@ interface IBottomSheet {
   buttonText?: string;
   title?: string;
   onPress?: () => void;
+  size?: StyleProp<ViewStyle>;
 }
 
 export const BottomSheet: React.FC<IBottomSheet> = ({
   setStatus,
   style,
   Children,
+  size,
   buttonText,
   title,
   onPress,
@@ -83,7 +85,7 @@ export const BottomSheet: React.FC<IBottomSheet> = ({
 
   return (
     <Pressable onPress={closeModal} style={styles.backdrop}>
-      <Pressable style={[styles.size]}>
+      <Pressable style={[styles.size, size]}>
         <GestureHandlerRootView>
           <PanGestureHandler
             onGestureEvent={onGestureEvent}
