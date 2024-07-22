@@ -17,6 +17,7 @@ import {TeensList} from 'screens/itemList/Teens.List';
 import {ItemListScreen} from 'screens/home/ItemList.Screen';
 import {CartScreen} from 'screens/Cart.Screen';
 import {FilterScreen} from 'screens/main/Filters.Screen';
+import {ProductReviewScreen} from 'screens/bookmark/ProductReview.Screen';
 const MainStack = createNativeStackNavigator<NavigationParamList>();
 export const MainStackRouter = () => {
   return (
@@ -45,6 +46,8 @@ export const MainStackRouter = () => {
       <MainStack.Screen name={Routes.kidslist} component={KidsList} />
       <MainStack.Screen name={Routes.teensList} component={TeensList} />
       <MainStack.Screen name={Routes.popular} component={PopularScreen} />
+
+      <MainStack.Screen name={Routes.review} component={ProductReviewScreen} />
     </MainStack.Navigator>
   );
 };
