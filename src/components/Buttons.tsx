@@ -5,6 +5,7 @@ import {
   StyleProp,
   StyleSheet,
   ViewStyle,
+  TextStyle,
 } from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {SvgImage} from './SvgImages';
@@ -19,7 +20,7 @@ type TSize = 'small' | 'block' | 'large';
 type TTypes = 'primary' | 'secondary' | 'outlined' | 'transparent';
 
 export interface IButton {
-  text: string | undefined;
+  text?: string | undefined;
   size?: TSize;
   types?: TTypes;
   disabled?: boolean;
@@ -27,7 +28,9 @@ export interface IButton {
   position?: TPosition;
   loading?: boolean;
   onPress?: () => void;
+  textColor?: StyleProp<TextStyle> | undefined;
   style?: StyleProp<ViewStyle>;
+  iconColor?: string;
 }
 
 export const Buttons: React.FC<IButton> = ({
@@ -40,6 +43,8 @@ export const Buttons: React.FC<IButton> = ({
   size = 'block',
   style,
   types = 'primary',
+  textColor,
+  iconColor = '#fff',
 }) => {
   const [pressed, setPressed] = useState<boolean>(false);
 
@@ -77,12 +82,12 @@ export const Buttons: React.FC<IButton> = ({
       onPressOut={onPressOut}
       disabled={disabled || loading}
       onPress={onPress}>
-      <Text style={[styles.text, textStyles]}>{text}</Text>
+      <Text style={[styles.text, textStyles, textColor]}>{text}</Text>
       {icon ? (
         <SvgImage
           width={svgSize}
           height={svgSize}
-          color={'#fff'}
+          color={iconColor}
           source={icon}
         />
       ) : null}

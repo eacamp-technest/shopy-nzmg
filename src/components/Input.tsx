@@ -7,6 +7,7 @@ import {
   StyleProp,
   ViewStyle,
   Pressable,
+  TextStyle,
 } from 'react-native';
 import React, {useMemo, useState} from 'react';
 import {SvgImage} from './SvgImages';
@@ -33,12 +34,14 @@ export interface IInput {
   icon?: TIcon | NodeRequire;
   errorMessage?: string;
   style?: StyleProp<ViewStyle>;
+  inputStyle?: StyleProp<ViewStyle>;
   maxLength?: number;
   setValue?: (value: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
   onInputPress?: () => void;
   noBorder?: boolean;
+  multiLine?: boolean;
 }
 export const Input: React.FC<IInput> = ({
   value,
@@ -46,6 +49,8 @@ export const Input: React.FC<IInput> = ({
   setValue,
   icon,
   noBorder,
+  inputStyle,
+  multiLine,
   ...props
 }) => {
   const [focused, setFocused] = useState<boolean>(false);
@@ -122,6 +127,7 @@ export const Input: React.FC<IInput> = ({
           props.disabled && styles.wrapperDisabled,
           isMoreIcon && CommonStyles.rowReverse,
           noBorder && styles.noBorder,
+          inputStyle,
         ]}>
         {renderIcon}
         <TextInput
@@ -136,6 +142,7 @@ export const Input: React.FC<IInput> = ({
           // editable={!isPressable ?? !props.disabled}
           secureTextEntry={secureTextEntry}
           onChangeText={setValue}
+          multiline={multiLine}
           placeholderTextColor={
             props.disabled ? colors.sky.base : colors.ink.lighter
           }

@@ -1,5 +1,12 @@
-import {View, Text, StyleSheet, StatusBar, FlatList} from 'react-native';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  StatusBar,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Navbar} from 'components/Navbar';
 import {colors} from 'theme/colors';
 import {normalize} from 'theme/metrics';
@@ -10,55 +17,134 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import {SearchBar} from 'components/SearchBar';
 import {Input} from 'components/Input';
 import {Category} from 'components/Category';
 import {SceneMap, TabView, TabBar} from 'react-native-tab-view';
-import { ProductCard } from 'components/ProductCard';
-import {Buttons} from 'components/Buttons';
 import {useUserStoreActions} from 'store/user';
 import {TypographyStyles} from 'theme/typography';
 import {useFocusEffect} from '@react-navigation/native';
 import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
+import {IProduct, ProductCard} from 'components/ProductCard';
+import data from 'data/data.json';
+import axios from 'axios';
 
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
 export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>
 > = ({navigation}) => {
-  const {logout} = useUserStoreActions();
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [value, setValue] = useState('');
   const [index, setIndex] = useState<number>(0);
   const {top} = useSafeAreaInsets();
-  const [Categorys,setCategorys]=useState()
+  const [seeAll, setSeeAll] = useState<boolean>(false);
+  const EndPoint = 'https://fakestoreapi.com/products';
+  const renderItem = useCallback(
+    ({item}: {item: IProduct}) => {
+      return (
+        <ProductCard
+          id={item.id}
+          title={item.title}
+          image={item.image}
+          price={item.price}
+          category={item.category}
+          onPress={() =>
+            navigation.navigate(Routes.productDetail, {product: item})
+          }
+        />
+      );
+    },
+    [navigation],
+  );
+
   const AllStore: React.FC = () => {
     return (
       <View style={styles.allStore}>
         <Navbar
           left={'CATEGORIES'}
-          textStyle={{color: colors.ink.darkest}}
+          leftTextStyle={[styles.leftColor, TypographyStyles.title3]}
           leftActionType="text"
           rightActionType="text"
-          onRightPress={() => console.log('--->')}
+          onRightPress={() => setSeeAll(!seeAll)}
           right={'See All'}
         />
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          data={categories}
-          renderItem={({item}) => (
-            <Category
-              item={item}
-              selectedCategory={selectedCategory}
-              setSelectedCategory={setSelectedCategory}
+        {loading ? (
+          <ActivityIndicator size="large" color={colors.ink.base} />
+        ) : (
+          <View>
+            <FlatList
+              numColumns={2}
+              data={seeAll ? products.slice(0, 12) : products.slice(0, 2)}
+              renderItem={renderItem}
+              horizontal={false}
+              showsVerticalScrollIndicator={false}
+              ListHeaderComponent={
+                <>
+                  <FlatList
+                    showsHorizontalScrollIndicator={false}
+                    data={categories}
+                    renderItem={({item}) => (
+                      <Category
+                        item={item}
+                        backgroundColor={colors.primary.base}
+                        selectedCategory={selectedCategory}
+                        setSelectedCategory={setSelectedCategory}
+                      />
+                    )}
+                    horizontal={true}
+                    keyExtractor={item => item}
+                  />
+                </>
+              }
+              ListFooterComponent={
+                <View>
+                  <Navbar
+                    style={{flex: 0.7}}
+                    left={'POPULAR PRODUCTS'}
+                    leftTextStyle={[styles.leftColor, TypographyStyles.title3]}
+                    leftActionType="text"
+                    rightActionType="text"
+                    onRightPress={() => navigation.navigate(Routes.popular)}
+                    right={'See All'}
+                  />
+                  <FlatList
+                    numColumns={2}
+                    data={products.slice(12)}
+                    renderItem={renderItem}
+                    horizontal={false}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={item => item.id.toString()}
+                  />
+                </View>
+              }
+              contentContainerStyle={styles.contentStyle}
+              keyExtractor={item => item.id.toString()}
             />
-          )}
-          horizontal={true}
-          keyExtractor={item => item}
-        />
+          </View>
+        )}
       </View>
     );
   };
+  const fetch = async (data: any) => {
+    await axios({
+      url: data,
+      method: 'GET',
+    })
+      .then(response => {
+        setProducts(response.data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.log(err);
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetch(EndPoint);
+  }, []);
+
   const InStore: React.FC = () => {
     return (
       <View>
@@ -66,29 +152,16 @@ export const HomeScreen: React.FC<
       </View>
     );
   };
+
   const renderScene = SceneMap({
     allStore: AllStore,
     inStore: InStore,
   });
+
   useCustomStatusBar({
     backgroundColor: colors.bdazzleBlue.darkest,
     barStyle: 'light-content',
   });
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     StatusBar.setBarStyle('light-content');
-  //     return () => {
-  //       StatusBar.setBarStyle('dark-content');
-  //     };
-  //   }, []),
-  // );
-  useEffect(()=>{
-    fetch('https://fakestoreapi.com/products')
-            .then(res=>res.json())
-            .then(json=>setCategorys(json))
-
-  })
-
 
   return (
     <SafeAreaProvider style={styles.root}>
@@ -101,15 +174,25 @@ export const HomeScreen: React.FC<
           leftActionType="icon"
           onLeftPress={navigation.goBack}
           right={vectors.shoppingBag}
-          onRightPress={() => console.log('shopping bag pressed')}
           rightActionType="icon"
         />
         <Input
           icon={vectors.search}
+          type="text"
           placeholder="Search brand products.."
           style={styles.input}
-          value={value}
-          setValue={text => setValue(text)}
+          onInputPress={() =>
+            navigation.navigate(Routes.search, {
+              items: [
+                'Nike Air Max 270 React',
+                'Nike Air Max 270 React ENG',
+                'Nike Air Max 97 Utility',
+                'Nike Air Vapormax',
+              ],
+              onItemPress: item => console.log('item pressed', item),
+              headerTitle: 'Flowers',
+            })
+          }
         />
       </View>
       <TabView
@@ -133,24 +216,15 @@ export const HomeScreen: React.FC<
         onIndexChange={setIndex}
         sceneContainerStyle={styles.sceneContainerStyle}
       />
-      <FlatList 
-         data={Categorys}
-         renderItem={({item})=>{
-          <ProductCard 
-             item={{title:item.price}}
-           />
-         }}
-      />
-     
-      
-      <Buttons text="Logout" onPress={logout} />
     </SafeAreaProvider>
   );
 };
+
 const routes = [
   {key: 'allStore', title: 'All Stores'},
   {key: 'inStore', title: 'In-Store'},
 ];
+
 const vectors = {
   search: {
     source: require('assets/vectors/search.svg'),
@@ -183,7 +257,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginVertical: normalize('vertical', 24),
   },
-
   contentContainerStyle: {
     backgroundColor: colors.bdazzleBlue.darkest,
   },
@@ -197,4 +270,6 @@ const styles = StyleSheet.create({
   allStore: {
     marginHorizontal: normalize('horizontal', 24),
   },
+  contentStyle: {paddingBottom: 150},
+  leftColor: {color: colors.ink.darkest},
 });

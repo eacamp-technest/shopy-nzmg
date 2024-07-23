@@ -1,68 +1,53 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {HomeScreen} from 'screens/main/Home.Screen';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {Routes} from './routes';
-import {BookmarkScreen} from 'screens/main/Bookmark.Screen';
-import {SettingsScreen} from 'screens/main/Settings.Screen';
-import {NortificationScreen} from 'screens/main/Nortification.Screen';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {CommonStyles} from 'theme/common.styles';
-import {tabBarOption, tabBarScreenOptions} from 'configs/navigation.configs';
-import {DiscoverRouter} from './Discover.Router';
-import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
-import {SettingsRouter} from './Settings.Router';
-
-export const MainRouter = () => {
-  const Main = createBottomTabNavigator();
-  const shownTabRoutes: Routes[] = [
-    Routes.home,
-    Routes.discover,
-    Routes.bookmark,
-    Routes.nortification,
-    Routes.settings,
-  ];
+import {
+  searchScreenOptions,
+  defaultScreenOptions,
+} from 'configs/navigation.configs';
+import {TabRouter} from './Tab.Router';
+import {SearchScreen} from 'screens/settings/Search.Screens';
+import {NavigationParamList} from 'types/navigation.types';
+import {ProductDetailScreen} from 'screens/bookmark/ProductDetail.Screen';
+import {PopularScreen} from 'screens/home/Popular.Screen';
+import {MenList} from 'screens/itemList/Men.List';
+import {WomenList} from 'screens/itemList/Women.List';
+import {KidsList} from 'screens/itemList/Kids.List';
+import {TeensList} from 'screens/itemList/Teens.List';
+import {ItemListScreen} from 'screens/home/ItemList.Screen';
+import {CartScreen} from 'screens/Cart.Screen';
+import {FilterScreen} from 'screens/main/Filters.Screen';
+import {ProductReviewScreen} from 'screens/bookmark/ProductReview.Screen';
+const MainStack = createNativeStackNavigator<NavigationParamList>();
+export const MainStackRouter = () => {
   return (
-    <SafeAreaView style={CommonStyles.flex}>
-      <Main.Navigator
-        screenOptions={({route}) => {
-          const routeName = getFocusedRouteNameFromRoute(route);
-          const routeKey = routeName as keyof typeof Routes;
-          const displayTabBar = shownTabRoutes.includes(Routes[routeKey]);
-          return {
-            ...tabBarScreenOptions,
-            tabBarStyle: {
-              display:
-                displayTabBar || routeName === undefined ? 'flex' : 'none',
-            },
-          };
-        }}
-        initialRouteName={Routes.home}>
-        <Main.Screen
-          options={tabBarOption[Routes.home]}
-          name={Routes.home}
-          component={HomeScreen}
-        />
-        <Main.Screen
-          options={tabBarOption[Routes.discover]}
-          name={Routes.discoverNested}
-          component={DiscoverRouter}
-        />
-        <Main.Screen
-          options={tabBarOption[Routes.bookmark]}
-          name={Routes.bookmark}
-          component={BookmarkScreen}
-        />
-        <Main.Screen
-          name={Routes.nortification}
-          component={NortificationScreen}
-          options={tabBarOption[Routes.nortification]}
-        />
-        <Main.Screen
-          options={tabBarOption[Routes.settings]}
-          name={Routes.settingsNested}
-          component={SettingsRouter}
-        />
-      </Main.Navigator>
-    </SafeAreaView>
+    <MainStack.Navigator
+      initialRouteName={Routes.tab}
+      screenOptions={defaultScreenOptions}>
+      <MainStack.Screen name={Routes.tab} component={TabRouter} />
+      <MainStack.Screen
+        options={searchScreenOptions}
+        name={Routes.search}
+        component={SearchScreen}
+      />
+      <MainStack.Screen name={Routes.filters} component={FilterScreen} />
+      <MainStack.Screen
+        name={Routes.productDetail}
+        component={ProductDetailScreen}
+      />
+      <MainStack.Screen
+        name={Routes.itemlistScreen}
+        component={ItemListScreen}
+      />
+      <MainStack.Screen name={Routes.cart} component={CartScreen} />
+
+      <MainStack.Screen name={Routes.menList} component={MenList} />
+      <MainStack.Screen name={Routes.womenList} component={WomenList} />
+      <MainStack.Screen name={Routes.kidslist} component={KidsList} />
+      <MainStack.Screen name={Routes.teensList} component={TeensList} />
+      <MainStack.Screen name={Routes.popular} component={PopularScreen} />
+
+      <MainStack.Screen name={Routes.review} component={ProductReviewScreen} />
+    </MainStack.Navigator>
   );
 };

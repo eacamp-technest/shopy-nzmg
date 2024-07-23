@@ -1,4 +1,4 @@
-import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 export const CommonStyles = StyleSheet.create({
   flex: {
@@ -109,5 +109,8 @@ export const CommonStyles = StyleSheet.create({
   } as ViewStyle,
   overflowHidden: {
     overflow: 'hidden',
+  } as ViewStyle,
+  textAlignCenter: {
+    textAlign: 'center',
   } as ViewStyle,
 });

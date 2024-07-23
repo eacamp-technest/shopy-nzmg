@@ -13,11 +13,14 @@ import {NavigationParamList} from 'types/navigation.types';
 import {Routes} from 'router/routes';
 import {ISettings, SETTINGS} from 'constants/settings';
 import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
+import {useUserStoreActions} from 'store/user';
 
 export const SettingsScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.settings>
 > = ({navigation}) => {
   useCustomStatusBar({backgroundColor: colors.white, barStyle: 'dark-content'});
+  const {logout} = useUserStoreActions();
+
   return (
     <SafeAreaProvider style={styles.root}>
       <Navbar
@@ -43,7 +46,11 @@ export const SettingsScreen: React.FC<
                 }}></View>
             ) : null}
             <Tables
-              onPress={() => navigation.navigate(item.onPress)}
+              onPress={
+                item.id === '8'
+                  ? logout
+                  : () => navigation.navigate(item.onPress)
+              }
               Left={<SvgImage source={item.icon} color={colors.primary.base} />}
               title={item.title}
               titleStyle={TypographyStyles.RegularTightSemiBold}
