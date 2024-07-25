@@ -9,11 +9,14 @@ import {colors} from 'theme/colors';
 import {normalize} from 'theme/metrics';
 import {Input} from 'components/Input';
 import {Buttons} from 'components/Buttons';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const ResetScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.reset>
 > = ({navigation}) => {
   const [email, setEmail] = useState<string>('brooklyn@nucleus.co');
+  useStatusBar('dark-content', colors.white);
+
   return (
     <View style={styles.root}>
       <Navbar

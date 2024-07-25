@@ -11,10 +11,13 @@ import {FlatList} from 'react-native-gesture-handler';
 import {Tables} from 'components/Tables';
 import {SvgImage} from 'components/SvgImages';
 import {IProfile, PROFILE} from 'constants/settings';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const ProfileScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.profile>
 > = ({navigation}) => {
+  useStatusBar('dark-content', colors.mellowApricot.base);
+
   return (
     <View>
       <View style={styles.contain}>

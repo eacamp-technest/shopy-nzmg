@@ -1,6 +1,5 @@
 import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
-import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
 import {colors} from 'theme/colors';
 import {Rating} from 'components/Rating';
 import {IReview, reviews} from 'data/reviewData';
@@ -19,6 +18,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 
 type Props = NativeStackScreenProps<NavigationParamList, Routes.review>;
 type TImage = string | NodeRequire | null;
+
 export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
   const [status, setStatus] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<TImage>();
@@ -78,13 +78,12 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
     setReviewList([...reviewList, newReview]);
     setRating(newReview.rate);
     setComment(newReview.comment);
-    newReview.avatar;
   };
+
   const handleOnPress = () => {
     setStatus(false);
     addReview();
   };
-  useCustomStatusBar({backgroundColor: colors.white, barStyle: 'dark-content'});
 
   return (
     <View style={styles.container}>
@@ -101,6 +100,7 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
       <View style={styles.reviewList}>
         <FlatList
           numColumns={1}
+          contentContainerStyle={{paddingBottom: 50}}
           renderItem={renderReview}
           data={reviewList}
           keyExtractor={(item, index) => index.toString()}
@@ -151,7 +151,11 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
 
                 <Image
                   style={styles.defaultImage}
-                  source={require('assets/images/ImagesRatio.png')}
+                  source={
+                    selectedImage
+                      ? {uri: selectedImage}
+                      : require('assets/images/ImagesRatio.png')
+                  }
                 />
               </View>
             </View>
@@ -172,11 +176,10 @@ const styles = StyleSheet.create({
   },
   button: {
     position: 'absolute',
-    bottom: 0,
+    bottom: 66,
     zIndex: 10,
     alignSelf: 'center',
     gap: 24,
-    marginBottom: 70,
     paddingHorizontal: normalize('horizontal', 32),
   },
   buttonInactive: {
@@ -200,7 +203,6 @@ const styles = StyleSheet.create({
   },
   reviewList: {
     position: 'relative',
-    marginBottom: 100,
   },
   name: {
     ...TypographyStyles.RegularTightSemiBold,

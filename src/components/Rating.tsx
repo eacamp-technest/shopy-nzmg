@@ -17,7 +17,6 @@ interface RatingProps {
   size?: number;
   style?: StyleProp<ViewStyle>;
   fixRating?: boolean;
-  rateLength?: number;
   onRateChange?: (rateLength: number) => void;
 }
 
@@ -27,7 +26,6 @@ export const Rating: React.FC<RatingProps> = ({
   size = 16,
   style,
   fixRating = false,
-  rateLength,
   onRateChange,
 }) => {
   const totalStars = 5;
