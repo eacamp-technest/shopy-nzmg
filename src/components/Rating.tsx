@@ -6,16 +6,17 @@ import {
   ViewStyle,
   Pressable,
 } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {SvgImage} from './SvgImages';
-import {colors} from 'theme/colors';
-import {CommonStyles} from 'theme/common.styles';
+import React, { useState, useEffect } from 'react';
+import { SvgImage } from './SvgImages';
+import { colors } from 'theme/colors';
+import { CommonStyles } from 'theme/common.styles';
 
 interface RatingProps {
   rating: number;
   numberOfRates?: number;
   size?: number;
   style?: StyleProp<ViewStyle>;
+  starStyle?: StyleProp<ViewStyle>;
   fixRating?: boolean;
   rateLength?: number;
   onRateChange?: (rateLength: number) => void;
@@ -26,6 +27,7 @@ export const Rating: React.FC<RatingProps> = ({
   numberOfRates = 0,
   size = 16,
   style,
+  starStyle,
   fixRating = false,
   rateLength,
   onRateChange,
@@ -48,7 +50,7 @@ export const Rating: React.FC<RatingProps> = ({
 
   return (
     <View style={[CommonStyles.alignCenterRow, style]}>
-      <View style={[CommonStyles.alignCenterRow]}>
+      <View style={[CommonStyles.alignCenterRow, starStyle]}>
         {Array(totalStars)
           .fill(0)
           .map((_, index) => (
@@ -59,7 +61,7 @@ export const Rating: React.FC<RatingProps> = ({
               <SvgImage
                 fill={
                   index <=
-                  (hoveredStars !== -1 ? hoveredStars : fixedRating - 1)
+                    (hoveredStars !== -1 ? hoveredStars : fixedRating - 1)
                     ? colors.yellow.base
                     : colors.sky.light
                 }

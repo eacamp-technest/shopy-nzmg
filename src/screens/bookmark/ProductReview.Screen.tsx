@@ -1,32 +1,32 @@
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
-import {colors} from 'theme/colors';
-import {Rating} from 'components/Rating';
-import {IReview, reviews} from 'data/reviewData';
-import {normalize} from 'theme/metrics';
-import {Navbar} from 'components/Navbar';
-import {NavigationParamList} from 'types/navigation.types';
-import {Routes} from 'router/routes';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {TypographyStyles} from 'theme/typography';
-import {Divider} from 'components/Divider';
-import {Buttons} from 'components/Buttons';
-import {BottomSheet} from 'components/BottomSheet';
-import {CommonStyles} from 'theme/common.styles';
-import {Input} from 'components/Input';
-import {launchImageLibrary} from 'react-native-image-picker';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { useCustomStatusBar } from 'helpers/useCustomStatusBar';
+import { colors } from 'theme/colors';
+import { Rating } from 'components/Rating';
+import { IReview, reviews } from 'data/reviewData';
+import { normalize } from 'theme/metrics';
+import { Navbar } from 'components/Navbar';
+import { NavigationParamList } from 'types/navigation.types';
+import { Routes } from 'router/routes';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { TypographyStyles } from 'theme/typography';
+import { Divider } from 'components/Divider';
+import { Buttons } from 'components/Buttons';
+import { BottomSheet } from 'components/BottomSheet';
+import { CommonStyles } from 'theme/common.styles';
+import { Input } from 'components/Input';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 type Props = NativeStackScreenProps<NavigationParamList, Routes.review>;
 type TImage = string | NodeRequire | null;
-export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
+export const ProductReviewScreen: React.FC<Props> = ({ navigation }) => {
   const [status, setStatus] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<TImage>();
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
   const [reviewList, setReviewList] = useState<IReview[]>(reviews);
 
-  const renderReview = ({item}: {item: IReview}) => {
+  const renderReview = ({ item }: { item: IReview }) => {
     return (
       <View style={styles.review}>
         <View style={styles.reviewContainer}>
@@ -84,7 +84,7 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
     setStatus(false);
     addReview();
   };
-  useCustomStatusBar({backgroundColor: colors.white, barStyle: 'dark-content'});
+  useCustomStatusBar({ backgroundColor: colors.white, barStyle: 'dark-content' });
 
   return (
     <View style={styles.container}>
@@ -96,6 +96,7 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
         right={require('assets/vectors/sliders.svg')}
         leftActionType="icon"
         mode="light"
+        rootStyle={styles.nav}
         left={require('assets/vectors/left.svg')}
       />
       <View style={styles.reviewList}>
@@ -125,6 +126,7 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
                 onRateChange={(rateLength: number) => setRating(rateLength)}
                 size={36}
                 style={CommonStyles.alginSelfCenter}
+                starStyle={{ gap: 16 }}
               />
               <Text
                 style={[
@@ -134,7 +136,7 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
                 Please share your opinion about the product
               </Text>
               <Input
-                inputStyle={{height: 100}}
+                inputStyle={{ height: 100 }}
                 setValue={setComment}
                 multiLine={true}
                 value={comment}
@@ -170,17 +172,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  nav: {
+    paddingHorizontal: 24
+  },
   button: {
     position: 'absolute',
-    bottom: 0,
-    zIndex: 10,
+    bottom: 30,
+    zIndex: 1,
     alignSelf: 'center',
     gap: 24,
-    marginBottom: 70,
+    // marginBottom: 40,
     paddingHorizontal: normalize('horizontal', 32),
   },
   buttonInactive: {
-    zIndex: -1,
+    zIndex: 0,
   },
   image: {
     width: 40,
