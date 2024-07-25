@@ -9,6 +9,7 @@ import {CommonStyles} from 'theme/common.styles';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {NavigationParamList} from 'types/navigation.types';
 import {Routes} from 'router/routes';
+import {normalize} from 'theme/metrics';
 
 export const AboutScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.about>
@@ -40,7 +41,11 @@ export const AboutScreen: React.FC<
             source={require('assets/vectors/logo.svg')}
           />
         </View>
-        <Text style={TypographyStyles.SmallNoneRegular}>
+        <Text
+          style={[
+            TypographyStyles.SmallNoneRegular,
+            CommonStyles.textAlignCenter,
+          ]}>
           Shoppay is a comprehensive e-commerce application designed to provide
           a seamless shopping experience. The app offers a user-friendly
           interface and a variety of features to enhance the online shopping
@@ -78,6 +83,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     gap: 60,
+    paddingHorizontal: normalize('horizontal', 24),
   },
   logo: {
     backgroundColor: colors.primary.base,

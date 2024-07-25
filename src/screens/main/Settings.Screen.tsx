@@ -12,13 +12,13 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {NavigationParamList} from 'types/navigation.types';
 import {Routes} from 'router/routes';
 import {ISettings, SETTINGS} from 'constants/settings';
-import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
 import {useUserStoreActions} from 'store/user';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const SettingsScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.settings>
 > = ({navigation}) => {
-  useCustomStatusBar({backgroundColor: colors.white, barStyle: 'dark-content'});
+  useStatusBar('dark-content', colors.white);
   const {logout} = useUserStoreActions();
 
   return (

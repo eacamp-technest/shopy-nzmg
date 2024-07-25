@@ -12,11 +12,14 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {OrderCard} from 'components/specific/OrderCard';
 import {ORDER} from 'constants/settings';
 import {Buttons} from 'components/Buttons';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const OrderScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.order>
-> = ({ navigation }) => {
+> = ({navigation}) => {
   const [index, setIndex] = useState<number>(0);
+
+  useStatusBar('light-content', colors.bdazzleBlue.darkest);
 
   const Processing: React.FC = () => {
     const processing = ORDER.filter(order => order.status === 'Processing');
@@ -107,19 +110,18 @@ export const OrderScreen: React.FC<
           leftActionType="icon"
           onLeftPress={() => navigation.goBack()}
           left={require('../../assets/vectors/left.svg')}
-          onLeftPress={() => navigation.goBack()}
           rootStyle={styles.header}
         />
       </View>
       <TabView
-        navigationState={{ index, routes }}
+        navigationState={{index, routes}}
         renderScene={renderScene}
         swipeEnabled={true}
         renderTabBar={props => (
           <TabBar
             {...props}
-            renderLabel={({ route, color }) => (
-              <Text style={[TypographyStyles.RegularNoneSemiBold, { color }]}>
+            renderLabel={({route, color}) => (
+              <Text style={[TypographyStyles.RegularNoneSemiBold, {color}]}>
                 {route.title}
               </Text>
             )}
@@ -142,9 +144,9 @@ export const OrderScreen: React.FC<
 };
 
 const routes = [
-  { key: 'processing', title: 'Processing' },
-  { key: 'delivered', title: 'Delivered' },
-  { key: 'cancelled', title: 'Cancelled' },
+  {key: 'processing', title: 'Processing'},
+  {key: 'delivered', title: 'Delivered'},
+  {key: 'cancelled', title: 'Cancelled'},
 ];
 const styles = StyleSheet.create({
   head: {
