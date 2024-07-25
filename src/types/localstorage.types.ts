@@ -3,5 +3,7 @@ export type StorageMethods = string | number | boolean | object | any[]
 export type TFunctionalMethod = 'set' | 'get'
 export enum StorageKeys {
     cards = 'cards',
-    user = 'user'
+    user = 'user',
+    carts = 'carts',
+    totalPrice = 'totalPrice',
 }

@@ -1,27 +1,30 @@
 import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TypographyStyles } from 'theme/typography';
 import { colors } from 'theme/colors';
 import { normalize } from 'theme/metrics';
 import { SvgImage } from './SvgImages';
 import { CommonStyles } from 'theme/common.styles';
 import { Buttons } from './Buttons';
+import { useCartStore } from 'store/cart/cart.store';
 
 export interface IProduct {
   horizontal?: boolean;
   id: number;
   title?: string;
-  price?: number;
+  price: number;
   image?: string;
   size?: 's' | 'm' | 'l';
   isCounter?: boolean;
   isLiked?: boolean;
   category?: string;
+  quantity?: number;
   rating?: {
-    rate: number;
-    count: number
+    rate?: number;
+    count?: number;
   }
   onPress?: () => void;
+  onBinPress?: () => void;
 }
 
 export const ProductCard: React.FC<IProduct> = ({
@@ -35,9 +38,16 @@ export const ProductCard: React.FC<IProduct> = ({
   image,
   size = 'l',
   category,
-  onPress
+  quantity = 1,
+  onPress,
+  onBinPress
 }) => {
-  const [counter, setCounter] = useState(0);
+  const [counter, setCounter] = useState(1);
+  const { actions: { updateItemQuantity } } = useCartStore();
+
+  useEffect(() => {
+    updateItemQuantity(id, counter);
+  }, [counter]);
 
   return (
     <TouchableOpacity
@@ -58,23 +68,34 @@ export const ProductCard: React.FC<IProduct> = ({
         ) : null}
         <View style={[styles.isLiked, isCounter && styles.content]}>
           {isCounter ? (
-            <View style={styles.counterContainer}>
-              <Pressable
-                onPress={() => setCounter(counter > 0 ? counter - 1 : 0)}>
+            <View style={{ width: '50%', gap: 20, flexDirection: 'row', alignItems: 'center' }}>
+              <View style={styles.counterContainer}>
+                <Pressable
+                  onPress={() => setCounter(counter > 1 ? counter - 1 : 1)}>
+                  <SvgImage
+                    color={colors.sky.base}
+                    width={16}
+                    height={16}
+                    source={require('../assets/vectors/minus.svg')}
+                    onPress={onBinPress}
+                  />
+                </Pressable>
+                <Text style={styles.counter}>{counter}</Text>
+                <Pressable onPress={() => setCounter(counter + 1)}>
+                  <SvgImage
+                    color={colors.primary.base}
+                    width={16}
+                    height={16}
+                    source={require('../assets/vectors/plus.svg')}
+                  />
+                </Pressable>
+              </View>
+              <Pressable onPress={onBinPress}>
                 <SvgImage
-                  color={colors.sky.base}
-                  width={16}
-                  height={16}
-                  source={require('../assets/vectors/minus.svg')}
-                />
-              </Pressable>
-              <Text style={styles.counter}>{counter}</Text>
-              <Pressable onPress={() => setCounter(counter + 1)}>
-                <SvgImage
-                  color={colors.primary.base}
-                  width={16}
-                  height={16}
-                  source={require('../assets/vectors/plus.svg')}
+                  color={colors.ink.lighter}
+                  width={26}
+                  height={24}
+                  source={require('../assets/vectors/trash-2.svg')}
                 />
               </Pressable>
             </View>
@@ -110,6 +131,7 @@ const styles = StyleSheet.create({
   container: {
     gap: normalize('vertical', 20),
     marginBottom: 24,
+
   },
   counterContainer: {
     ...CommonStyles.alignJustifyCenterRow,
@@ -163,7 +185,7 @@ const styles = StyleSheet.create({
     marginTop: 18,
   },
   content: {
-    width: 229,
+    width: 200,
     ...CommonStyles.justifyBetweenRow,
     paddingTop: 26,
   },

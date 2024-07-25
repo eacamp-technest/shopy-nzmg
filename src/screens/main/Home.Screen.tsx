@@ -6,13 +6,13 @@ import {
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
-import {Navbar} from 'components/Navbar';
-import {colors} from 'theme/colors';
-import {normalize} from 'theme/metrics';
-import {NavigationParamList} from 'types/navigation.types';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Routes} from 'router/routes';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Navbar } from 'components/Navbar';
+import { colors } from 'theme/colors';
+import { normalize } from 'theme/metrics';
+import { NavigationParamList } from 'types/navigation.types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Routes } from 'router/routes';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -29,16 +29,16 @@ const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
 export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>
-> = ({navigation}) => {
+> = ({ navigation }) => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [index, setIndex] = useState<number>(0);
-  const {top} = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
   const [seeAll, setSeeAll] = useState<boolean>(false);
   const EndPoint = 'https://fakestoreapi.com/products';
   const renderItem = useCallback(
-    ({item}: {item: IProduct}) => {
+    ({ item }: { item: IProduct }) => {
       return (
         <ProductCard
           id={item.id}
@@ -47,7 +47,7 @@ export const HomeScreen: React.FC<
           price={item.price}
           category={item.category}
           onPress={() =>
-            navigation.navigate(Routes.productDetail, {product: item})
+            navigation.navigate(Routes.productDetail, { product: item })
           }
         />
       );
@@ -81,7 +81,7 @@ export const HomeScreen: React.FC<
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     data={categories}
-                    renderItem={({item}) => (
+                    renderItem={({ item }) => (
                       <Category
                         item={item}
                         backgroundColor={colors.primary.base}
@@ -97,7 +97,7 @@ export const HomeScreen: React.FC<
               ListFooterComponent={
                 <View>
                   <Navbar
-                    style={{flex: 0.7}}
+                    style={{ flex: 0.7 }}
                     left={'POPULAR PRODUCTS'}
                     leftTextStyle={[styles.leftColor, TypographyStyles.title3]}
                     leftActionType="text"
@@ -157,7 +157,7 @@ export const HomeScreen: React.FC<
 
   return (
     <SafeAreaProvider style={styles.root}>
-      <View style={[styles.header, {paddingTop: top}]}>
+      <View style={[styles.header, { paddingTop: top }]}>
         <Navbar
           mode="dark"
           title="SHOPPAY"
@@ -167,6 +167,7 @@ export const HomeScreen: React.FC<
           onLeftPress={navigation.goBack}
           right={vectors.shoppingBag}
           rightActionType="icon"
+          onRightPress={() => navigation.navigate(Routes.cart)}
         />
         <Input
           icon={vectors.search}
@@ -188,14 +189,14 @@ export const HomeScreen: React.FC<
         />
       </View>
       <TabView
-        navigationState={{index, routes}}
+        navigationState={{ index, routes }}
         renderScene={renderScene}
         swipeEnabled={true}
         renderTabBar={props => (
           <TabBar
             {...props}
-            renderLabel={({route, color}) => (
-              <Text style={[TypographyStyles.RegularNoneSemiBold, {color}]}>
+            renderLabel={({ route, color }) => (
+              <Text style={[TypographyStyles.RegularNoneSemiBold, { color }]}>
                 {route.title}
               </Text>
             )}
@@ -213,8 +214,8 @@ export const HomeScreen: React.FC<
 };
 
 const routes = [
-  {key: 'allStore', title: 'All Stores'},
-  {key: 'inStore', title: 'In-Store'},
+  { key: 'allStore', title: 'All Stores' },
+  { key: 'inStore', title: 'In-Store' },
 ];
 
 const vectors = {
@@ -262,6 +263,6 @@ const styles = StyleSheet.create({
   allStore: {
     marginHorizontal: normalize('horizontal', 24),
   },
-  contentStyle: {paddingBottom: 150},
-  leftColor: {color: colors.ink.darkest},
+  contentStyle: { paddingBottom: 150 },
+  leftColor: { color: colors.ink.darkest },
 });

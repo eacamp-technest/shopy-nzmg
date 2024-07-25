@@ -6,47 +6,45 @@ import {
   Image,
   StatusBar,
 } from 'react-native';
-import React, {useState} from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationParamList} from 'types/navigation.types';
-import {Routes} from 'router/routes';
-import {Navbar} from 'components/Navbar';
-import {colors} from 'theme/colors';
-import {normalize} from 'theme/metrics';
-import {SvgImage} from 'components/SvgImages';
-import {TypographyStyles} from 'theme/typography';
-import {Buttons} from 'components/Buttons';
-import {Tables} from 'components/Tables';
-import {Rating} from 'components/Rating';
-import {IProduct} from 'components/ProductCard';
-// import React, { useContext, useState } from 'react';
-// import { NavigationProp, RouteProp, useRoute } from '@react-navigation/native';
-// import { CartContext } from 'context/CartContextType';
+import React, { useState } from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationParamList } from 'types/navigation.types';
+import { Routes } from 'router/routes';
+import { Navbar } from 'components/Navbar';
+import { colors } from 'theme/colors';
+import { normalize } from 'theme/metrics';
+import { SvgImage } from 'components/SvgImages';
+import { TypographyStyles } from 'theme/typography';
+import { Buttons } from 'components/Buttons';
+import { Tables } from 'components/Tables';
+import { Rating } from 'components/Rating';
+import { IProduct } from 'components/ProductCard';
+import { CommonStyles } from 'theme/common.styles';
+import { Divider } from 'components/Divider';
+import { useCartStore } from 'store/cart/cart.store';
 
 const plusIcon = require('../../assets/vectors/plus.svg');
 const minusIcon = require('../../assets/vectors/minus.svg');
 
 export const ProductDetailScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.productDetail>
-> = ({navigation, route}) => {
+> = ({ navigation, route }) => {
   const item: IProduct = route.params.product;
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
-  //   //     const { addToCart } = useContext<any>(CartContext)
-  //   type ProductDetailsRouteProp = RouteProp<RootStackParamList, Routes.productDetail>;
-  //   const route = useRoute<ProductDetailsRouteProp>();
-  //   const { item } = route.params;
-  //   type RootStackParamList = {
-  //     productDetails: { item: IProduct };
-  //     cart: undefined;
-  //   };
+  const { actions: { addToCart } } = useCartStore();
 
-  //   // const handleAddToCart = async (product: IProduct) => {
-  //   //   const updatedProduct = { ...ProductDetailScreen, size: selectedSize, color: selectedColor }
-  //   //   // await addToCart(updatedProduct)
-  //   //   navigation.navigate(Routes.cart)
-  //   // }
+  const handleAddToCart = () => {
+    const productWithDetails = {
+      ...item,
+      size: selectedSize,
+      color: selectedColor,
+      price: item.price ?? 0,
+    };
+    addToCart(productWithDetails);
+    navigation.navigate(Routes.cart);
+  };
 
   const sizes = ['S', 'M', 'L', 'XL', 'XXL', '36', '38'];
   const colorsArr = [
@@ -72,11 +70,11 @@ export const ProductDetailScreen: React.FC<
           rightActionType="icon"
           rootStyle={styles.nav}
         />
-        <Image style={styles.coverImage} source={{uri: item.image}} />
+        <Image style={styles.coverImage} source={{ uri: item.image }} />
       </View>
       <Text style={styles.category}>{item.category}</Text>
       <View style={styles.titleContainer}>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title}>{item.title && item.title.length > 36 ? item.title.slice(0, 36) + '...' : item.title}</Text>
         <SvgImage
           fill={colors.red.light}
           width={26}
@@ -86,9 +84,10 @@ export const ProductDetailScreen: React.FC<
       </View>
       <Tables
         onPress={() => navigation.navigate(Routes.review)}
-        Left={<Rating rating={4} numberOfRates={24} />}
+        Left={<Rating starStyle={{ gap: 2 }} rating={item.rating?.rate as number} numberOfRates={item.rating?.count} />}
         Right={<Text style={[styles.price]}>{item.price}</Text>}
       />
+      <Divider height='S' />
       <Tables
         Left={
           <View>
@@ -108,7 +107,7 @@ export const ProductDetailScreen: React.FC<
                     <Text
                       style={[
                         styles.sizeValue,
-                        selectedSize === size && {color: colors.white},
+                        selectedSize === size && { color: colors.white },
                       ]}>
                       {size}
                     </Text>
@@ -150,13 +149,14 @@ export const ProductDetailScreen: React.FC<
                     borderColor: colors.black,
                   },
                 ]}>
-                <View style={[styles.circle, {backgroundColor: color}]}></View>
+                <View style={[styles.circle, { backgroundColor: color }]}></View>
               </TouchableOpacity>
             );
           })}
         </View>
       </View>
-      <Buttons style={styles.button} text="Add to Cart" />
+      <Buttons style={styles.button} text="Add to Cart"
+        onPress={handleAddToCart} />
     </View>
   );
 };
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   nav: {
     position: 'absolute',
-    zIndex: 999,
+    zIndex: 99,
     paddingHorizontal: normalize('horizontal', 24),
   },
   coverImage: {
@@ -190,11 +190,9 @@ const styles = StyleSheet.create({
     height: normalize('vertical', 392),
   },
   titleContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 24,
-    marginBottom: 20,
+    ...CommonStyles.alignCenterJustifyBetweenRow,
+    paddingHorizontal: normalize('horizontal', 24),
+    marginBottom: 8,
   },
   category: {
     ...TypographyStyles.RegularTightSemiBold,
@@ -233,9 +231,7 @@ const styles = StyleSheet.create({
     color: colors.ink.base,
   },
   colorContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    ...CommonStyles.alignCenterJustifyBetweenRow,
     marginVertical: 16,
     paddingHorizontal: 24,
   },
