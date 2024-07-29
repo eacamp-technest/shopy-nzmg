@@ -55,7 +55,7 @@ export class LocalStorage {
         this.set(StorageKeys.carts, 'array', data);
     }
 
-    public static totalPrice(method: TFunctionalMethod, data?: number) {
+    public static subTotalPrice(method: TFunctionalMethod, data?: number) {
         if (method === 'get') {
             const totalPrice = storage.getString(StorageKeys.totalPrice);
             return totalPrice ? JSON.parse(totalPrice) : 0;
