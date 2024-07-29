@@ -37,7 +37,7 @@ export const RegisterScreen: React.FC<
   });
   const onSubmit = (data: any) => {
     console.log(data);
-    navigation.navigate(Routes.verification,data);
+    navigation.navigate(Routes.verification, data);
   };
   // useEffect(()=>{
   //   const showListener = Keyboard.addListener(keyboardShowEvent, ()=>{

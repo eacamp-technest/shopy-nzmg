@@ -4,6 +4,7 @@ import { AuthRouter } from './Auth.Router';
 import { NavigationContainer } from '@react-navigation/native';
 import { useUserStore } from 'store/user/user.store';
 import BootSplash from 'react-native-bootsplash';
+import { useCartStore } from 'store/cart/cart.store';
 
 const delay = (ms: number, cb?: any) =>
   new Promise(resolve => setTimeout(resolve, ms, cb));
@@ -12,13 +13,15 @@ const Router = () => {
   const [ready, setReady] = useState<boolean>(false);
   const {
     user,
-    actions: { initialize },
+    actions: { initialize: initializeUser },
   } = useUserStore(state => state);
+  const { actions: { initialize: initializeCart } } = useCartStore(state => state);
   const init = useCallback(async () => {
-    await delay(1500, initialize());
+    await delay(1500, initializeUser());
+    initializeCart();
     setReady(true);
     await BootSplash.hide({ fade: true });
-  }, [initialize]);
+  }, [initializeUser, initializeCart]);
 
   useEffect(() => {
     console.log(user);

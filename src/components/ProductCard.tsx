@@ -90,7 +90,7 @@ export const ProductCard: React.FC<IProduct> = ({
                   />
                 </Pressable>
               </View>
-              <Pressable onPress={onBinPress}>
+              <Pressable onPress={onBinPress} style={{ zIndex: 2 }}>
                 <SvgImage
                   color={colors.ink.lighter}
                   width={26}
@@ -102,7 +102,7 @@ export const ProductCard: React.FC<IProduct> = ({
           ) : null}
           {price ? (
             <Text style={[styles.price, horizontal && { paddingTop: 8 }]}>
-              ${price}
+              ${price * counter}
             </Text>
           ) : null}
           {isLiked ? (

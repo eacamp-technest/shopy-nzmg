@@ -18,9 +18,20 @@ import { CartItem } from 'store/cart/cart.types';
 export const CartScreen: React.FC<
     NativeStackScreenProps<NavigationParamList, Routes.cart>
 > = ({ navigation }) => {
+    const { carts, subTotalPrice, actions: { deleteItemFromCart } } = useCartStore(state => state);
+    const [address, setAddress] = useState('');
 
-    const { carts, totalPrice, actions: { deleteItemFromCart } } = useCartStore(state => state)
-    const [address, setAddress] = useState('')
+    const calculateShippingCost = (items: CartItem[]) => {
+        return items.reduce((total, item) => {
+            const itemShippingCost = (item.category === "women's clothing" || item.category === "men's clothing") ? 23 : 30;
+            return total + itemShippingCost;
+        }, 0);
+    };
+
+    const shippingCost = calculateShippingCost(carts);
+    const totalPrice = subTotalPrice + shippingCost;
+
+    const totalItems = carts.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
     const renderInCart = useCallback(
         ({ item }: { item: CartItem }) => (
@@ -33,14 +44,14 @@ export const CartScreen: React.FC<
                 horizontal={true}
                 size='s'
                 isCounter={true}
+                onPress={() => navigation.navigate(Routes.productDetail, { product: item })}
                 onBinPress={() => {
-                    console.log("delete")
-                    deleteItemFromCart(item)
-                }
-                }
+                    console.log("delete");
+                    deleteItemFromCart(item);
+                }}
             />
         ),
-        [deleteItemFromCart]
+        [deleteItemFromCart, navigation]
     );
 
     return (
@@ -92,7 +103,7 @@ export const CartScreen: React.FC<
                     </Text>
                     <SvgImage
                         isPressable
-                        onPress={() => console.log('...')}
+                        onPress={() => navigation.navigate(Routes.addAddress)}
                         source={require('../assets/vectors/chevron-right.svg')}
                         color={colors.ink.darkest}
                     />
@@ -101,25 +112,22 @@ export const CartScreen: React.FC<
                 <Input type='select' value={address} setValue={setAddress} inputStyle={{ flexDirection: 'row-reverse', marginBottom: 32 }} placeholder='Add postal address' icon={require('../assets/vectors/chevron-right.svg')} />
                 <Divider height="M" />
                 <View style={styles.subtotal}>
-                    <Text>Subtotal</Text>
-                    {/* add number of items */}
-                    <Text>${totalPrice.toFixed(2)}</Text>
+                    <Text>Subtotal ({totalItems} items)</Text>
+                    <Text>${subTotalPrice.toFixed(2)}</Text>
+                </View>
+                <View style={styles.shipping}>
+                    <Text>Shipping</Text>
+                    <Text>${shippingCost.toFixed(2)}</Text>
                 </View>
                 <View style={styles.total}>
-                    <Text>Shipping</Text>
-                    <Text>$23</Text>
+                    <Text>Total</Text>
+                    <Text>${totalPrice.toFixed(2)}</Text>
                 </View>
-                {/* <View style={styles.total}> */}
-                {/* <Text>Total</Text> */}
-                {/* <Text>$0.00</Text> */}
-                {/* add total price */}
-                {/* </View> */}
-
                 <Buttons text='Purchase' />
             </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -140,6 +148,10 @@ const styles = StyleSheet.create({
     subtotal: {
         ...CommonStyles.alignCenterJustifyBetweenRow,
         marginTop: 24,
+    },
+    shipping: {
+        ...CommonStyles.alignCenterJustifyBetweenRow,
+        marginTop: 8
     },
     total: {
         ...CommonStyles.alignCenterJustifyBetweenRow,

@@ -6,6 +6,7 @@ export type CartItem = {
     image?: string;
     title?: string;
     quantity?: number;
+    category?: string
 }
 
 interface ICartStoreActions {
@@ -13,12 +14,12 @@ interface ICartStoreActions {
     addToCart: (item: CartItem) => void;
     updateItemQuantity: (id: number, quantity: number) => void;
     deleteItemFromCart: (item: CartItem) => void;
-    calculateTotalPrice: () => void;
+    calculateSubTotalPrice: () => void;
     reset: () => void;
 }
 
 export interface ICartStore {
     carts: CartItem[];
-    totalPrice: number;
+    subTotalPrice: number;
     actions: ICartStoreActions;
 }

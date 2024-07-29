@@ -1,24 +1,24 @@
-import {StyleSheet, ScrollView, View} from 'react-native';
-import React, {useState} from 'react';
-import {Navbar} from 'components/Navbar';
-import {FormRules} from 'constants/formRules';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationParamList} from 'types/navigation.types';
-import {InputControlled} from 'components/InputControlled';
-import {Routes} from 'router/routes';
-import {colors} from 'theme/colors';
-import {useForm} from 'react-hook-form';
-import {Buttons} from 'components/Buttons';
-import {CommonStyles} from 'theme/common.styles';
-import {ICardInputFrom} from 'types/card.types';
-import {useUserStoreActions} from 'store/user';
+import { StyleSheet, ScrollView, View } from 'react-native';
+import React, { useState } from 'react';
+import { Navbar } from 'components/Navbar';
+import { FormRules } from 'constants/formRules';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationParamList } from 'types/navigation.types';
+import { InputControlled } from 'components/InputControlled';
+import { Routes } from 'router/routes';
+import { colors } from 'theme/colors';
+import { useForm } from 'react-hook-form';
+import { Buttons } from 'components/Buttons';
+import { CommonStyles } from 'theme/common.styles';
+import { ICardInputFrom } from 'types/card.types';
+import { useUserStoreActions } from 'store/user';
 import DatePicker from 'react-native-date-picker';
-import {useToast} from 'store/toast';
-import {SceneRendererProps} from 'react-native-tab-view';
+import { useToast } from 'store/toast';
+import { SceneRendererProps } from 'react-native-tab-view';
 
-export const AddNewCardScreen: React.FC<SceneRendererProps> = ({jumpTo}) => {
+export const AddNewCardScreen: React.FC<SceneRendererProps> = ({ jumpTo }) => {
   const [picker, setPicker] = useState<boolean>(false);
-  const {addCard} = useUserStoreActions();
+  const { addCard } = useUserStoreActions();
   const showToast = useToast();
 
   const {
@@ -26,15 +26,15 @@ export const AddNewCardScreen: React.FC<SceneRendererProps> = ({jumpTo}) => {
     handleSubmit,
     setValue,
     reset,
-    formState: {errors},
+    formState: { errors },
   } = useForm<ICardInputFrom>({
     defaultValues: __DEV__
       ? {
-          cardNumber: '1111 5555 7777 7777',
-          cardHolder: 'John Doe',
-          cvv: '333',
-          cardDate: '05 / 25',
-        }
+        cardNumber: '1111 5555 7777 7777',
+        cardHolder: 'John Doe',
+        cvv: '333',
+        cardDate: '05 / 25',
+      }
       : {},
   });
 

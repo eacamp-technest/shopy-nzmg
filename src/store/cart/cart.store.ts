@@ -4,7 +4,7 @@ import { LocalStorage } from 'store/LocalStorage'
 import { StorageKeys } from 'types/localstorage.types'
 
 const initial: Omit<ICartStore, 'actions'> = {
-    totalPrice: 0,
+    subTotalPrice: 0,
     carts: [],
 }
 
@@ -13,8 +13,8 @@ export const useCartStore = create<ICartStore>((set, get) => ({
     actions: {
         initialize: () => {
             const carts = LocalStorage.carts('get')
-            const totalPrice = LocalStorage.totalPrice('get')
-            set({ carts, totalPrice })
+            const subTotalPrice = LocalStorage.subTotalPrice('get')
+            set({ carts, subTotalPrice })
         },
         addToCart: (item: CartItem) => {
             const isExist = get().carts.find(info => info.id === item.id);
@@ -29,18 +29,18 @@ export const useCartStore = create<ICartStore>((set, get) => ({
             const newCarts = get().carts.map(cartItem =>
                 cartItem.id === id ? { ...cartItem, quantity } : cartItem
             );
-            const newTotalPrice = newCarts.reduce((acc, cartItem) => acc + (cartItem.price || 0) * (cartItem.quantity || 1), 0);
-            set({ carts: newCarts, totalPrice: newTotalPrice })
+            const newSubTotalPrice = newCarts.reduce((acc, cartItem) => acc + (cartItem.price || 0) * (cartItem.quantity || 1), 0);
+            set({ carts: newCarts, subTotalPrice: newSubTotalPrice })
         },
-        calculateTotalPrice: () => {
+        calculateSubTotalPrice: () => {
             const newTotalPrice = get().carts.reduce((acc, cartItem) => acc + (cartItem.price || 0) * (cartItem.quantity || 1), 0);
-            set({ totalPrice: newTotalPrice })
-            LocalStorage.totalPrice('set', newTotalPrice)
+            set({ subTotalPrice: newTotalPrice })
+            LocalStorage.subTotalPrice('set', newTotalPrice)
         },
         deleteItemFromCart: (item: CartItem) => {
             const newCarts = get().carts.filter(data => data.id !== item.id);
             const newTotalPrice = newCarts.reduce((acc, carItem) => acc + (carItem.price || 0) * (carItem.quantity || 1), 0)
-            set({ carts: newCarts, totalPrice: newTotalPrice })
+            set({ carts: newCarts, subTotalPrice: newTotalPrice })
 
             if (newCarts.length === 0) {
                 LocalStorage.clean(StorageKeys.carts)

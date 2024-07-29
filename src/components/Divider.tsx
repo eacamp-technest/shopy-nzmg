@@ -1,6 +1,7 @@
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native'
 import React from 'react'
 import { colors } from 'theme/colors'
+import { windowWidth } from 'theme/Const.styles';
 
 interface IDivider {
     height: "S" | "M" | 'L';
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     },
     L: {
         height: 12,
-        width: 375,
+        width: windowWidth,
         backgroundColor: colors.sky.lightest
     },
     M: {

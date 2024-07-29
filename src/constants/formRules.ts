@@ -67,4 +67,14 @@ export class FormRules {
       message: "Cardholder name must be alphabetic",
     },
   } as RegisterOptions;
+  public static mobile = {
+    required: {
+      message: "Mobile number is required",
+      value: true,
+    },
+    pattern: {
+      value: Regex.phone,
+      message: "Mobile number is invalid",
+    },
+  } as RegisterOptions;
 }
