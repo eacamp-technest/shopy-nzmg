@@ -26,7 +26,7 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
   const [comment, setComment] = useState<string>('');
   const [reviewList, setReviewList] = useState<IReview[]>(reviews);
 
-  const renderReview = ({ item }: { item: IReview }) => {
+  const renderReview = ({item}: {item: IReview}) => {
     return (
       <View style={styles.review}>
         <View style={styles.reviewContainer}>
@@ -126,7 +126,7 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
                 onRateChange={(rateLength: number) => setRating(rateLength)}
                 size={36}
                 style={CommonStyles.alginSelfCenter}
-                starStyle={{ gap: 16 }}
+                starStyle={{gap: 16}}
               />
               <Text
                 style={[
@@ -136,7 +136,7 @@ export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
                 Please share your opinion about the product
               </Text>
               <Input
-                inputStyle={{ height: 100 }}
+                inputStyle={{height: 100}}
                 setValue={setComment}
                 multiLine={true}
                 value={comment}
@@ -177,11 +177,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   nav: {
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
   },
   button: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 66,
     zIndex: 1,
     alignSelf: 'center',
     gap: 24,

@@ -17,6 +17,7 @@ import {discover} from 'constants/discover';
 import {TypographyStyles} from 'theme/typography';
 import {Navbar} from 'components/Navbar';
 import {colors} from 'theme/colors';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const SearchScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.search>
@@ -52,7 +53,7 @@ export const SearchScreen: React.FC<
     },
     [onItemPress, navigation],
   );
-
+  useStatusBar('dark-content', colors.white);
   useEffect(() => {
     navigation.setOptions({
       ...searchScreenOptions,
@@ -94,7 +95,7 @@ export const SearchScreen: React.FC<
   return (
     <FlatList
       ListHeaderComponent={searchText === '' ? renderSuggestions : null}
-      data={searchText === '' ? [] : data} // Show suggestions if no search text, otherwise show filtered data
+      data={searchText === '' ? [] : data}
       renderItem={renderItems}
       contentContainerStyle={{gap: 32}}
       contentInsetAdjustmentBehavior="automatic"
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   suggestionItem: {
-    width: '48%', // Adjust to ensure two items per row
+    width: '48%',
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: 16,

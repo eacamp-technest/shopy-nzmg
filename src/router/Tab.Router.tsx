@@ -1,14 +1,14 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { tabBarOption, tabBarScreenOptions } from 'configs/navigation.configs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {tabBarOption, tabBarScreenOptions} from 'configs/navigation.configs';
 import React from 'react';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from './routes';
-import { HomeScreen } from 'screens/main/Home.Screen';
-import { NortificationScreen } from 'screens/main/Nortification.Screen';
-import { DiscoverRouter } from './Discover.Router';
-import { SettingsRouter } from './Settings.Router';
-import { BookmarkRouter } from './Bookmark.Router';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from './routes';
+import {HomeScreen} from 'screens/main/Home.Screen';
+import {NortificationScreen} from 'screens/main/Nortification.Screen';
+import {DiscoverRouter} from './Discover.Router';
+import {SettingsRouter} from './Settings.Router';
+import {BookmarkRouter} from './Bookmark.Router';
+import {getFocusedRouteNameFromRoute} from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator<NavigationParamList>();
 
@@ -22,7 +22,7 @@ export const TabRouter: React.FC = () => {
   ];
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => {
+      screenOptions={({route}) => {
         const routeName = getFocusedRouteNameFromRoute(route);
         const routeKey = routeName as keyof typeof Routes;
         const displayTabBar = shownTabRoutes.includes(Routes[routeKey]);

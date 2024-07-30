@@ -51,7 +51,11 @@ export const AuthRouter = () => {
           component={ModalScreen}
           options={modalScreenOptions}
         />
-        <AuthStack.Screen name={Routes.home} component={HomeScreen} />
+        <AuthStack.Screen
+          options={defaultScreenOptions}
+          name={Routes.home}
+          component={HomeScreen}
+        />
 
         <AuthStack.Screen name={Routes.test} component={TestScreen} />
       </AuthStack.Navigator>
