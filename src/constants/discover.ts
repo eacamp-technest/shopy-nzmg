@@ -7,7 +7,7 @@ interface IDiscover {
   title: string;
   image: ImageSourcePropType;
   background: string;
-  onPress: string;
+  onPress: any;
   placeholder?: ImageSourcePropType;
 }
 

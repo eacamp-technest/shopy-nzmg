@@ -38,7 +38,7 @@ export const ProductDetailScreen: React.FC<
   } = useCartStore();
 
   const handleAddToCart = () => {
-    const productWithDetails = {
+    const productWithDetails: any = {
       ...item,
       size: selectedSize,
       color: selectedColor,
@@ -72,7 +72,7 @@ export const ProductDetailScreen: React.FC<
           rightActionType="icon"
           rootStyle={styles.nav}
         />
-        <Image style={styles.coverImage} source={{uri: item.image}} />
+        <Image style={[styles.coverImage]} source={{uri: item.image}} />
       </View>
       <Text style={styles.category}>{item.category}</Text>
       <View style={styles.titleContainer}>
