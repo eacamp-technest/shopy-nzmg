@@ -20,6 +20,7 @@ import {FilterScreen} from 'screens/main/Filters.Screen';
 import {ProductReviewScreen} from 'screens/bookmark/ProductReview.Screen';
 import {AddAddressScreen} from 'screens/main/AddAddress.Screen';
 import {ChooseCardScreen} from 'screens/home/ChooseCard.Screen';
+import {AddNewCardScreen} from 'screens/payments/AddNewCard.Screen';
 const MainStack = createNativeStackNavigator<NavigationParamList>();
 export const MainStackRouter = () => {
   return (
@@ -41,6 +42,7 @@ export const MainStackRouter = () => {
         name={Routes.itemlistScreen}
         component={ItemListScreen}
       />
+
       <MainStack.Screen name={Routes.cart} component={CartScreen} />
       <MainStack.Screen name={Routes.addAddress} component={AddAddressScreen} />
       <MainStack.Screen name={Routes.chooseCard} component={ChooseCardScreen} />
