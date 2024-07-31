@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   Camera,
+  CameraDevice,
   useCameraDevice,
   useCodeScanner,
 } from 'react-native-vision-camera';
@@ -9,7 +10,7 @@ import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 
 export function ScannerScreen() {
   const [hasPermission, setHasPermission] = useState(false);
-  const device = useCameraDevice('back');
+  const device: CameraDevice | undefined = useCameraDevice('back');
 
   useEffect(() => {
     checkCameraPermission();
@@ -54,14 +55,10 @@ export function ScannerScreen() {
     );
   }
 
+  if (device == null) return null;
   return (
     <View style={StyleSheet.absoluteFill}>
-      <Camera
-        style={StyleSheet.absoluteFill}
-        device={device}
-        isActive={true}
-        codeScanner={codeScanner}
-      />
+      <Camera device={device} isActive={true} style={StyleSheet.absoluteFill} />
     </View>
   );
 }
