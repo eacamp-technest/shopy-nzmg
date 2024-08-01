@@ -17,16 +17,13 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import { Input } from 'components/Input';
-import { Category } from 'components/Category';
-import { SceneMap, TabView, TabBar } from 'react-native-tab-view';
-import { useUserStoreActions } from 'store/user';
-import { TypographyStyles } from 'theme/typography';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCustomStatusBar } from 'helpers/useCustomStatusBar';
-import { IProduct, ProductCard } from 'components/ProductCard';
-import data from 'data/data.json';
+import {Input} from 'components/Input';
+import {Category} from 'components/Category';
+import {SceneMap, TabView, TabBar} from 'react-native-tab-view';
+import {TypographyStyles} from 'theme/typography';
+import {IProduct, ProductCard} from 'components/ProductCard';
 import axios from 'axios';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
@@ -141,7 +138,7 @@ export const HomeScreen: React.FC<
         setLoading(false);
       });
   };
-
+  useStatusBar('light-content', colors.bdazzleBlue.darkest);
   useEffect(() => {
     fetch(EndPoint);
   }, []);
@@ -157,11 +154,6 @@ export const HomeScreen: React.FC<
   const renderScene = SceneMap({
     allStore: AllStore,
     inStore: InStore,
-  });
-
-  useCustomStatusBar({
-    backgroundColor: colors.bdazzleBlue.darkest,
-    barStyle: 'light-content',
   });
 
   return (

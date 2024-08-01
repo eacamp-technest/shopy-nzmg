@@ -1,12 +1,19 @@
-import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { TypographyStyles } from 'theme/typography';
-import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
-import { SvgImage } from './SvgImages';
-import { CommonStyles } from 'theme/common.styles';
-import { Buttons } from './Buttons';
-import { useCartStore } from 'store/cart/cart.store';
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {TypographyStyles} from 'theme/typography';
+import {colors} from 'theme/colors';
+import {normalize} from 'theme/metrics';
+import {SvgImage} from './SvgImages';
+import {CommonStyles} from 'theme/common.styles';
+import {Buttons} from './Buttons';
+import {useCartStore} from 'store/cart/cart.store';
 
 export interface IProduct {
   horizontal?: boolean;
@@ -18,11 +25,12 @@ export interface IProduct {
   isCounter?: boolean;
   isLiked?: boolean;
   category?: string;
+  opacity?: number;
   quantity?: number;
   rating?: {
     rate?: number;
     count?: number;
-  }
+  };
   onPress?: () => void;
   onBinPress?: () => void;
 }
@@ -32,18 +40,19 @@ export const ProductCard: React.FC<IProduct> = ({
   horizontal,
   isLiked,
   isCounter,
+  opacity,
   title,
   price,
-  rating,
   image,
   size = 'l',
   category,
-  quantity = 1,
   onPress,
-  onBinPress
+  onBinPress,
 }) => {
   const [counter, setCounter] = useState(1);
-  const { actions: { updateItemQuantity } } = useCartStore();
+  const {
+    actions: {updateItemQuantity},
+  } = useCartStore();
 
   useEffect(() => {
     updateItemQuantity(id, counter);
@@ -52,8 +61,9 @@ export const ProductCard: React.FC<IProduct> = ({
   return (
     <TouchableOpacity
       onPress={onPress}
+      activeOpacity={opacity}
       style={[horizontal && CommonStyles.row, styles.container]}>
-      <Image style={[styles[size], styles.img]} source={{ uri: image }} />
+      <Image style={[styles[size], styles.img]} source={{uri: image}} />
       <View>
         {title ? (
           <Text
@@ -61,14 +71,20 @@ export const ProductCard: React.FC<IProduct> = ({
             style={[
               TypographyStyles.RegularTightSemiBold,
               styles.title,
-              { width: styles['l'].width },
+              {width: styles['l'].width},
             ]}>
             {title}
           </Text>
         ) : null}
         <View style={[styles.isLiked, isCounter && styles.content]}>
           {isCounter ? (
-            <View style={{ width: '50%', gap: 20, flexDirection: 'row', alignItems: 'center' }}>
+            <View
+              style={{
+                width: '50%',
+                gap: 20,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
               <View style={styles.counterContainer}>
                 <Pressable
                   onPress={() => setCounter(counter > 1 ? counter - 1 : 1)}>
@@ -90,7 +106,7 @@ export const ProductCard: React.FC<IProduct> = ({
                   />
                 </Pressable>
               </View>
-              <Pressable onPress={onBinPress} style={{ zIndex: 2 }}>
+              <Pressable onPress={onBinPress} style={{zIndex: 2}}>
                 <SvgImage
                   color={colors.ink.lighter}
                   width={26}
@@ -101,7 +117,7 @@ export const ProductCard: React.FC<IProduct> = ({
             </View>
           ) : null}
           {price ? (
-            <Text style={[styles.price, horizontal && { paddingTop: 8 }]}>
+            <Text style={[styles.price, horizontal && {paddingTop: 8}]}>
               ${price * counter}
             </Text>
           ) : null}
@@ -109,7 +125,7 @@ export const ProductCard: React.FC<IProduct> = ({
             <View style={styles.liked}>
               <Buttons
                 style={styles.button}
-                textColor={{ color: colors.ink.base }}
+                textColor={{color: colors.ink.base}}
                 text="Move to Bag"
               />
               <SvgImage
@@ -131,7 +147,6 @@ const styles = StyleSheet.create({
   container: {
     gap: normalize('vertical', 20),
     marginBottom: 24,
-
   },
   counterContainer: {
     ...CommonStyles.alignJustifyCenterRow,

@@ -42,10 +42,12 @@ export const MainStackRouter = () => {
         name={Routes.itemlistScreen}
         component={ItemListScreen}
       />
+
       <MainStack.Screen name={Routes.cart} component={CartScreen} />
       <MainStack.Screen name={Routes.addAddress} component={AddAddressScreen} />
       <MainStack.Screen name={Routes.yourAddress} component={YourAddress} />
       <MainStack.Screen name={Routes.tester} component={Tester} />
+      <MainStack.Screen name={Routes.chooseCard} component={ChooseCardScreen} />
 
       <MainStack.Screen name={Routes.menList} component={MenList} />
       <MainStack.Screen name={Routes.womenList} component={WomenList} />

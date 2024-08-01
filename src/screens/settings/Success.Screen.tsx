@@ -7,10 +7,13 @@ import {TypographyStyles} from 'theme/typography';
 import {CommonStyles} from 'theme/common.styles';
 import {normalize} from 'theme/metrics';
 import {Buttons} from 'components/Buttons';
+import {useStatusBar} from 'helpers/useStatusBar';
+import {colors} from 'theme/colors';
 
 export const SuccessScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.success>
 > = ({navigation}) => {
+  useStatusBar('dark-content', colors.white);
   return (
     <View style={styles.root}>
       <Image

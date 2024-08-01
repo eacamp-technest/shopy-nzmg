@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -6,14 +7,12 @@ import {
   ScrollView,
   Linking,
 } from 'react-native';
-import React from 'react';
 import {Navbar} from 'components/Navbar';
 import {colors} from 'theme/colors';
 import {TextLink} from 'components/TextLinks';
 import {Buttons} from 'components/Buttons';
 import {SvgImage} from 'components/SvgImages';
 import {CommonStyles} from 'theme/common.styles';
-
 import {useForm} from 'react-hook-form';
 import {InputControlled} from 'components/InputControlled';
 import {FormRules} from 'constants/formRules';
@@ -29,6 +28,26 @@ interface ILoginForm {
   email: string;
   password: string;
 }
+
+interface SocialIcon {
+  icon: NodeRequire;
+  link: string;
+}
+
+const socialIcons: Record<string, SocialIcon> = {
+  google: {
+    icon: require('../../assets/social/google.svg'),
+    link: 'https://www.google.com/',
+  },
+  facebook: {
+    icon: require('../../assets/social/facebook.svg'),
+    link: 'https://www.facebook.com/',
+  },
+  x: {
+    icon: require('../../assets/social/x.svg'),
+    link: 'https://www.twitter.com/',
+  },
+};
 
 export const LoginScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.login>
@@ -46,37 +65,41 @@ export const LoginScreen: React.FC<
       password: __DEV__ ? 'emilyspass' : '',
     },
   });
+
   const onSubmit = async (data: ILoginForm) => {
     console.log(data);
 
-    const res = await axios({
-      url: Endpoints.auth.login,
-      method: 'POST',
-      data: {
-        username: data.email.replace('@gmail.com', ''),
-        password: data.password,
-      },
-    });
-    if (res.status === 200) {
-      initUser(res.data);
-      showToast('success', 'Login succesful');
-
-      // navigation.navigate(Routes.verification, data);
-    } else {
-      showToast('error', 'Login failed');
+    try {
+      const res = await axios({
+        url: Endpoints.auth.login,
+        method: 'POST',
+        data: {
+          username: data.email.replace('@gmail.com', ''),
+          password: data.password,
+        },
+      });
+      if (res.status === 200) {
+        initUser(res.data);
+        showToast('success', 'Login successful');
+        // navigation.navigate(Routes.verification, data);
+      } else {
+        showToast('error', 'Login failed');
+      }
+    } catch (error) {
+      showToast('error', 'An error occurred');
+      console.error(error);
     }
   };
 
-  const renderSocialButtons = (icon: NodeRequire, index: number) => {
-    if (index === 0) {
-      return null;
-    }
-    return (
-      <Pressable key={index} onPress={() => Linking.openSettings()}>
-        <SvgImage source={icon} />
-      </Pressable>
-    );
-  };
+  const renderSocialButtons = (
+    icon: NodeRequire,
+    link: string,
+    index: number,
+  ) => (
+    <Pressable key={index} onPress={() => Linking.openURL(link)}>
+      <SvgImage source={icon} />
+    </Pressable>
+  );
 
   return (
     <ScrollView
@@ -107,7 +130,6 @@ export const LoginScreen: React.FC<
           name="password"
           label="Password"
           errorMessage={errors.password?.message}
-          // rules={FormRules.password}
           type="password"
           placeholder="Enter your password"
         />
@@ -120,7 +142,9 @@ export const LoginScreen: React.FC<
         />
         <Text style={CommonStyles.alginSelfCenter}>or sign in with</Text>
         <View style={styles.social}>
-          {Object.values(vectors).map(renderSocialButtons)}
+          {Object.values(socialIcons).map((social, index) =>
+            renderSocialButtons(social.icon, social.link, index),
+          )}
         </View>
         <TextLink
           content="Don't have an account? Sign up"
@@ -142,9 +166,6 @@ const vectors = {
     icon: require('../../assets/vectors/chevron-left.svg'),
     color: colors.ink.base,
   },
-  google: require('../../assets/social/google.svg'),
-  facebook: require('../../assets/social/facebook.svg'),
-  x: require('../../assets/social/x.svg'),
 };
 
 const styles = StyleSheet.create({

@@ -44,4 +44,5 @@ export enum Routes {
   productDetail = 'productDetail',
   popular = 'popularScreen',
   about = 'aboutScreen',
+  chooseCard = 'chooseCardScreen',
 }

@@ -5,32 +5,42 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { Buttons } from 'components/Buttons';
-import { BottomSheet } from 'components/BottomSheet';
-import { CommonStyles } from 'theme/common.styles';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
-import { IProduct, ProductCard } from 'components/ProductCard';
-import { Category } from 'components/Category';
+import React, {useCallback, useEffect, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {Buttons} from 'components/Buttons';
+import {BottomSheet} from 'components/BottomSheet';
+import {CommonStyles} from 'theme/common.styles';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {normalize} from 'theme/metrics';
+import {IProduct, ProductCard} from 'components/ProductCard';
+import {Category} from 'components/Category';
 import axios from 'axios';
+import {TypographyStyles} from 'theme/typography';
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
 export const PopularScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.popular>
-> = ({ navigation }) => {
+> = ({navigation}) => {
   const [status, setStatus] = useState<boolean>(false);
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const EndPoint = 'https://fakestoreapi.com/products';
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
+
+  const handleSelect = (index: number) => {
+    if (selectedIndex === index) {
+      setSelectedIndex(null);
+    } else {
+      setSelectedIndex(index);
+    }
+  };
 
   const renderItem = useCallback(
-    ({ item }: { item: IProduct }) => {
+    ({item}: {item: IProduct}) => {
       return (
         <ProductCard
           id={item.id}
@@ -39,7 +49,7 @@ export const PopularScreen: React.FC<
           price={item.price}
           category={item.category}
           onPress={() =>
-            navigation.navigate(Routes.productDetail, { product: item })
+            navigation.navigate(Routes.productDetail, {product: item})
           }
         />
       );
@@ -81,7 +91,7 @@ export const PopularScreen: React.FC<
       </View>
       <View style={styles.product}>
         {loading ? (
-          <ActivityIndicator size="large" color={colors.ink.base} />
+          <ActivityIndicator size="large" color={colors.white} />
         ) : (
           <View>
             <FlatList
@@ -95,7 +105,7 @@ export const PopularScreen: React.FC<
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     data={categories}
-                    renderItem={({ item }) => (
+                    renderItem={({item}) => (
                       <Category
                         style={styles.category}
                         item={item}
@@ -119,7 +129,20 @@ export const PopularScreen: React.FC<
       {status && (
         <BottomSheet
           buttonText="Apply"
+          titleStyle={{paddingTop: 26, paddingBottom: 16}}
           title="Sort By"
+          Children={sortBy.map((item, index) => (
+            <Navbar
+              key={index}
+              leftTextStyle={styles.checkTitle}
+              leftActionType="text"
+              rightActionType="checkBox"
+              checkSquare={true}
+              onRightPress={() => handleSelect(index)}
+              check={selectedIndex === index}
+              left={item}
+            />
+          ))}
           onPress={() => navigation.navigate(Routes.itemlistScreen)}
           setStatus={setStatus}
         />
@@ -127,7 +150,7 @@ export const PopularScreen: React.FC<
     </View>
   );
 };
-
+const sortBy = ['Lowest price', 'Relevance'];
 const styles = StyleSheet.create({
   navbar: {
     paddingHorizontal: normalize('horizontal', 18),
@@ -146,5 +169,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bdazzleBlue.base,
     color: colors.white,
   },
-  product: { marginTop: 72 },
+  product: {
+    marginTop: 72,
+  },
+  checkTitle: {
+    color: colors.ink.darkest,
+    ...TypographyStyles.RegularNoneRegular,
+  },
 });

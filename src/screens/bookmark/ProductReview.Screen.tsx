@@ -1,32 +1,32 @@
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import { useCustomStatusBar } from 'helpers/useCustomStatusBar';
-import { colors } from 'theme/colors';
-import { Rating } from 'components/Rating';
-import { IReview, reviews } from 'data/reviewData';
-import { normalize } from 'theme/metrics';
-import { Navbar } from 'components/Navbar';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { TypographyStyles } from 'theme/typography';
-import { Divider } from 'components/Divider';
-import { Buttons } from 'components/Buttons';
-import { BottomSheet } from 'components/BottomSheet';
-import { CommonStyles } from 'theme/common.styles';
-import { Input } from 'components/Input';
-import { launchImageLibrary } from 'react-native-image-picker';
+import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {colors} from 'theme/colors';
+import {Rating} from 'components/Rating';
+import {IReview, reviews} from 'data/reviewData';
+import {normalize} from 'theme/metrics';
+import {Navbar} from 'components/Navbar';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {TypographyStyles} from 'theme/typography';
+import {Divider} from 'components/Divider';
+import {Buttons} from 'components/Buttons';
+import {BottomSheet} from 'components/BottomSheet';
+import {CommonStyles} from 'theme/common.styles';
+import {Input} from 'components/Input';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 type Props = NativeStackScreenProps<NavigationParamList, Routes.review>;
 type TImage = string | NodeRequire | null;
-export const ProductReviewScreen: React.FC<Props> = ({ navigation }) => {
+
+export const ProductReviewScreen: React.FC<Props> = ({navigation}) => {
   const [status, setStatus] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<TImage>();
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState<string>('');
   const [reviewList, setReviewList] = useState<IReview[]>(reviews);
 
-  const renderReview = ({ item }: { item: IReview }) => {
+  const renderReview = ({item}: {item: IReview}) => {
     return (
       <View style={styles.review}>
         <View style={styles.reviewContainer}>
@@ -78,13 +78,12 @@ export const ProductReviewScreen: React.FC<Props> = ({ navigation }) => {
     setReviewList([...reviewList, newReview]);
     setRating(newReview.rate);
     setComment(newReview.comment);
-    newReview.avatar;
   };
+
   const handleOnPress = () => {
     setStatus(false);
     addReview();
   };
-  useCustomStatusBar({ backgroundColor: colors.white, barStyle: 'dark-content' });
 
   return (
     <View style={styles.container}>
@@ -102,6 +101,7 @@ export const ProductReviewScreen: React.FC<Props> = ({ navigation }) => {
       <View style={styles.reviewList}>
         <FlatList
           numColumns={1}
+          contentContainerStyle={{paddingBottom: 50}}
           renderItem={renderReview}
           data={reviewList}
           keyExtractor={(item, index) => index.toString()}
@@ -126,7 +126,7 @@ export const ProductReviewScreen: React.FC<Props> = ({ navigation }) => {
                 onRateChange={(rateLength: number) => setRating(rateLength)}
                 size={36}
                 style={CommonStyles.alginSelfCenter}
-                starStyle={{ gap: 16 }}
+                starStyle={{gap: 16}}
               />
               <Text
                 style={[
@@ -136,7 +136,7 @@ export const ProductReviewScreen: React.FC<Props> = ({ navigation }) => {
                 Please share your opinion about the product
               </Text>
               <Input
-                inputStyle={{ height: 100 }}
+                inputStyle={{height: 100}}
                 setValue={setComment}
                 multiLine={true}
                 value={comment}
@@ -153,7 +153,11 @@ export const ProductReviewScreen: React.FC<Props> = ({ navigation }) => {
 
                 <Image
                   style={styles.defaultImage}
-                  source={require('assets/images/ImagesRatio.png')}
+                  source={
+                    selectedImage
+                      ? {uri: selectedImage}
+                      : require('assets/images/ImagesRatio.png')
+                  }
                 />
               </View>
             </View>
@@ -173,15 +177,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   nav: {
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
   },
   button: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 66,
     zIndex: 1,
     alignSelf: 'center',
     gap: 24,
-    // marginBottom: 40,
     paddingHorizontal: normalize('horizontal', 32),
   },
   buttonInactive: {
@@ -205,7 +208,6 @@ const styles = StyleSheet.create({
   },
   reviewList: {
     position: 'relative',
-    marginBottom: 100,
   },
   name: {
     ...TypographyStyles.RegularTightSemiBold,
@@ -232,7 +234,7 @@ const styles = StyleSheet.create({
   },
   children: {
     gap: 32,
-    marginVertical: normalize('vertical', 32),
+    marginTop: 32,
   },
   galeryBorder: {
     borderWidth: 1,

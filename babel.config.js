@@ -26,8 +26,8 @@ module.exports = {
           screens: './src/screens',
           theme: './src/theme',
           types: './src/types',
-          helpers: './src/helpers'
-          // constants: './src/constants',
+          helpers: './src/helpers',
+          constants: './src/constants',
           // hooks: './src/hooks',
           // store: './src/store',
           // utils: './src/utils',

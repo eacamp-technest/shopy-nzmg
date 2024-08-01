@@ -6,7 +6,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
-import {useCustomStatusBar} from 'helpers/useCustomStatusBar';
 import {colors} from 'theme/colors';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {NavigationParamList} from 'types/navigation.types';
@@ -22,6 +21,7 @@ import {normalize} from 'theme/metrics';
 import {IProduct, ProductCard} from 'components/ProductCard';
 import axios from 'axios';
 import {Buttons} from 'components/Buttons';
+import {useStatusBar} from 'helpers/useStatusBar';
 interface IData {
   id?: number;
   title?: string;
@@ -107,10 +107,7 @@ export const BookmarkScreen: React.FC<
     allItems: AllItems,
     boards: Boards,
   });
-  useCustomStatusBar({
-    backgroundColor: colors.bdazzleBlue.darkest,
-    barStyle: 'light-content',
-  });
+  useStatusBar('light-content', colors.bdazzleBlue.darkest);
   useEffect(() => {
     fetch(EndPoints);
   }, []);
