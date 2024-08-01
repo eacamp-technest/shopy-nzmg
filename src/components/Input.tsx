@@ -7,14 +7,15 @@ import {
   StyleProp,
   ViewStyle,
   Pressable,
-  TextStyle,
+  FlatList,
 } from 'react-native';
-import React, {useMemo, useState} from 'react';
-import {SvgImage} from './SvgImages';
-import {TypographyStyles} from 'theme/typography';
-import {colors} from 'theme/colors';
-import {standardHitSlopSize} from 'theme/consts.styles';
-import {CommonStyles} from 'theme/common.styles';
+import React, { useMemo, useState } from 'react';
+import { SvgImage } from './SvgImages';
+import { TypographyStyles } from 'theme/typography';
+import { colors } from 'theme/colors';
+import { standardHitSlopSize } from 'theme/consts.styles';
+import { CommonStyles } from 'theme/common.styles';
+import { ICountry } from 'data/countries';
 
 export type TIcon = {
   source: NodeRequire;
@@ -23,6 +24,7 @@ export type TIcon = {
   height?: number;
   position?: 'left' | 'right';
 };
+
 export interface IInput {
   type?: 'text' | 'phone' | 'password' | 'select';
   label?: string;
@@ -40,7 +42,9 @@ export interface IInput {
   onFocus?: () => void;
   onBlur?: () => void;
   onInputPress?: () => void;
-  noBorder?: boolean;
+  onIconPress?: () => void;
+  options?: ICountry[];
+  onSelect?: (option: ICountry) => void;
   multiLine?: boolean;
 }
 export const Input: React.FC<IInput> = ({
@@ -48,20 +52,23 @@ export const Input: React.FC<IInput> = ({
   type = 'text',
   setValue,
   icon,
-  noBorder,
   inputStyle,
   multiLine,
+  options,
+  onSelect,
+  onIconPress,
   ...props
 }) => {
   const [focused, setFocused] = useState<boolean>(false);
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(
     type === 'password',
   );
+  const [open, setOpen] = useState<boolean>(false)
 
   const isMoreIcon = useMemo(
     () =>
       ('position' in (icon ?? {}) && (icon as TIcon)?.position === 'right') ||
-      type === 'password',
+      type === 'password' || type === 'select',
     [icon, type],
   );
 
@@ -85,6 +92,23 @@ export const Input: React.FC<IInput> = ({
         </Pressable>
       );
     }
+    if (type === 'select') {
+      return (
+        <Pressable onPress={() => setOpen(state => !state)} hitSlop={standardHitSlopSize}>
+          <SvgImage
+            source={
+              open
+                ? require('../assets/vectors/chevron-up.svg')
+                : require('../assets/vectors/chevron-down.svg')
+            }
+            color={colors.ink.base}
+            width={24}
+            height={24}
+
+          />
+        </Pressable>
+      );
+    }
     if (!icon) {
       return null;
     }
@@ -99,12 +123,14 @@ export const Input: React.FC<IInput> = ({
       );
     }
     return (
-      <SvgImage
-        source={icon}
-        color={props.disabled ? colors.sky.base : colors.ink.base}
-      />
+      <Pressable onPress={onIconPress}>
+        <SvgImage
+          source={icon}
+          color={props.disabled ? colors.sky.base : colors.ink.base}
+        />
+      </Pressable>
     );
-  }, [icon, props.disabled, secureTextEntry, type]);
+  }, [icon, props.disabled, secureTextEntry, open, type]);
 
   const handleOnFocused = () => {
     setFocused(true);
@@ -113,6 +139,12 @@ export const Input: React.FC<IInput> = ({
   const handleOnBlur = () => {
     setFocused(false);
     props?.onBlur?.();
+  };
+
+  const handleSelect = (option: ICountry) => {
+    setValue?.(option.label);
+    setOpen(false);
+    onSelect?.(option);
   };
 
   return (
@@ -126,7 +158,6 @@ export const Input: React.FC<IInput> = ({
           focused && styles.focused,
           props.disabled && styles.wrapperDisabled,
           isMoreIcon && CommonStyles.rowReverse,
-          noBorder && styles.noBorder,
           inputStyle,
         ]}>
         {renderIcon}
@@ -149,6 +180,19 @@ export const Input: React.FC<IInput> = ({
           style={styles.input}
         />
       </View>
+      {type === 'select' && open && (
+        <View style={styles.dropdown}>
+          <FlatList
+            data={options}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => handleSelect(item)}>
+                <Text style={styles.option}>{item.label}</Text>
+              </Pressable>
+            )}
+            keyExtractor={(item) => item.value}
+            style={styles.flatlist}
+          />
+        </View>)}
       {props.caption || props.errorMessage ? (
         <Text
           style={[
@@ -199,7 +243,24 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     ...TypographyStyles.RegularNoneRegular,
   },
-  noBorder: {
-    borderWidth: 0,
+  flatlist: {
+    maxHeight: 200,
+    gap: 6
   },
+  dropdown: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    borderWidth: 1,
+    borderColor: colors.sky.light,
+    borderRadius: 8,
+    zIndex: 999,
+    backgroundColor: colors.white,
+  },
+  option: {
+    ...TypographyStyles.RegularNoneRegular,
+    color: colors.ink.base,
+    paddingHorizontal: 16,
+    paddingBottom: 16
+  }
 });

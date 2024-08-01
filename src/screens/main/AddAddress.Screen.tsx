@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useRef, useState } from 'react'
 import { NavigationParamList } from 'types/navigation.types'
 import { Routes } from 'router/routes'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
@@ -11,6 +11,9 @@ import { useForm } from 'react-hook-form'
 import { normalize } from 'theme/metrics'
 import { TypographyStyles } from 'theme/typography'
 import { Divider } from 'components/Divider'
+import { Buttons } from 'components/Buttons'
+import PhoneInput from 'react-native-phone-number-input'
+import { countries, ICountry } from 'data/countries'
 
 interface IAddress {
     fullName: string;
@@ -22,6 +25,7 @@ interface IAddress {
 export const AddAddressScreen: React.FC<
     NativeStackScreenProps<NavigationParamList, Routes.addAddress>
 > = ({ navigation }) => {
+    const label = "Country"
     const {
         control,
         handleSubmit,
@@ -34,6 +38,18 @@ export const AddAddressScreen: React.FC<
             mobile: '055 555 55 55'
         },
     });
+
+    const onSubmit = (data: IAddress) => {
+        console.log('Data', data);
+        navigation.navigate(Routes.yourAddress)
+
+    }
+
+    const [value, setValue] = useState("");
+    const [formattedValue, setFormattedValue] = useState("");
+    const phoneInput = useRef<PhoneInput>(null);
+    const [country, setCountry] = useState<ICountry | null>(null);
+
     return (
         <View style={styles.container}>
             <Navbar
@@ -56,26 +72,73 @@ export const AddAddressScreen: React.FC<
                     type="text"
                     placeholder="Enter Your Name"
                 />
-                <InputControlled
-                    control={control}
-                    name="mobile"
-                    label="Mobile"
-                    errorMessage={errors.mobile?.message}
-                    rules={FormRules.mobile}
-                    type='phone'
-                    maxLength={16}
-                    keyboardType="number-pad"
-                    placeholder="Enter Your Mobile Number"
-                />
+                <View style={styles.select}>
+                    <Text style={styles.label}>Mobile</Text>
+                    <PhoneInput
+                        ref={phoneInput}
+                        defaultValue={value}
+                        defaultCode="AZ"
+                        layout="first"
+                        placeholder='Enter Your Mobile'
+                        onChangeText={(text) => {
+                            setValue(text);
+                        }}
+                        onChangeFormattedText={(text) => {
+                            setFormattedValue(text);
+                        }}
+                        textInputStyle={{ ...TypographyStyles.RegularNoneRegular, color: colors.ink.lighter }}
+                        codeTextStyle={{ ...TypographyStyles.InterRegular, color: colors.ink.base }}
+                        containerStyle={styles.containerStyle}
+                        textContainerStyle={styles.textContainerStyle}
+                    />
+                </View>
             </View>
             <Divider height='L' />
+            <Text style={styles.details}>ADDRESS DETAILS</Text>
+            <View style={styles.inputs}>
+                <InputControlled
+                    control={control}
+                    type='select'
+                    name="country"
+                    label="Country"
+                    placeholder="Azerbaijan"
+                    options={countries}
+                    onSelect={(option) => setCountry(option)}
+                // onIconPress={setCountry()}
+                />
+                <InputControlled
+                    control={control}
+                    name="address"
+                    label="Address"
+                    // errorMessage={errors.fullName?.message}
+                    placeholder="Enter Your Address"
+                />
+            </View>
+            <Buttons style={styles.button} text='Deliver to this address' onPress={handleSubmit(onSubmit)
+            } />
         </View>
     )
 }
 
+const vectors = {
+    down: {
+        source: require('../../assets/vectors/chevron-down.svg'),
+        width: 24,
+        height: 24,
+        color: colors.ink.base,
+        position: 'right'
+    },
+    up: {
+        source: require('../../assets/vectors/chevron-up.svg'),
+        width: 24,
+        height: 24,
+        color: colors.ink.base,
+        position: 'right'
+    },
+};
+
 const styles = StyleSheet.create({
     container: {
-
     },
     nav: {
         paddingHorizontal: normalize('horizontal', 24)
@@ -92,5 +155,27 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         marginBottom: 16,
         marginTop: 32
+    },
+    button: {
+        marginHorizontal: normalize('horizontal', 24),
+        marginTop: 54
+    },
+    containerStyle: {
+        borderRadius: 8,
+        width: 341,
+        borderColor: colors.sky.light,
+        borderWidth: 1,
+    },
+    textContainerStyle: {
+        backgroundColor: colors.white,
+        borderRadius: 8,
+        paddingVertical: 8
+    },
+    label: {
+        ...TypographyStyles.RegularNoneSemiBold,
+        color: colors.ink.base,
+    },
+    select: {
+        gap: 12
     }
 })
