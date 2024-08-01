@@ -50,6 +50,7 @@ interface INavBar {
   rootStyle?: StyleProp<ViewStyle>;
   titleColor?: string;
   check?: boolean;
+  checkSquare?: boolean;
 }
 
 export const Navbar: React.FC<INavBar> = ({
@@ -67,6 +68,7 @@ export const Navbar: React.FC<INavBar> = ({
   leftTextStyle,
   onLeftPress,
   onRightPress,
+  checkSquare,
   titleColor,
 }) => {
   if (type === 'large') {
@@ -178,7 +180,12 @@ export const Navbar: React.FC<INavBar> = ({
           />
         );
       case 'checkBox':
-        return <CheckBox setCheck={check} />;
+        return (
+          <CheckBox
+            types={checkSquare ? 'square' : 'circle'}
+            setCheck={check}
+          />
+        );
 
       default:
         null;

@@ -112,7 +112,11 @@ export const BottomSheet: React.FC<IBottomSheet> = ({
               <View style={[styles.handle, CommonStyles.alginSelfCenter]} />
               <Text style={[TypographyStyles.title3, titleStyle]}>{title}</Text>
               {Children}
-              <Buttons onPress={onPress} text={buttonText} />
+              <Buttons
+                style={styles.button}
+                onPress={onPress}
+                text={buttonText}
+              />
               <View style={styles.foot} />
             </Animated.View>
           </PanGestureHandler>
@@ -151,6 +155,9 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
     borderTopLeftRadius: 16,
     paddingHorizontal: normalize('horizontal', 24),
+  },
+  button: {
+    marginTop: 32,
   },
   foot: {marginTop: 20},
 });

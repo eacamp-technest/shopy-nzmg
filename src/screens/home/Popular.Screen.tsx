@@ -18,6 +18,7 @@ import {normalize} from 'theme/metrics';
 import {IProduct, ProductCard} from 'components/ProductCard';
 import {Category} from 'components/Category';
 import axios from 'axios';
+import {TypographyStyles} from 'theme/typography';
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
 export const PopularScreen: React.FC<
@@ -28,6 +29,15 @@ export const PopularScreen: React.FC<
   const [loading, setLoading] = useState(true);
   const EndPoint = 'https://fakestoreapi.com/products';
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
+
+  const handleSelect = (index: number) => {
+    if (selectedIndex === index) {
+      setSelectedIndex(null);
+    } else {
+      setSelectedIndex(index);
+    }
+  };
 
   const renderItem = useCallback(
     ({item}: {item: IProduct}) => {
@@ -119,7 +129,20 @@ export const PopularScreen: React.FC<
       {status && (
         <BottomSheet
           buttonText="Apply"
+          titleStyle={{paddingTop: 26, paddingBottom: 16}}
           title="Sort By"
+          Children={sortBy.map((item, index) => (
+            <Navbar
+              key={index}
+              leftTextStyle={styles.checkTitle}
+              leftActionType="text"
+              rightActionType="checkBox"
+              checkSquare={true}
+              onRightPress={() => handleSelect(index)}
+              check={selectedIndex === index}
+              left={item}
+            />
+          ))}
           onPress={() => navigation.navigate(Routes.itemlistScreen)}
           setStatus={setStatus}
         />
@@ -127,7 +150,7 @@ export const PopularScreen: React.FC<
     </View>
   );
 };
-
+const sortBy = ['Lowest price', 'Relevance'];
 const styles = StyleSheet.create({
   navbar: {
     paddingHorizontal: normalize('horizontal', 18),
@@ -146,5 +169,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.bdazzleBlue.base,
     color: colors.white,
   },
-  product: {marginTop: 72},
+  product: {
+    marginTop: 72,
+  },
+  checkTitle: {
+    color: colors.ink.darkest,
+    ...TypographyStyles.RegularNoneRegular,
+  },
 });

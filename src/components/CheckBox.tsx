@@ -1,17 +1,31 @@
-import {View, Pressable, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import {View, StyleSheet} from 'react-native';
+import React from 'react';
 import {CommonStyles} from 'theme/common.styles';
 import {colors} from 'theme/colors';
+import {SvgImage} from './SvgImages';
 
-export const CheckBox = ({setCheck}: {setCheck: boolean}) => {
+interface ICheckBox {
+  setCheck: boolean;
+  types?: 'circle' | 'square';
+}
+
+export const CheckBox: React.FC<ICheckBox> = ({setCheck, types = 'circle'}) => {
   return (
     <View
       style={[
         styles.checkbox,
         setCheck ? styles.active : styles.passive,
-        CommonStyles.alignJustifyCenter,
+        types === 'square' && styles.square,
       ]}>
-      <View style={styles.circle}></View>
+      {types === 'circle' && setCheck ? (
+        <View style={styles.circle} />
+      ) : types === 'square' && setCheck ? (
+        <SvgImage
+          width={15}
+          height={15}
+          source={require('/assets/vectors/check.svg')}
+        />
+      ) : null}
     </View>
   );
 };
@@ -21,7 +35,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue.base,
   },
   passive: {
-    backgroundColor: colors.sky.base,
+    backgroundColor: colors.white,
   },
   circle: {
     width: 8,
@@ -31,9 +45,13 @@ const styles = StyleSheet.create({
   },
   checkbox: {
     borderWidth: 1,
-    borderColor: `${colors.sky.base}`,
+    borderColor: colors.sky.base,
     width: 24,
     height: 24,
     borderRadius: 30,
+    ...CommonStyles.alignJustifyCenter,
+  },
+  square: {
+    borderRadius: 4,
   },
 });

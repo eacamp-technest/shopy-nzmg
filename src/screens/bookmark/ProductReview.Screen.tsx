@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
   },
   children: {
     gap: 32,
-    marginVertical: normalize('vertical', 32),
+    marginTop: 32,
   },
   galeryBorder: {
     borderWidth: 1,
