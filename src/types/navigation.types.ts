@@ -36,6 +36,8 @@ export type NavigationParamList = {
   [Routes.test]: undefined;
   [Routes.cart]: undefined;
   [Routes.addAddress]: undefined;
+  [Routes.yourAddress]: undefined;
+  [Routes.tester]: undefined;
   [Routes.review]: undefined;
   [Routes.home]: undefined;
   [Routes.bookmark]: undefined;

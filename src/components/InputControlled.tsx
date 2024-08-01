@@ -34,7 +34,6 @@ export const InputControlled: React.FC<IInputController> = ({
             disabled={disabledControl}
             control={control}
             name={name as string}
-
             rules={rules}
             defaultValue={defaultValue}
             render={({ field }) => (

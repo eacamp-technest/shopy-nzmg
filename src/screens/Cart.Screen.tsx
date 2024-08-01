@@ -103,13 +103,14 @@ export const CartScreen: React.FC<
                     </Text>
                     <SvgImage
                         isPressable
-                        onPress={() => navigation.navigate(Routes.addAddress)}
+                        onPress={() => console.log("payment")
+                        }
                         source={require('../assets/vectors/chevron-right.svg')}
                         color={colors.ink.darkest}
                     />
                 </Pressable>
                 <Text style={styles.text}>DELIVERY ADDRESS</Text>
-                <Input type='select' value={address} setValue={setAddress} inputStyle={{ flexDirection: 'row-reverse', marginBottom: 32 }} placeholder='Add postal address' icon={require('../assets/vectors/chevron-right.svg')} />
+                <Input onIconPress={() => navigation.navigate(Routes.addAddress)} value={address} setValue={setAddress} inputStyle={{ flexDirection: 'row-reverse', marginBottom: 32 }} placeholder='Add postal address' icon={require('../assets/vectors/chevron-right.svg')} />
                 <Divider height="M" />
                 <View style={styles.subtotal}>
                     <Text>Subtotal ({totalItems} items)</Text>
