@@ -5,7 +5,7 @@ export interface ISettings {
   id: string;
   title: string;
   icon: NodeRequire;
-  onPress?: string;
+  onPress?: any;
 }
 
 const {logout} = useUserStoreActions();
@@ -27,13 +27,13 @@ export const SETTINGS: ISettings[] = [
     id: '3',
     title: 'Address',
     icon: require('../assets/vectors/map-pin.svg'),
-    onPress: Routes.profile,
+    onPress: Routes.addAddress,
   },
   {
     id: '4',
     title: 'Payment',
     icon: require('../assets/vectors/shopping-cart.svg'),
-    onPress: Routes.profile,
+    onPress: Routes.cart,
   },
   {
     id: '5',

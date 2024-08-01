@@ -13,6 +13,7 @@ import {Input} from 'components/Input';
 import {Buttons} from 'components/Buttons';
 import {useCartStore} from 'store/cart/cart.store';
 import {useUserStore} from 'store/user/user.store';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const CartScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.cart>
@@ -61,7 +62,7 @@ export const CartScreen: React.FC<
     ),
     [deleteItemFromCart, navigation],
   );
-
+  useStatusBar('dark-content', colors.white);
   return (
     <View style={styles.container}>
       <Navbar
