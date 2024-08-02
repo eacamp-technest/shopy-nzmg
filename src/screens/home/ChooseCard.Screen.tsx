@@ -42,6 +42,7 @@ export const ChooseCardScreen: React.FC<
         titleColor={colors.ink.base}
         leftActionType="icon"
         left={require('assets/vectors/left.svg')}
+        onLeftPress={() => navigation.goBack()}
         mode="light"
         title="Choose Payment"
       />

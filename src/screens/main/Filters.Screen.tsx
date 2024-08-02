@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {useCustomStatusBar} from 'helpers/useStatusBar';
 import {colors} from 'theme/colors';
 import {PriceBar} from 'components/Filters';
 import {
@@ -17,6 +16,7 @@ import {normalize} from 'theme/metrics';
 import {Category} from 'components/Category';
 import {Buttons} from 'components/Buttons';
 import {Divider} from 'components/Divider';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 const colorArr = [
@@ -30,22 +30,20 @@ const colorArr = [
 const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
 
 export const FilterScreen = () => {
-  useCustomStatusBar({backgroundColor: colors.white, barStyle: 'dark-content'});
-
   const navigation = useNavigation();
 
   const [selectedMinPrice, setSelectedMinPrice] = useState(50);
   const [selectedMaxPrice, setSelectedMaxPrice] = useState(150);
-
+  const [selectedSize, setSelectedSize] = useState<string | null>('S');
+  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const handlePriceChange = (priceRange: {min: number; max: number}) => {
     console.log(
       `Price range changed: ${priceRange.min.toFixed(2)} - ${priceRange.max.toFixed(2)}`,
     );
   };
 
-  const [selectedSize, setSelectedSize] = useState<string | null>('S');
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  useStatusBar('dark-content', colors.white);
 
   return (
     <SafeAreaView style={styles.container}>
