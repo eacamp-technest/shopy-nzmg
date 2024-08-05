@@ -29,7 +29,10 @@ export const CheckEmailScreen: React.FC<
       </View>
       <Buttons
         text="Open email app"
-        onPress={() => navigation.navigate(Routes.newPassword)}
+        onPress={() => {
+          navigation.pop();
+          navigation.navigate(Routes.newPassword);
+        }}
         style={styles.button}
       />
       <Buttons

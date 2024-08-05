@@ -136,7 +136,10 @@ export const OrderScreen: React.FC<
       />
       <Buttons
         text="Cleaner"
-        onPress={() => navigation.navigate(Routes.success)}
+        onPress={() => {
+          navigation.pop();
+          navigation.navigate(Routes.success);
+        }}
         style={styles.button}
       />
     </SafeAreaProvider>

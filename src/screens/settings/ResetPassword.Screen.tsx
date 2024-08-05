@@ -28,8 +28,8 @@ export const ResetPasswordScreen: React.FC<
       </View>
       <Buttons
         onPress={() => {
+          navigation.pop(2);
           navigation.navigate(Routes.search);
-          navigation.pop();
         }}
         text="Continue shopping"
       />

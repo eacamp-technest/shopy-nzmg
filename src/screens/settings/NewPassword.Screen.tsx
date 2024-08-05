@@ -41,7 +41,10 @@ export const NewPasswordScreen: React.FC<
         />
       </View>
       <Buttons
-        onPress={() => navigation.navigate(Routes.resetPassword)}
+        onPress={() => {
+          navigation.pop();
+          navigation.navigate(Routes.resetPassword);
+        }}
         text="Reset password"
       />
     </View>

@@ -32,8 +32,8 @@ export const SETTINGS: ISettings[] = [
   {
     id: '4',
     title: 'Payment',
-    icon: require('../assets/vectors/shopping-cart.svg'),
-    onPress: Routes.cart,
+    icon: require('../assets/vectors/payment.svg'),
+    onPress: Routes.chooseCard,
   },
   {
     id: '5',
