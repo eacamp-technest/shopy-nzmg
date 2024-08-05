@@ -6,74 +6,107 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
-import {IProduct, ProductCard} from 'components/ProductCard';
-import {Router, useNavigation} from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { IProduct, ProductCard } from 'components/ProductCard';
 import axios from 'axios';
-import {colors} from 'theme/colors';
-import {Navbar} from 'components/Navbar';
-import {TypographyStyles} from 'theme/typography';
-import {Routes} from 'router/routes';
-import {IBrand, brands} from 'data/brands';
-import {normalize} from 'theme/metrics';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationParamList} from 'types/navigation.types';
+import { colors } from 'theme/colors';
+import { Navbar } from 'components/Navbar';
+import { TypographyStyles } from 'theme/typography';
+import { Routes } from 'router/routes';
+import { IBrand, brands } from 'data/brands';
+import { normalize } from 'theme/metrics';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationParamList } from 'types/navigation.types';
 
 export const ItemListScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.itemlistScreen>
-> = ({navigation}) => {
+> = ({ navigation, route }) => {
+  const { filters, sortCriteria } = route.params || {};
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const EndPoints = 'https://fakestoreapi.com/products';
 
-  const renderBrand = ({item}: {item: IBrand}) => {
-    return (
-      <View style={styles.brandContainer}>
-        <Image style={styles.img} source={item.image} />
-        <Text style={styles.text}>{item.name}</Text>
-      </View>
-    );
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(EndPoints);
+      let filteredProducts = response.data;
+
+      if (filters) {
+        if (filters.minPrice !== null) {
+          filteredProducts = filteredProducts.filter((product: IProduct) => product.price >= filters.minPrice);
+        }
+        if (filters.maxPrice !== null) {
+          filteredProducts = filteredProducts.filter((product: IProduct) => product.price <= filters.maxPrice);
+        }
+        if (filters.size) {
+          filteredProducts = filteredProducts.filter((product: IProduct) => product.size === filters.size);
+        }
+        // if (filters.color) {
+        //   filteredProducts = filteredProducts.filter((product: IProduct) => product.color === filters.color);
+        // }
+        if (filters.category) {
+          filteredProducts = filteredProducts.filter((product: IProduct) => product.category === filters.category);
+        }
+      }
+
+      if (sortCriteria === 'lowestPrice') {
+        filteredProducts.sort((a: IProduct, b: IProduct) => a.price - b.price);
+      } else if (sortCriteria === 'highestPrice') {
+        filteredProducts.sort((a: IProduct, b: IProduct) => b.price - a.price);
+      }
+
+      setProducts(filteredProducts);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
-  const renderList = useCallback(
-    ({item}: {item: IProduct}) => {
-      return (
-        <ProductCard
-          id={item.id}
-          size="s"
-          title={item.title}
-          image={item.image}
-          horizontal={true}
-          price={item.price}
-          onPress={() =>
-            navigation.navigate(Routes.productDetail, {product: item})
-          }
-        />
-      );
-    },
-    [navigation],
-  );
-  const fetch = async (data: any) => {
-    await axios({
-      url: data,
-      method: 'GET',
-    })
-      .then(response => {
-        setProducts(response.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
+
   useEffect(() => {
-    fetch(EndPoints);
-  }, []);
+    fetchProducts();
+  }, [filters, sortCriteria]);
+
+  const renderBrand = ({ item }: { item: IBrand }) => (
+    <View style={styles.brandContainer}>
+      <Image style={styles.img} source={item.image} />
+      <Text style={styles.text}>{item.name}</Text>
+    </View>
+  );
+
+  const renderList = useCallback(
+    ({ item }: { item: IProduct }) => (
+      <ProductCard
+        id={item.id}
+        size="s"
+        title={item.title}
+        image={item.image}
+        horizontal={true}
+        price={item.price}
+        onPress={() =>
+          navigation.navigate(Routes.productDetail, { product: item })
+        }
+      />
+    ),
+    [navigation]
+  );
+
+  const getTitle = () => {
+    switch (sortCriteria) {
+      case 'lowestPrice':
+        return 'Sorted by Lowest Price';
+      case 'highestPrice':
+        return 'Sorted by Highest Price';
+      default:
+        return 'Products';
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Navbar
         mode="light"
-        title="SHOES"
+        title={getTitle()}
         titleColor={colors.ink.base}
         left={vectors.leftVector}
         leftActionType="icon"
@@ -84,7 +117,7 @@ export const ItemListScreen: React.FC<
       />
       <View>
         <Navbar
-          style={{flex: 0.7}}
+          style={{ flex: 0.7 }}
           left={'BRAND'}
           leftTextStyle={styles.leftStyle}
           leftActionType="text"
@@ -111,11 +144,11 @@ export const ItemListScreen: React.FC<
             renderItem={renderList}
             horizontal={false}
             showsVerticalScrollIndicator={false}
-            keyExtractor={item => item.id.toString()}
+            keyExtractor={(item) => item.id.toString()}
             ListHeaderComponent={
               <>
                 <Navbar
-                  style={{flex: 0.7}}
+                  style={{ flex: 0.7 }}
                   left={'PRODUCT'}
                   leftTextStyle={styles.leftStyle}
                   leftActionType="text"
@@ -131,6 +164,7 @@ export const ItemListScreen: React.FC<
     </View>
   );
 };
+
 const vectors = {
   leftVector: {
     icon: require('assets/vectors/left.svg'),
@@ -141,6 +175,7 @@ const vectors = {
     color: colors.ink.base,
   },
 };
+
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 24,
@@ -166,7 +201,6 @@ const styles = StyleSheet.create({
     color: colors.ink.base,
     marginTop: normalize('vertical', 12),
   },
-
   products: {
     marginTop: normalize('vertical', 10),
   },

@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {colors} from 'theme/colors';
-import {PriceBar} from 'components/Filters';
+import React, { useState } from 'react';
+import { colors } from 'theme/colors';
+import { PriceBar } from 'components/Filters';
 import {
   SafeAreaView,
   View,
@@ -9,14 +9,16 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import {TypographyStyles} from 'theme/typography';
-import {Navbar} from 'components/Navbar';
-import {useNavigation} from '@react-navigation/native';
-import {normalize} from 'theme/metrics';
-import {Category} from 'components/Category';
-import {Buttons} from 'components/Buttons';
-import {Divider} from 'components/Divider';
-import {useStatusBar} from 'helpers/useStatusBar';
+import { TypographyStyles } from 'theme/typography';
+import { Navbar } from 'components/Navbar';
+import { normalize } from 'theme/metrics';
+import { Category } from 'components/Category';
+import { Buttons } from 'components/Buttons';
+import { Divider } from 'components/Divider';
+import { useStatusBar } from 'helpers/useStatusBar';
+import { Routes } from 'router/routes';
+import { NavigationParamList } from 'types/navigation.types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 const colorArr = [
@@ -27,20 +29,42 @@ const colorArr = [
   colors.bdazzleBlue.base,
   colors.sky.dark,
 ];
-const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
+const categories: string[] = ['All', 'Women', 'Men', 'Electronics', 'Jewelery', 'New'];
 
-export const FilterScreen = () => {
-  const navigation = useNavigation();
+export const FilterScreen: React.FC<
+  NativeStackScreenProps<NavigationParamList, Routes.cart>
+> = ({ navigation }) => {
 
-  const [selectedMinPrice, setSelectedMinPrice] = useState(50);
-  const [selectedMaxPrice, setSelectedMaxPrice] = useState(150);
+  const [selectedMinPrice, setSelectedMinPrice] = useState(7);
+  const [selectedMaxPrice, setSelectedMaxPrice] = useState(1000);
   const [selectedSize, setSelectedSize] = useState<string | null>('S');
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const handlePriceChange = (priceRange: {min: number; max: number}) => {
+
+  const handlePriceChange = (priceRange: { min: number; max: number }) => {
     console.log(
       `Price range changed: ${priceRange.min.toFixed(2)} - ${priceRange.max.toFixed(2)}`,
     );
+  };
+
+  const categoryMap: { [key: string]: string } = {
+    Women: "women's clothing",
+    Men: "men's clothing",
+    Electronics: 'electronics',
+    Jewelery: 'jewelery',
+    New: 'new',
+  };
+
+  const applyFilters = () => {
+    navigation.navigate(Routes.itemlistScreen, {
+      filters: {
+        minPrice: selectedMinPrice,
+        maxPrice: selectedMaxPrice,
+        // size: selectedSize,
+        // color: selectedColor,
+        category: selectedCategory === 'All' ? null : categoryMap[selectedCategory],
+      },
+    });
   };
 
   useStatusBar('dark-content', colors.white);
@@ -66,7 +90,7 @@ export const FilterScreen = () => {
       </View>
       <PriceBar
         minPrice={0}
-        maxPrice={200}
+        maxPrice={1200}
         selectedMinPrice={selectedMinPrice}
         setSelectedMinPrice={setSelectedMinPrice}
         selectedMaxPrice={selectedMaxPrice}
@@ -92,7 +116,7 @@ export const FilterScreen = () => {
                   borderColor: colors.black,
                 },
               ]}>
-              <View style={[styles.circle, {backgroundColor: color}]} />
+              <View style={[styles.circle, { backgroundColor: color }]} />
             </TouchableOpacity>
           );
         })}
@@ -107,12 +131,12 @@ export const FilterScreen = () => {
               onPress={() => setSelectedSize(size)}
               style={[
                 styles.sizeValueContainer,
-                selectedSize === size && {backgroundColor: colors.blue.base},
+                selectedSize === size && { backgroundColor: colors.blue.base },
               ]}>
               <Text
                 style={[
                   styles.sizeValue,
-                  selectedSize === size && {color: colors.white},
+                  selectedSize === size && { color: colors.white },
                 ]}>
                 {size}
               </Text>
@@ -125,7 +149,7 @@ export const FilterScreen = () => {
       <FlatList
         showsHorizontalScrollIndicator={false}
         data={categories}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <Category
             item={item}
             backgroundColor={colors.blue.base}
@@ -136,14 +160,14 @@ export const FilterScreen = () => {
         horizontal={true}
         keyExtractor={item => item}
       />
-      <Buttons text="Apply Filters" />
+      <Buttons text="Apply Filters" onPress={applyFilters} />
     </SafeAreaView>
   );
 };
 
 const vectors = {
   leftVector: {
-    icon: require('../../assets/vectors/chevron-left.svg'),
+    icon: require('assets/vectors/chevron-left.svg'),
     color: colors.ink.base,
   },
 };
