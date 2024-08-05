@@ -25,7 +25,7 @@ export const CartScreen: React.FC<
   } = useCartStore(state => state);
   const { cards } = useUserStore(state => state);
   const [address, setAddress] = useState('');
-  const cardNumber = cards.map(card => card.cardNumber.slice(-4));
+  const cardNumber = cards.map(card => card?.cardNumber);
   const calculateShippingCost = (items: IProduct[]) => {
     return items.reduce((total, item) => {
       const itemShippingCost =
@@ -107,13 +107,13 @@ export const CartScreen: React.FC<
         />
         <Text style={styles.text}>DELIVERY ADDRESS</Text>
         <Input
-          type="select"
           value={address}
           setValue={setAddress}
           inputStyle={styles.input}
           placeholder="Add postal address"
           onInputPress={() => navigation.navigate(Routes.addAddress)}
           icon={require('assets/vectors/chevron-right.svg')}
+          onIconPress={() => navigation.navigate(Routes.addAddress)}
         />
         <Divider height="M" />
         <View style={styles.subtotal}>

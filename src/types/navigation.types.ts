@@ -51,7 +51,16 @@ export type NavigationParamList = {
   [Routes.search]: undefined;
   [Routes.filters]: undefined;
   [Routes.tab]: undefined;
-  [Routes.itemlistScreen]: undefined;
+  [Routes.itemlistScreen]: {
+    filters?: {
+      minPrice?: number;
+      maxPrice?: number;
+      size?: string;
+      color?: string;
+      category?: null | string;
+    };
+    sortCriteria?: 'lowestPrice' | 'highestPrice'
+  };
   [Routes.womenList]: undefined;
   [Routes.discoverRouter]: undefined;
   [Routes.menList]: undefined;

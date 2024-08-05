@@ -33,11 +33,7 @@ export const PopularScreen: React.FC<
   const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
 
   const handleSelect = (index: number) => {
-    if (selectedIndex === index) {
-      setSelectedIndex(null);
-    } else {
-      setSelectedIndex(index);
-    }
+    setSelectedIndex(index);
   };
 
   const filterProducts = useCallback(() => {
@@ -166,14 +162,20 @@ export const PopularScreen: React.FC<
               left={item}
             />
           ))}
-          onPress={() => navigation.navigate(Routes.itemlistScreen)}
+          onPress={() => {
+            setStatus(false);
+            if (selectedIndex !== null) {
+              const sortCriteria = selectedIndex === 0 ? 'lowestPrice' : 'highestPrice'
+              navigation.navigate(Routes.itemlistScreen, { sortCriteria })
+            }
+          }}
           setStatus={setStatus}
         />
       )}
     </View>
   );
 };
-const sortBy = ['Lowest price', 'Relevance'];
+const sortBy = ['Lowest price', 'Highest price'];
 const styles = StyleSheet.create({
   navbar: {
     paddingHorizontal: normalize('horizontal', 18),
