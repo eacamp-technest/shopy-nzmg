@@ -1,16 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import {
   Camera,
-  CameraDevice,
   useCameraDevice,
   useCodeScanner,
 } from 'react-native-vision-camera';
-import {StyleSheet, View, Alert, Platform, Text} from 'react-native';
+import {StyleSheet, View, Alert, Platform, Text, Linking} from 'react-native';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {BottomSheet} from 'components/BottomSheet';
+import {normalize} from 'theme/metrics';
 
-export function ScannerScreen() {
+export const ScannerScreen = () => {
   const [hasPermission, setHasPermission] = useState(false);
-  const device: CameraDevice | undefined = useCameraDevice('back');
+  const device = useCameraDevice('back');
+  const [status, setStatus] = useState<boolean>(false);
+  const [link, setLink] = useState<any>(null);
 
   useEffect(() => {
     checkCameraPermission();
@@ -34,15 +37,21 @@ export function ScannerScreen() {
   const codeScanner = useCodeScanner({
     codeTypes: ['qr'],
     onCodeScanned: codes => {
-      console.log('Scanned QR code:', codes);
-      showScanAlert();
+      console.log(codes);
+      const scannedUrl = codes[0]?.value;
+
+      setLink(scannedUrl);
+      setStatus(true);
     },
   });
-
-  const showScanAlert = () => {
-    Alert.alert('QR Code Scanned!', 'QR code has been successfully scanned.', [
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
-    ]);
+  const handleOnpress = () => {
+    if (link)
+      try {
+        Linking.openURL(link);
+        setStatus(false);
+      } catch (err) {
+        console.log(`Error:${err}`);
+      }
   };
 
   if (!hasPermission) {
@@ -55,13 +64,32 @@ export function ScannerScreen() {
     );
   }
 
-  if (device == null) return null;
   return (
     <View style={StyleSheet.absoluteFill}>
-      <Camera device={device} isActive={true} style={StyleSheet.absoluteFill} />
+      <Camera
+        style={StyleSheet.absoluteFill}
+        device={device}
+        isActive={true}
+        codeScanner={codeScanner}
+      />
+      {status ? (
+        <BottomSheet
+          buttonText="Go to link"
+          title={link}
+          titleStyle={{
+            backgroundColor: '#d3d3d3',
+            borderRadius: 10,
+            padding: 10,
+            top: 10,
+          }}
+          size={{height: '20%'}}
+          onPress={handleOnpress}
+          setStatus={setStatus}
+        />
+      ) : null}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   permissionContainer: {
@@ -73,5 +101,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     margin: 20,
+  },
+  title: {
+    backgroundColor: '#d3d3d3',
+    borderRadius: 50,
+    padding: 10,
+    marginVertical: normalize('vertical', 10),
   },
 });

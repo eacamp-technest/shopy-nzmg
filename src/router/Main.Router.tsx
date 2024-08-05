@@ -15,13 +15,14 @@ import { WomenList } from 'screens/itemList/Women.List';
 import { KidsList } from 'screens/itemList/Kids.List';
 import { TeensList } from 'screens/itemList/Teens.List';
 import { ItemListScreen } from 'screens/home/ItemList.Screen';
-import { CartScreen } from 'screens/Cart.Screen';
+import { CartScreen } from 'screens/home/Cart.Screen';
 import { FilterScreen } from 'screens/main/Filters.Screen';
 import { ProductReviewScreen } from 'screens/bookmark/ProductReview.Screen';
 import { AddAddressScreen } from 'screens/main/AddAddress.Screen';
 import { Tester } from 'screens/payments/tester';
 import { YourAddress } from 'screens/main/YourAddress';
 import { ChooseCardScreen } from 'screens/home/ChooseCard.Screen';
+
 const MainStack = createNativeStackNavigator<NavigationParamList>();
 export const MainStackRouter = () => {
   return (

@@ -28,6 +28,7 @@ interface IBottomSheet {
   title?: string;
   onPress?: () => void;
   size?: StyleProp<ViewStyle>;
+  link?: boolean;
 }
 
 export const BottomSheet: React.FC<IBottomSheet> = ({
@@ -39,6 +40,7 @@ export const BottomSheet: React.FC<IBottomSheet> = ({
   title,
   onPress,
   titleStyle,
+  link,
 }) => {
   const slide = React.useRef(new Animated.Value(300)).current;
   const lastOffset = React.useRef(0);
