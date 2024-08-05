@@ -20,7 +20,6 @@ import {
 import {normalize} from 'theme/metrics';
 import {IProduct, ProductCard} from 'components/ProductCard';
 import axios from 'axios';
-import {Buttons} from 'components/Buttons';
 import {useStatusBar} from 'helpers/useStatusBar';
 interface IData {
   id?: number;

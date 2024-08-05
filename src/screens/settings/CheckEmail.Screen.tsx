@@ -32,7 +32,11 @@ export const CheckEmailScreen: React.FC<
         onPress={() => navigation.navigate(Routes.newPassword)}
         style={styles.button}
       />
-      <Buttons text="Skip, I’ll confirm later" types="outlined" />
+      <Buttons
+        text="Skip, I’ll confirm later"
+        onPress={() => navigation.goBack()}
+        types="outlined"
+      />
       <TextLink
         content="Did not receive the email? Check your spam filter, or try another email address"
         highlighted={[

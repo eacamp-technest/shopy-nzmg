@@ -14,7 +14,6 @@ import {
   defaultScreenOptions,
   modalScreenOptions,
 } from 'configs/navigation.configs';
-import {TestScreen} from '../Test.Screen';
 import {PaymentScreensTab} from 'screens/payments';
 import {HomeScreen} from 'screens/main/Home.Screen';
 
@@ -56,8 +55,6 @@ export const AuthRouter = () => {
           name={Routes.home}
           component={HomeScreen}
         />
-
-        <AuthStack.Screen name={Routes.test} component={TestScreen} />
       </AuthStack.Navigator>
     </SafeAreaView>
   );

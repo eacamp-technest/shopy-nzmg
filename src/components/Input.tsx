@@ -9,14 +9,15 @@ import {
   Pressable,
   FlatList,
 } from 'react-native';
-import React, { useEffect, useMemo, useState } from 'react';
-import { SvgImage } from './SvgImages';
-import { TypographyStyles } from 'theme/typography';
-import { colors } from 'theme/colors';
-import { standardHitSlopSize } from 'theme/consts.styles';
-import { CommonStyles } from 'theme/common.styles';
-import { ICountry } from 'data/countries';
-import { keyboardHideEvent } from 'constants/common.consts';
+import React, {useEffect, useMemo, useState} from 'react';
+import {SvgImage} from './SvgImages';
+import {TypographyStyles} from 'theme/typography';
+import {colors} from 'theme/colors';
+import {standardHitSlopSize} from 'theme/consts.styles';
+import {CommonStyles} from 'theme/common.styles';
+import {ICountry} from 'data/countries';
+import {keyboardHideEvent} from 'constants/common.consts';
+import {IProduct} from './ProductCard';
 
 export type TIcon = {
   source: NodeRequire;
@@ -42,7 +43,7 @@ export interface IInput {
   setValue?: (value: string) => void;
   onFocus?: () => void;
   onBlur?: () => void;
-  onInputPress?: () => void;
+  onInputPress?: any;
   onIconPress?: () => void;
   options?: ICountry[];
   onSelect?: (option: ICountry) => void;
@@ -64,12 +65,13 @@ export const Input: React.FC<IInput> = ({
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(
     type === 'password',
   );
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false);
 
   const isMoreIcon = useMemo(
     () =>
       ('position' in (icon ?? {}) && (icon as TIcon)?.position === 'right') ||
-      type === 'password' || type === 'select',
+      type === 'password' ||
+      type === 'select',
     [icon, type],
   );
 
@@ -95,7 +97,9 @@ export const Input: React.FC<IInput> = ({
     }
     if (type === 'select') {
       return (
-        <Pressable onPress={() => setOpen(state => !state)} hitSlop={standardHitSlopSize}>
+        <Pressable
+          onPress={() => setOpen(state => !state)}
+          hitSlop={standardHitSlopSize}>
           <SvgImage
             source={
               open
@@ -105,7 +109,6 @@ export const Input: React.FC<IInput> = ({
             color={colors.ink.base}
             width={24}
             height={24}
-
           />
         </Pressable>
       );
@@ -185,20 +188,20 @@ export const Input: React.FC<IInput> = ({
         <View style={styles.dropdown}>
           <FlatList
             data={options}
-            renderItem={({ item }) => (
-              <Pressable onPress={() => {
-                handleSelect(item)
-                keyboardHideEvent
-              }
-
-              }>
+            renderItem={({item}) => (
+              <Pressable
+                onPress={() => {
+                  handleSelect(item);
+                  keyboardHideEvent;
+                }}>
                 <Text style={styles.option}>{item.label}</Text>
               </Pressable>
             )}
-            keyExtractor={(item) => item.value}
+            keyExtractor={item => item.value}
             style={styles.flatlist}
           />
-        </View>)}
+        </View>
+      )}
       {props.caption || props.errorMessage ? (
         <Text
           style={[
@@ -251,7 +254,7 @@ const styles = StyleSheet.create({
   },
   flatlist: {
     maxHeight: 200,
-    gap: 6
+    gap: 6,
   },
   dropdown: {
     position: 'absolute',
@@ -267,6 +270,6 @@ const styles = StyleSheet.create({
     ...TypographyStyles.RegularNoneRegular,
     color: colors.ink.base,
     paddingHorizontal: 16,
-    paddingBottom: 16
-  }
+    paddingBottom: 16,
+  },
 });

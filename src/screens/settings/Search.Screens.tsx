@@ -18,42 +18,50 @@ import {TypographyStyles} from 'theme/typography';
 import {Navbar} from 'components/Navbar';
 import {colors} from 'theme/colors';
 import {useStatusBar} from 'helpers/useStatusBar';
+import axios from 'axios';
+import {Endpoints} from 'services/Endpoints';
+import {IProduct} from 'components/ProductCard';
+import {normalize} from 'theme/metrics';
 
 export const SearchScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.search>
 > = ({route, navigation}) => {
-  const {onItemPress, items, ...rest} = route.params;
-  const [data, setData] = useState<string[]>(items ?? []);
+  const [products, setProducts] = useState<IProduct[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [searchText, setSearchText] = useState<string>('');
 
   const onChangeText = useCallback(
     (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
       const text = event.nativeEvent.text;
       setSearchText(text);
-      const filtered = items?.filter(item => {
-        return item.toLowerCase().includes(text.toLowerCase());
+
+      const filtered = products.filter((item: any) => {
+        return item.title.toLowerCase().startsWith(text.toLowerCase());
       });
-      setData(filtered ?? []);
+      setFilteredProducts(filtered);
     },
-    [items],
+    [products],
   );
 
   const renderItems = useCallback(
-    ({item}: {item: any}) => {
+    ({item}: {item: IProduct}) => {
       return (
         <Pressable
-          style={{padding: 10}}
-          onPress={() => {
-            onItemPress?.(item);
-            navigation.pop();
-          }}>
-          <Text>{item}</Text>
+          style={{
+            paddingHorizontal: normalize('horizontal', 24),
+          }}
+          onPress={() =>
+            navigation.navigate(Routes.productDetail, {product: item})
+          }>
+          <Text>{item.title}</Text>
         </Pressable>
       );
     },
-    [onItemPress, navigation],
+    [navigation],
   );
+
   useStatusBar('dark-content', colors.white);
+
   useEffect(() => {
     navigation.setOptions({
       ...searchScreenOptions,
@@ -61,9 +69,8 @@ export const SearchScreen: React.FC<
         ...searchScreenOptions.headerSearchBarOptions,
         onChangeText,
       },
-      ...rest,
     });
-  }, [navigation, onChangeText, rest]);
+  }, [navigation, onChangeText]);
 
   const renderSuggestions = () => (
     <View style={styles.suggestionsContainer}>
@@ -74,8 +81,9 @@ export const SearchScreen: React.FC<
         rootStyle={TypographyStyles.title3}
       />
       <View style={styles.suggestionsGrid}>
-        {discover.map(item => (
+        {discover.map((item, index) => (
           <Pressable
+            key={index}
             onPress={() => navigation.navigate(item.onPress)}
             style={styles.suggestionItem}>
             <Image
@@ -91,13 +99,29 @@ export const SearchScreen: React.FC<
       </View>
     </View>
   );
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(Endpoints.product);
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <FlatList
       ListHeaderComponent={searchText === '' ? renderSuggestions : null}
-      data={searchText === '' ? [] : data}
+      data={searchText === '' ? [] : filteredProducts}
       renderItem={renderItems}
-      contentContainerStyle={{gap: 32}}
+      keyExtractor={item => item.id.toString()}
+      contentContainerStyle={{
+        gap: 32,
+        marginVertical: normalize('vertical', 24),
+      }}
       contentInsetAdjustmentBehavior="automatic"
     />
   );

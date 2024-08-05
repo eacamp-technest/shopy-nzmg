@@ -22,6 +22,7 @@ export const ResetScreen: React.FC<
       <Navbar
         leftActionType="icon"
         mode="light"
+        onLeftPress={() => navigation.goBack()}
         left={require('assets/vectors/left.svg')}
       />
       <Text style={styles.title}>RESET PASSWORD</Text>
@@ -37,7 +38,10 @@ export const ResetScreen: React.FC<
       />
       <Buttons
         text="Send instructions"
-        onPress={() => navigation.navigate(Routes.checkEmail)}
+        onPress={() => {
+          navigation.pop();
+          navigation.navigate(Routes.checkEmail);
+        }}
       />
     </View>
   );

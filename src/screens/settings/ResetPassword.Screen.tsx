@@ -27,18 +27,10 @@ export const ResetPasswordScreen: React.FC<
         </Text>
       </View>
       <Buttons
-        onPress={() =>
-          navigation.navigate(Routes.search, {
-            items: [
-              'Nike Air Max 270 React',
-              'Nike Air Max 270 React ENG',
-              'Nike Air Max 97 Utility',
-              'Nike Air Vapormax',
-            ],
-            onItemPress: item => console.log('item pressed', item),
-            headerTitle: 'Flowers',
-          })
-        }
+        onPress={() => {
+          navigation.navigate(Routes.search);
+          navigation.pop();
+        }}
         text="Continue shopping"
       />
     </View>
