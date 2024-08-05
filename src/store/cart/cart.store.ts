@@ -1,7 +1,8 @@
 import { create } from 'zustand'
-import { ICartStore, CartItem } from './cart.types'
+import { ICartStore } from './cart.types'
 import { LocalStorage } from 'store/LocalStorage'
 import { StorageKeys } from 'types/localstorage.types'
+import { IProduct } from 'components/ProductCard'
 
 const initial: Omit<ICartStore, 'actions'> = {
     subTotalPrice: 0,
@@ -16,7 +17,7 @@ export const useCartStore = create<ICartStore>((set, get) => ({
             const subTotalPrice = LocalStorage.subTotalPrice('get')
             set({ carts, subTotalPrice })
         },
-        addToCart: (item: CartItem) => {
+        addToCart: (item: IProduct) => {
             const isExist = get().carts.find(info => info.id === item.id);
 
             if (!isExist) {
@@ -37,7 +38,7 @@ export const useCartStore = create<ICartStore>((set, get) => ({
             set({ subTotalPrice: newTotalPrice })
             LocalStorage.subTotalPrice('set', newTotalPrice)
         },
-        deleteItemFromCart: (item: CartItem) => {
+        deleteItemFromCart: (item: IProduct) => {
             const newCarts = get().carts.filter(data => data.id !== item.id);
             const newTotalPrice = newCarts.reduce((acc, carItem) => acc + (carItem.price || 0) * (carItem.quantity || 1), 0)
             set({ carts: newCarts, subTotalPrice: newTotalPrice })

@@ -1,25 +1,25 @@
-import {StyleSheet, Text, View, Pressable} from 'react-native';
-import React, {useState} from 'react';
-import {Navbar} from 'components/Navbar';
-import {TypographyStyles} from 'theme/typography';
-import {TextLink} from 'components/TextLinks';
-import {colors} from 'theme/colors';
-import {Buttons} from 'components/Buttons';
-import {Routes} from 'router/routes';
-import {CommonStyles} from 'theme/common.styles';
-import {useUserStore} from 'store/user/user.store';
-import {ICardInputFrom} from 'types/card.types';
-import {SvgImage} from 'components/SvgImages';
-import {useToast} from 'store/toast';
-import {SceneRendererProps} from 'react-native-tab-view';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {normalize} from 'theme/metrics';
-import {Tables} from 'components/Tables';
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { Navbar } from 'components/Navbar';
+import { TypographyStyles } from 'theme/typography';
+import { TextLink } from 'components/TextLinks';
+import { colors } from 'theme/colors';
+import { Buttons } from 'components/Buttons';
+import { Routes } from 'router/routes';
+import { CommonStyles } from 'theme/common.styles';
+import { useUserStore } from 'store/user/user.store';
+import { ICardInputFrom } from 'types/card.types';
+import { SvgImage } from 'components/SvgImages';
+import { useToast } from 'store/toast';
+import { SceneRendererProps } from 'react-native-tab-view';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { normalize } from 'theme/metrics';
+import { Tables } from 'components/Tables';
 
-export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({jumpTo}) => {
+export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) => {
   const {
     cards,
-    actions: {selectCard},
+    actions: { selectCard },
   } = useUserStore(state => state);
   const navigation = useNavigation<NavigationProp<any>>();
 

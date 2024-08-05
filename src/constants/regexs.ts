@@ -9,6 +9,8 @@ export class Regex {
   public static cardNumber = /^\d{4} \d{4} \d{4} \d{4}$/;
   public static cardholderName = /^[A-Za-z\s]+$/;
   public static cvv = /^\d{3}$/;
+  // public static address = /^[a-zA-Z0-9\s,'-]*$/;
+  public static country = /^[a-zA-Z\s]*$/;
 
 
 }

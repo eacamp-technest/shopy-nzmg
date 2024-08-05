@@ -6,5 +6,6 @@ export enum StorageKeys {
     user = 'user',
     carts = 'carts',
     totalPrice = 'totalPrice',
-    subTotalPrice = 'subTotalPrice'
+    subTotalPrice = 'subTotalPrice',
+    addresses = 'addresses'
 }
