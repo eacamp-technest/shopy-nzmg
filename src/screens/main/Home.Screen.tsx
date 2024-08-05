@@ -17,15 +17,15 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import {Input} from 'components/Input';
-import {Category} from 'components/Category';
-import {SceneMap, TabView, TabBar} from 'react-native-tab-view';
-import {TypographyStyles} from 'theme/typography';
-import {IProduct, ProductCard} from 'components/ProductCard';
+import { Input } from 'components/Input';
+import { Category } from 'components/Category';
+import { SceneMap, TabView, TabBar } from 'react-native-tab-view';
+import { TypographyStyles } from 'theme/typography';
+import { IProduct, ProductCard } from 'components/ProductCard';
 import axios from 'axios';
-import {useStatusBar} from 'helpers/useStatusBar';
+import { useStatusBar } from 'helpers/useStatusBar';
 
-const categories: string[] = ['All', 'Shoes', 'Tshirt', 'Kids', 'New'];
+export const categories: string[] = ['All', 'Women', 'Men', 'Electronics', 'Jewelery', 'New'];
 
 export const HomeScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.home>
@@ -33,10 +33,48 @@ export const HomeScreen: React.FC<
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([])
   const [index, setIndex] = useState<number>(0);
   const { top } = useSafeAreaInsets();
   const [seeAll, setSeeAll] = useState<boolean>(false);
   const EndPoint = 'https://fakestoreapi.com/products';
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(EndPoint)
+      setProducts(response.data);
+      setLoading(false);
+    }
+    catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
+  const filterProducts = useCallback(() => {
+    if (selectedCategory === 'All') {
+      setFilteredProducts(products)
+    } else {
+      const mapCategory: { [key: string]: string } = {
+        Women: "women's clothing",
+        Men: "men's clothing",
+        Electronics: "electronics",
+        Jewelery: 'jewelery',
+        New: "new",
+      };
+      const filtered = products.filter(
+        product => product.category === mapCategory[selectedCategory])
+      setFilteredProducts(filtered)
+    }
+  }, [products, selectedCategory])
+
+  useEffect(() => {
+    fetchProducts()
+  }, [])
+  useEffect(() => {
+    filterProducts()
+  }, [products, selectedCategory, filterProducts])
+
   const renderItem = useCallback(
     ({ item }: { item: IProduct }) => {
       return (
@@ -73,7 +111,7 @@ export const HomeScreen: React.FC<
           <View>
             <FlatList
               numColumns={2}
-              data={seeAll ? products.slice(0, 12) : products.slice(0, 2)}
+              data={seeAll ? filteredProducts.slice(0, 12) : filteredProducts.slice(0, 2)}
               renderItem={renderItem}
               horizontal={false}
               showsVerticalScrollIndicator={false}
@@ -108,7 +146,7 @@ export const HomeScreen: React.FC<
                   />
                   <FlatList
                     numColumns={2}
-                    data={products.slice(12)}
+                    data={filteredProducts.slice(2)}
                     renderItem={renderItem}
                     horizontal={false}
                     showsVerticalScrollIndicator={false}
@@ -118,30 +156,16 @@ export const HomeScreen: React.FC<
               }
               contentContainerStyle={styles.contentStyle}
               keyExtractor={item => item.id.toString()}
+              ListEmptyComponent={<Text style={styles.emptyComponentText}>No Products found</Text>}
             />
           </View>
         )}
       </View>
     );
   };
-  const fetch = async (data: any) => {
-    await axios({
-      url: data,
-      method: 'GET',
-    })
-      .then(response => {
-        setProducts(response.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
+
+
   useStatusBar('light-content', colors.bdazzleBlue.darkest);
-  useEffect(() => {
-    fetch(EndPoint);
-  }, []);
 
   const InStore: React.FC = () => {
     return (
@@ -266,4 +290,11 @@ const styles = StyleSheet.create({
   },
   contentStyle: { paddingBottom: 150 },
   leftColor: { color: colors.ink.darkest },
+  emptyComponentText: {
+    ...TypographyStyles.RegularTightSemiBold,
+    marginTop: normalize('vertical', 20),
+    color: colors.ink.dark,
+    textAlign: 'center',
+
+  }
 });

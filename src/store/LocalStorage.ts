@@ -2,7 +2,8 @@ import { MMKV } from "react-native-mmkv";
 import { ICardInputFrom } from "types/card.types";
 import { StorageKeys, StorageMethodsKeys, TFunctionalMethod } from "types/localstorage.types";
 import { IUser } from "types/user";
-import { CartItem } from "./cart/cart.types";
+import { IProduct } from "components/ProductCard";
+import { IAddress } from "screens/main/AddAddress.Screen";
 
 const storage = new MMKV();
 
@@ -38,6 +39,13 @@ export class LocalStorage {
         }
         this.set(StorageKeys.cards, 'array', data);
     }
+    public static addresses(method: TFunctionalMethod, data?: IAddress[]) {
+        if (method === 'get') {
+            const addresses = storage.getString(StorageKeys.addresses);
+            return addresses ? JSON.parse(addresses) : [];
+        }
+        this.set(StorageKeys.cards, 'array', data);
+    }
 
     public static user(method: TFunctionalMethod, data?: IUser) {
         if (method === 'get') {
@@ -47,7 +55,7 @@ export class LocalStorage {
         this.set(StorageKeys.user, 'object', data);
     }
 
-    public static carts(method: TFunctionalMethod, data?: CartItem[]) {
+    public static carts(method: TFunctionalMethod, data?: IProduct[]) {
         if (method === 'get') {
             const carts = storage.getString(StorageKeys.carts);
             return carts ? JSON.parse(carts) : [];

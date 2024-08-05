@@ -2,9 +2,9 @@ import {
   NativeStackNavigationOptions,
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
-import {Routes} from 'router/routes';
-import {IModal} from 'components/Modal';
-import {IProduct} from 'components/ProductCard';
+import { Routes } from 'router/routes';
+import { IModal } from 'components/Modal';
+import { IProduct } from 'components/ProductCard';
 export type AppNavigation = NativeStackNavigationProp<NavigationParamList>;
 
 interface ISearchProps extends NativeStackNavigationOptions {
@@ -36,7 +36,10 @@ export type NavigationParamList = {
   [Routes.test]: undefined;
   [Routes.cart]: undefined;
   [Routes.addAddress]: undefined;
-  [Routes.yourAddress]: undefined;
+  [Routes.yourAddress]: {
+    name: string;
+    address: string
+  };
   [Routes.tester]: undefined;
   [Routes.review]: undefined;
   [Routes.home]: undefined;
@@ -63,7 +66,7 @@ export type NavigationParamList = {
   [Routes.checkEmail]: undefined;
   [Routes.newPassword]: undefined;
   [Routes.resetPassword]: undefined;
-  [Routes.productDetail]: {product: IProduct};
+  [Routes.productDetail]: { product: IProduct };
   [Routes.bookmarkRouter]: undefined;
   [Routes.popular]: undefined;
   [Routes.about]: undefined;

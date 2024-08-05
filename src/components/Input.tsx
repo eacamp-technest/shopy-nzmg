@@ -9,13 +9,14 @@ import {
   Pressable,
   FlatList,
 } from 'react-native';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { SvgImage } from './SvgImages';
 import { TypographyStyles } from 'theme/typography';
 import { colors } from 'theme/colors';
 import { standardHitSlopSize } from 'theme/consts.styles';
 import { CommonStyles } from 'theme/common.styles';
 import { ICountry } from 'data/countries';
+import { keyboardHideEvent } from 'constants/common.consts';
 
 export type TIcon = {
   source: NodeRequire;
@@ -185,7 +186,12 @@ export const Input: React.FC<IInput> = ({
           <FlatList
             data={options}
             renderItem={({ item }) => (
-              <Pressable onPress={() => handleSelect(item)}>
+              <Pressable onPress={() => {
+                handleSelect(item)
+                keyboardHideEvent
+              }
+
+              }>
                 <Text style={styles.option}>{item.label}</Text>
               </Pressable>
             )}

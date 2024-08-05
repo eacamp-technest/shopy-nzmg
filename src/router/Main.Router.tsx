@@ -21,6 +21,7 @@ import { ProductReviewScreen } from 'screens/bookmark/ProductReview.Screen';
 import { AddAddressScreen } from 'screens/main/AddAddress.Screen';
 import { Tester } from 'screens/payments/tester';
 import { YourAddress } from 'screens/main/YourAddress';
+import { ChooseCardScreen } from 'screens/home/ChooseCard.Screen';
 const MainStack = createNativeStackNavigator<NavigationParamList>();
 export const MainStackRouter = () => {
   return (

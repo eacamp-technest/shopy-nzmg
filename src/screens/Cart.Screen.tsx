@@ -13,7 +13,6 @@ import { CommonStyles } from 'theme/common.styles';
 import { Input } from 'components/Input';
 import { Buttons } from 'components/Buttons';
 import { useCartStore } from 'store/cart/cart.store';
-import { CartItem } from 'store/cart/cart.types';
 
 export const CartScreen: React.FC<
     NativeStackScreenProps<NavigationParamList, Routes.cart>
@@ -21,7 +20,7 @@ export const CartScreen: React.FC<
     const { carts, subTotalPrice, actions: { deleteItemFromCart } } = useCartStore(state => state);
     const [address, setAddress] = useState('');
 
-    const calculateShippingCost = (items: CartItem[]) => {
+    const calculateShippingCost = (items: IProduct[]) => {
         return items.reduce((total, item) => {
             const itemShippingCost = (item.category === "women's clothing" || item.category === "men's clothing") ? 23 : 30;
             return total + itemShippingCost;
@@ -34,7 +33,7 @@ export const CartScreen: React.FC<
     const totalItems = carts.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
     const renderInCart = useCallback(
-        ({ item }: { item: CartItem }) => (
+        ({ item }: { item: IProduct }) => (
             <ProductCard
                 id={item.id}
                 title={item.title}
@@ -69,7 +68,7 @@ export const CartScreen: React.FC<
             <FlatList
                 numColumns={1}
                 data={carts}
-                keyExtractor={(item: CartItem) => item.id.toString()}
+                keyExtractor={(item: IProduct) => item.id.toString()}
                 renderItem={renderInCart}
                 showsVerticalScrollIndicator={false}
                 style={{ padding: 24, maxHeight: 240 }}
