@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "872300903027",
+    "project_id": "shoppay-ab9e5",
+    "storage_bucket": "shoppay-ab9e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:872300903027:android:ee3def34498f6a37da4806",
+        "android_client_info": {
+          "package_name": "com.shoppay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCorqUzewEvtv5DD_V2YK-BYafWrVgrRkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

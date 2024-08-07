@@ -200,10 +200,10 @@ export const HomeScreen: React.FC<
           titleColor="white"
           left={vectors.menu}
           leftActionType="icon"
-          onLeftPress={navigation.goBack}
+          onLeftPress={() => console.log('menu')}
           right={vectors.shoppingBag}
           rightActionType="icon"
-          onRightPress={() => navigation.navigate(Routes.cart)}
+          onRightPress={() => navigation.navigate(Routes.nortification)}
         />
         <Input
           icon={vectors.search}
@@ -255,7 +255,7 @@ const vectors = {
     color: colors.white,
   },
   shoppingBag: {
-    icon: require('assets/vectors/shopping-bag.svg'),
+    icon: require('assets/vectors/bell.svg'),
     color: colors.white,
   },
 };

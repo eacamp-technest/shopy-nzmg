@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { colors } from 'theme/colors';
-import { PriceBar } from 'components/Filters';
+import React, {useState} from 'react';
+import {colors} from 'theme/colors';
+import {PriceBar} from 'components/Filters';
 import {
   SafeAreaView,
   View,
@@ -9,16 +9,16 @@ import {
   TouchableOpacity,
   FlatList,
 } from 'react-native';
-import { TypographyStyles } from 'theme/typography';
-import { Navbar } from 'components/Navbar';
-import { normalize } from 'theme/metrics';
-import { Category } from 'components/Category';
-import { Buttons } from 'components/Buttons';
-import { Divider } from 'components/Divider';
-import { useStatusBar } from 'helpers/useStatusBar';
-import { Routes } from 'router/routes';
-import { NavigationParamList } from 'types/navigation.types';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {TypographyStyles} from 'theme/typography';
+import {Navbar} from 'components/Navbar';
+import {normalize} from 'theme/metrics';
+import {Category} from 'components/Category';
+import {Buttons} from 'components/Buttons';
+import {Divider} from 'components/Divider';
+import {useStatusBar} from 'helpers/useStatusBar';
+import {Routes} from 'router/routes';
+import {NavigationParamList} from 'types/navigation.types';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 const sizes = ['XS', 'S', 'M', 'L', 'XL'];
 const colorArr = [
@@ -29,25 +29,31 @@ const colorArr = [
   colors.bdazzleBlue.base,
   colors.sky.dark,
 ];
-const categories: string[] = ['All', 'Women', 'Men', 'Electronics', 'Jewelery', 'New'];
+const categories: string[] = [
+  'All',
+  'Women',
+  'Men',
+  'Electronics',
+  'Jewelery',
+  'New',
+];
 
 export const FilterScreen: React.FC<
-  NativeStackScreenProps<NavigationParamList, Routes.cart>
-> = ({ navigation }) => {
-
+  NativeStackScreenProps<NavigationParamList, Routes.filters>
+> = ({navigation}) => {
   const [selectedMinPrice, setSelectedMinPrice] = useState(7);
   const [selectedMaxPrice, setSelectedMaxPrice] = useState(1000);
   const [selectedSize, setSelectedSize] = useState<string | null>('S');
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  const handlePriceChange = (priceRange: { min: number; max: number }) => {
+  const handlePriceChange = (priceRange: {min: number; max: number}) => {
     console.log(
       `Price range changed: ${priceRange.min.toFixed(2)} - ${priceRange.max.toFixed(2)}`,
     );
   };
 
-  const categoryMap: { [key: string]: string } = {
+  const categoryMap: {[key: string]: string} = {
     Women: "women's clothing",
     Men: "men's clothing",
     Electronics: 'electronics',
@@ -62,7 +68,8 @@ export const FilterScreen: React.FC<
         maxPrice: selectedMaxPrice,
         // size: selectedSize,
         // color: selectedColor,
-        category: selectedCategory === 'All' ? null : categoryMap[selectedCategory],
+        category:
+          selectedCategory === 'All' ? null : categoryMap[selectedCategory],
       },
     });
   };
@@ -116,7 +123,7 @@ export const FilterScreen: React.FC<
                   borderColor: colors.black,
                 },
               ]}>
-              <View style={[styles.circle, { backgroundColor: color }]} />
+              <View style={[styles.circle, {backgroundColor: color}]} />
             </TouchableOpacity>
           );
         })}
@@ -131,12 +138,12 @@ export const FilterScreen: React.FC<
               onPress={() => setSelectedSize(size)}
               style={[
                 styles.sizeValueContainer,
-                selectedSize === size && { backgroundColor: colors.blue.base },
+                selectedSize === size && {backgroundColor: colors.blue.base},
               ]}>
               <Text
                 style={[
                   styles.sizeValue,
-                  selectedSize === size && { color: colors.white },
+                  selectedSize === size && {color: colors.white},
                 ]}>
                 {size}
               </Text>
@@ -149,7 +156,7 @@ export const FilterScreen: React.FC<
       <FlatList
         showsHorizontalScrollIndicator={false}
         data={categories}
-        renderItem={({ item }) => (
+        renderItem={({item}) => (
           <Category
             item={item}
             backgroundColor={colors.blue.base}

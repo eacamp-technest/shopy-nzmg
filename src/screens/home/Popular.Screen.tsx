@@ -5,31 +5,32 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { Buttons } from 'components/Buttons';
-import { BottomSheet } from 'components/BottomSheet';
-import { CommonStyles } from 'theme/common.styles';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { normalize } from 'theme/metrics';
-import { IProduct, ProductCard } from 'components/ProductCard';
-import { Category } from 'components/Category';
+import React, {useCallback, useEffect, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {Buttons} from 'components/Buttons';
+import {BottomSheet} from 'components/BottomSheet';
+import {CommonStyles} from 'theme/common.styles';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {normalize} from 'theme/metrics';
+import {IProduct, ProductCard} from 'components/ProductCard';
+import {Category} from 'components/Category';
 import axios from 'axios';
-import { TypographyStyles } from 'theme/typography';
-import { categories } from 'screens/main/Home.Screen';
+import {TypographyStyles} from 'theme/typography';
+import {categories} from 'screens/main/Home.Screen';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const PopularScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.popular>
-> = ({ navigation }) => {
+> = ({navigation}) => {
   const [status, setStatus] = useState<boolean>(false);
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const EndPoint = 'https://fakestoreapi.com/products';
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
-  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([])
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(0);
 
   const handleSelect = (index: number) => {
@@ -38,27 +39,28 @@ export const PopularScreen: React.FC<
 
   const filterProducts = useCallback(() => {
     if (selectedCategory === 'All') {
-      setFilteredProducts(products)
+      setFilteredProducts(products);
     } else {
-      const mapCategory: { [key: string]: string } = {
+      const mapCategory: {[key: string]: string} = {
         Women: "women's clothing",
         Men: "men's clothing",
-        Electronics: "electronics",
+        Electronics: 'electronics',
         Jewelery: 'jewelery',
-        New: "new",
+        New: 'new',
       };
       const filtered = products.filter(
-        product => product.category === mapCategory[selectedCategory])
-      setFilteredProducts(filtered)
+        product => product.category === mapCategory[selectedCategory],
+      );
+      setFilteredProducts(filtered);
     }
-  }, [products, selectedCategory])
+  }, [products, selectedCategory]);
 
   useEffect(() => {
-    filterProducts()
-  }, [products, selectedCategory, filterProducts])
+    filterProducts();
+  }, [products, selectedCategory, filterProducts]);
 
   const renderItem = useCallback(
-    ({ item }: { item: IProduct }) => {
+    ({item}: {item: IProduct}) => {
       return (
         <ProductCard
           id={item.id}
@@ -67,7 +69,7 @@ export const PopularScreen: React.FC<
           price={item.price}
           category={item.category}
           onPress={() =>
-            navigation.navigate(Routes.productDetail, { product: item })
+            navigation.navigate(Routes.productDetail, {product: item})
           }
         />
       );
@@ -88,7 +90,7 @@ export const PopularScreen: React.FC<
         setLoading(false);
       });
   };
-
+  useStatusBar('light-content', colors.bdazzleBlue.darkest);
   useEffect(() => {
     fetch(EndPoint);
   }, []);
@@ -123,7 +125,7 @@ export const PopularScreen: React.FC<
                   <FlatList
                     showsHorizontalScrollIndicator={false}
                     data={categories}
-                    renderItem={({ item }) => (
+                    renderItem={({item}) => (
                       <Category
                         style={styles.category}
                         item={item}
@@ -139,7 +141,9 @@ export const PopularScreen: React.FC<
               }
               contentContainerStyle={styles.contentStyle}
               keyExtractor={item => item.id.toString()}
-              ListEmptyComponent={<Text style={styles.emptyComponentText}>No Products found</Text>}
+              ListEmptyComponent={
+                <Text style={styles.emptyComponentText}>No Products found</Text>
+              }
             />
           </View>
         )}
@@ -148,7 +152,7 @@ export const PopularScreen: React.FC<
       {status && (
         <BottomSheet
           buttonText="Apply"
-          titleStyle={{ paddingTop: 26, paddingBottom: 16 }}
+          titleStyle={{paddingTop: 26, paddingBottom: 16}}
           title="Sort By"
           Children={sortBy.map((item, index) => (
             <Navbar
@@ -165,8 +169,9 @@ export const PopularScreen: React.FC<
           onPress={() => {
             setStatus(false);
             if (selectedIndex !== null) {
-              const sortCriteria = selectedIndex === 0 ? 'lowestPrice' : 'highestPrice'
-              navigation.navigate(Routes.itemlistScreen, { sortCriteria })
+              const sortCriteria =
+                selectedIndex === 0 ? 'lowestPrice' : 'highestPrice';
+              navigation.navigate(Routes.itemlistScreen, {sortCriteria});
             }
           }}
           setStatus={setStatus}
@@ -206,6 +211,5 @@ const styles = StyleSheet.create({
     marginTop: normalize('vertical', 20),
     color: colors.white,
     textAlign: 'center',
-
-  }
+  },
 });

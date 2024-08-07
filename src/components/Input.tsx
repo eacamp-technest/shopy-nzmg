@@ -80,7 +80,9 @@ export const Input: React.FC<IInput> = ({
   const renderIcon = useMemo(() => {
     if (type === 'password') {
       return (
-        <Pressable hitSlop={standardHitSlopSize}>
+        <Pressable
+          onPress={() => setSecureTextEntry(state => !state)}
+          hitSlop={standardHitSlopSize}>
           <SvgImage
             source={
               secureTextEntry
@@ -90,7 +92,6 @@ export const Input: React.FC<IInput> = ({
             color={colors.ink.base}
             width={24}
             height={24}
-            onPress={() => setSecureTextEntry(state => !state)}
           />
         </Pressable>
       );
