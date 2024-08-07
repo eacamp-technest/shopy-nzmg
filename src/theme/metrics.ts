@@ -3,7 +3,7 @@ import {PixelRatio} from 'react-native';
 import {
   windowHeight as deviceHeight,
   windowWidth as deviceWidth,
-} from './Const.styles';
+} from './consts.styles';
 
 /**
  * Layout height and width from design

@@ -1,36 +1,36 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-import React, { useCallback, useState } from 'react';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { IProduct, ProductCard } from 'components/ProductCard';
-import { Divider } from 'components/Divider';
-import { TypographyStyles } from 'theme/typography';
-import { CommonStyles } from 'theme/common.styles';
-import { Input } from 'components/Input';
-import { Buttons } from 'components/Buttons';
-import { useCartStore } from 'store/cart/cart.store';
-import { useUserStore } from 'store/user/user.store';
-import { useStatusBar } from 'helpers/useStatusBar';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {IProduct, ProductCard} from 'components/ProductCard';
+import {Divider} from 'components/Divider';
+import {TypographyStyles} from 'theme/typography';
+import {CommonStyles} from 'theme/common.styles';
+import {Input} from 'components/Input';
+import {Buttons} from 'components/Buttons';
+import {useCartStore} from 'store/cart/cart.store';
+import {useUserStore} from 'store/user/user.store';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const CartScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.cart>
-> = ({ navigation }) => {
+> = ({navigation}) => {
   const {
     carts,
     subTotalPrice,
-    actions: { deleteItemFromCart },
+    actions: {deleteItemFromCart},
   } = useCartStore(state => state);
-  const { cards } = useUserStore(state => state);
+  const {cards} = useUserStore(state => state);
   const [address, setAddress] = useState('');
   const cardNumber = cards.map(card => card?.cardNumber);
   const calculateShippingCost = (items: IProduct[]) => {
     return items.reduce((total, item) => {
       const itemShippingCost =
         item.category === "women's clothing" ||
-          item.category === "men's clothing"
+        item.category === "men's clothing"
           ? 23
           : 30;
       return total + itemShippingCost;
@@ -43,7 +43,7 @@ export const CartScreen: React.FC<
   const totalItems = carts.reduce((acc, item) => acc + (item.quantity || 1), 0);
 
   const renderInCart = useCallback(
-    ({ item }: { item: IProduct }) => (
+    ({item}: {item: IProduct}) => (
       <ProductCard
         opacity={1}
         id={item.id}
@@ -63,6 +63,7 @@ export const CartScreen: React.FC<
     [deleteItemFromCart, navigation],
   );
   useStatusBar('dark-content', colors.white);
+
   return (
     <View style={styles.container}>
       <Navbar
@@ -98,7 +99,7 @@ export const CartScreen: React.FC<
           onLeftPress={() => console.log(cardNumber)}
           onRightPress={() => console.log('Card')}
           left={{
-            text: `Mastercard * * * *${cardNumber[0]}`,
+            text: `Mastercard * * * *${cardNumber[0]?.slice(-4)}`,
             icon: require('assets/vectors/brands.svg'),
           }}
           rightActionType="icon"

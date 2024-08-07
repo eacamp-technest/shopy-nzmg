@@ -13,6 +13,8 @@
   "dependencies": {
     "@react-native-community/checkbox": "^0.5.17",
     "@react-native-community/netinfo": "^11.3.2",
+    "@react-native-firebase/app": "^20.3.0",
+    "@react-native-firebase/messaging": "^20.3.0",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
@@ -37,6 +39,7 @@
     "react-native-svg": "^15.2.0",
     "react-native-tab-view": "^3.5.2",
     "react-native-vision-camera": "^4.3.2",
+    "uuid": "^10.0.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {

@@ -6,22 +6,23 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { IProduct, ProductCard } from 'components/ProductCard';
+import React, {useCallback, useEffect, useState} from 'react';
+import {IProduct, ProductCard} from 'components/ProductCard';
 import axios from 'axios';
-import { colors } from 'theme/colors';
-import { Navbar } from 'components/Navbar';
-import { TypographyStyles } from 'theme/typography';
-import { Routes } from 'router/routes';
-import { IBrand, brands } from 'data/brands';
-import { normalize } from 'theme/metrics';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { NavigationParamList } from 'types/navigation.types';
+import {colors} from 'theme/colors';
+import {Navbar} from 'components/Navbar';
+import {TypographyStyles} from 'theme/typography';
+import {Routes} from 'router/routes';
+import {IBrand, brands} from 'data/brands';
+import {normalize} from 'theme/metrics';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {NavigationParamList} from 'types/navigation.types';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const ItemListScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.itemlistScreen>
-> = ({ navigation, route }) => {
-  const { filters, sortCriteria } = route.params || {};
+> = ({navigation, route}) => {
+  const {filters, sortCriteria} = route.params || {};
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const EndPoints = 'https://fakestoreapi.com/products';
@@ -33,19 +34,27 @@ export const ItemListScreen: React.FC<
 
       if (filters) {
         if (filters.minPrice !== null) {
-          filteredProducts = filteredProducts.filter((product: IProduct) => product.price >= filters.minPrice);
+          filteredProducts = filteredProducts.filter(
+            (product: IProduct) => product.price >= Number(filters.minPrice),
+          );
         }
         if (filters.maxPrice !== null) {
-          filteredProducts = filteredProducts.filter((product: IProduct) => product.price <= filters.maxPrice);
+          filteredProducts = filteredProducts.filter(
+            (product: IProduct) => product.price <= Number(filters.maxPrice),
+          );
         }
         if (filters.size) {
-          filteredProducts = filteredProducts.filter((product: IProduct) => product.size === filters.size);
+          filteredProducts = filteredProducts.filter(
+            (product: IProduct) => product.size === filters.size,
+          );
         }
         // if (filters.color) {
         //   filteredProducts = filteredProducts.filter((product: IProduct) => product.color === filters.color);
         // }
         if (filters.category) {
-          filteredProducts = filteredProducts.filter((product: IProduct) => product.category === filters.category);
+          filteredProducts = filteredProducts.filter(
+            (product: IProduct) => product.category === filters.category,
+          );
         }
       }
 
@@ -62,12 +71,13 @@ export const ItemListScreen: React.FC<
       setLoading(false);
     }
   };
+  useStatusBar('dark-content', colors.white);
 
   useEffect(() => {
     fetchProducts();
   }, [filters, sortCriteria]);
 
-  const renderBrand = ({ item }: { item: IBrand }) => (
+  const renderBrand = ({item}: {item: IBrand}) => (
     <View style={styles.brandContainer}>
       <Image style={styles.img} source={item.image} />
       <Text style={styles.text}>{item.name}</Text>
@@ -75,7 +85,7 @@ export const ItemListScreen: React.FC<
   );
 
   const renderList = useCallback(
-    ({ item }: { item: IProduct }) => (
+    ({item}: {item: IProduct}) => (
       <ProductCard
         id={item.id}
         size="s"
@@ -84,11 +94,11 @@ export const ItemListScreen: React.FC<
         horizontal={true}
         price={item.price}
         onPress={() =>
-          navigation.navigate(Routes.productDetail, { product: item })
+          navigation.navigate(Routes.productDetail, {product: item})
         }
       />
     ),
-    [navigation]
+    [navigation],
   );
 
   const getTitle = () => {
@@ -117,7 +127,7 @@ export const ItemListScreen: React.FC<
       />
       <View>
         <Navbar
-          style={{ flex: 0.7 }}
+          style={{flex: 0.7}}
           left={'BRAND'}
           leftTextStyle={styles.leftStyle}
           leftActionType="text"
@@ -144,11 +154,11 @@ export const ItemListScreen: React.FC<
             renderItem={renderList}
             horizontal={false}
             showsVerticalScrollIndicator={false}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={item => item.id.toString()}
             ListHeaderComponent={
               <>
                 <Navbar
-                  style={{ flex: 0.7 }}
+                  style={{flex: 0.7}}
                   left={'PRODUCT'}
                   leftTextStyle={styles.leftStyle}
                   leftActionType="text"

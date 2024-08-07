@@ -59,7 +59,7 @@ export type NavigationParamList = {
       color?: string;
       category?: null | string;
     };
-    sortCriteria?: 'lowestPrice' | 'highestPrice'
+    sortCriteria?: 'lowestPrice' | 'highestPrice';
   };
   [Routes.womenList]: undefined;
   [Routes.discoverRouter]: undefined;
