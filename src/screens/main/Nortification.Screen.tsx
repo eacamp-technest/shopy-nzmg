@@ -1,13 +1,13 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {View, Text, FlatList, StyleSheet, Pressable} from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import {MMKV} from 'react-native-mmkv';
-import {useStatusBar} from 'helpers/useStatusBar';
-import {colors} from 'theme/colors';
-import {SvgImage} from 'components/SvgImages';
-import {CommonStyles} from 'theme/common.styles';
-import {TypographyStyles} from 'theme/typography';
-import {standardHitSlopSize} from 'theme/consts.styles';
+import { MMKV } from 'react-native-mmkv';
+import { useStatusBar } from 'helpers/useStatusBar';
+import { colors } from 'theme/colors';
+import { SvgImage } from 'components/SvgImages';
+import { CommonStyles } from 'theme/common.styles';
+import { TypographyStyles } from 'theme/typography';
+import { standardHitSlopSize } from 'theme/consts.styles';
 
 interface Notification {
   id: string;
@@ -170,7 +170,7 @@ export const NortificationScreen = () => {
     return () => {
       unsubscribeForeground();
       unsubscribeOpenedApp();
-      unsubscribeBackground();
+      // unsubscribeBackground();
     };
   }, [loadNotifications, saveNotifications]);
 
@@ -182,7 +182,7 @@ export const NortificationScreen = () => {
       <FlatList
         data={displayedNotifications}
         keyExtractor={item => item.id}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <View style={styles.notificationContainer}>
             <View>
               <Text style={TypographyStyles.RegularNoneSemiBold}>
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderRadius: 8,
     shadowColor: colors.black,
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
