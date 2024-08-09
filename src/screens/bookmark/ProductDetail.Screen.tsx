@@ -6,35 +6,35 @@ import {
   Image,
   StatusBar,
 } from 'react-native';
-import React, {useState} from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationParamList} from 'types/navigation.types';
-import {Routes} from 'router/routes';
-import {Navbar} from 'components/Navbar';
-import {colors} from 'theme/colors';
-import {normalize} from 'theme/metrics';
-import {SvgImage} from 'components/SvgImages';
-import {TypographyStyles} from 'theme/typography';
-import {Buttons} from 'components/Buttons';
-import {Tables} from 'components/Tables';
-import {Rating} from 'components/Rating';
-import {IProduct} from 'components/ProductCard';
-import {CommonStyles} from 'theme/common.styles';
-import {Divider} from 'components/Divider';
-import {useCartStore} from 'store/cart/cart.store';
+import React, { useState } from 'react';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationParamList } from 'types/navigation.types';
+import { Routes } from 'router/routes';
+import { Navbar } from 'components/Navbar';
+import { colors } from 'theme/colors';
+import { normalize } from 'theme/metrics';
+import { SvgImage } from 'components/SvgImages';
+import { TypographyStyles } from 'theme/typography';
+import { Buttons } from 'components/Buttons';
+import { Tables } from 'components/Tables';
+import { Rating } from 'components/Rating';
+import { IProduct } from 'components/ProductCard';
+import { CommonStyles } from 'theme/common.styles';
+import { Divider } from 'components/Divider';
+import { useCartStore } from 'store/cart/cart.store';
 
 const plusIcon = require('../../assets/vectors/plus.svg');
 const minusIcon = require('../../assets/vectors/minus.svg');
 
 export const ProductDetailScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.productDetail>
-> = ({navigation, route}) => {
+> = ({ navigation, route }) => {
   const item: IProduct = route.params.product;
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
 
   const {
-    actions: {addToCart},
+    actions: { addToCart },
   } = useCartStore();
 
   const handleAddToCart = () => {
@@ -68,11 +68,11 @@ export const ProductDetailScreen: React.FC<
           leftActionType="icon"
           left={vectors.leftArrow}
           right={vectors.shoppingBag}
-          onRightPress={() => console.log('shopping bag pressed')}
+          onRightPress={() => navigation.navigate(Routes.cart)}
           rightActionType="icon"
           rootStyle={styles.nav}
         />
-        <Image style={[styles.coverImage]} source={{uri: item.image}} />
+        <Image style={[styles.coverImage]} source={{ uri: item.image }} />
       </View>
       <Text style={styles.category}>{item.category}</Text>
       <View style={styles.titleContainer}>
@@ -93,7 +93,7 @@ export const ProductDetailScreen: React.FC<
         Left={
           <Rating
             fixRating={true}
-            starStyle={{gap: 2}}
+            starStyle={{ gap: 2 }}
             rating={item.rating?.rate as number}
             numberOfRates={item.rating?.count}
           />
@@ -120,7 +120,7 @@ export const ProductDetailScreen: React.FC<
                     <Text
                       style={[
                         styles.sizeValue,
-                        selectedSize === size && {color: colors.white},
+                        selectedSize === size && { color: colors.white },
                       ]}>
                       {size}
                     </Text>
@@ -162,7 +162,7 @@ export const ProductDetailScreen: React.FC<
                     borderColor: colors.black,
                   },
                 ]}>
-                <View style={[styles.circle, {backgroundColor: color}]}></View>
+                <View style={[styles.circle, { backgroundColor: color }]}></View>
               </TouchableOpacity>
             );
           })}

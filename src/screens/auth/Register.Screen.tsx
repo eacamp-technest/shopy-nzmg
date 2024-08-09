@@ -1,17 +1,21 @@
-import {View, StyleSheet, ScrollView, Keyboard} from 'react-native';
+import { View, StyleSheet, ScrollView, Keyboard } from 'react-native';
 import React from 'react';
-import {Navbar} from 'components/Navbar';
-import {Buttons} from 'components/Buttons';
-import {TextLink} from 'components/TextLinks';
-import {normalize} from 'theme/metrics';
-import {NavigationParamList} from 'types/navigation.types';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {Routes} from 'router/routes';
-import {useForm} from 'react-hook-form';
-import {InputControlled} from 'components/InputControlled';
-import {FormRules} from 'constants/formRules';
-import {CommonStyles} from 'theme/common.styles';
-import {colors} from 'theme/colors';
+import { Navbar } from 'components/Navbar';
+import { Buttons } from 'components/Buttons';
+import { TextLink } from 'components/TextLinks';
+import { normalize } from 'theme/metrics';
+import { NavigationParamList } from 'types/navigation.types';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Routes } from 'router/routes';
+import { useForm } from 'react-hook-form';
+import { InputControlled } from 'components/InputControlled';
+import { FormRules } from 'constants/formRules';
+import { CommonStyles } from 'theme/common.styles';
+import { colors } from 'theme/colors';
+import { Endpoints } from 'services/Endpoints';
+import axios from 'axios';
+import { useUserStoreActions } from 'store/user';
+import { useToast } from 'store/toast';
 // import {keyboardHideEvent, keyboardShowEvent} from 'constants/common.consts'
 
 interface IRegister {
@@ -22,12 +26,14 @@ interface IRegister {
 
 export const RegisterScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.register>
-> = ({navigation}) => {
+> = ({ navigation }) => {
+  const { initUser } = useUserStoreActions();
+  const showToast = useToast();
   // const scrollRef = useRef<ScrollView>(null)
   const {
     control,
     handleSubmit,
-    formState: {errors, isSubmitted},
+    formState: { errors, isSubmitted },
   } = useForm<IRegister>({
     defaultValues: {
       fullName: 'NGS Group',
@@ -35,10 +41,38 @@ export const RegisterScreen: React.FC<
       password: 'qwe45678!',
     },
   });
-  const onSubmit = (data: any) => {
+
+  const onSubmit = async (data: IRegister) => {
     console.log(data);
-    navigation.navigate(Routes.verification, data);
-  };
+    try {
+      const res = await axios({
+        url: Endpoints.auth.register,
+        method: 'POST',
+        data: {
+          email: data.email,
+          password: data.password,
+          name: data.fullName,
+        },
+      });
+      if (res.status === 201) {
+        initUser(res.data);
+        showToast('success', 'Registation successful');
+        // navigation.navigate(Routes.verification, data)
+      } else {
+        showToast('error', 'Register failed')
+      }
+    } catch (error) {
+      showToast('error', 'An error occured');
+      console.error('Error details', error.response?.data || error.message);
+    }
+  }
+  //         username: data.email?.replace('@gmail.com', ''),
+  //         password: data.password,
+  //         name: data.fullName,
+  //         email: data.email,
+
+
+
   // useEffect(()=>{
   //   const showListener = Keyboard.addListener(keyboardShowEvent, ()=>{
   //     scrollRef?.current?.scrollToEnd({animated:true})
