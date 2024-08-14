@@ -1,5 +1,5 @@
-import { View, StyleSheet, ScrollView, Keyboard } from 'react-native';
-import React from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from 'components/Navbar';
 import { Buttons } from 'components/Buttons';
 import { TextLink } from 'components/TextLinks';
@@ -14,22 +14,27 @@ import { CommonStyles } from 'theme/common.styles';
 import { colors } from 'theme/colors';
 import { Endpoints } from 'services/Endpoints';
 import axios from 'axios';
-import { useUserStoreActions } from 'store/user';
 import { useToast } from 'store/toast';
-// import {keyboardHideEvent, keyboardShowEvent} from 'constants/common.consts'
+import { useUserStore } from 'store/user/user.store';
+import { useUserStoreActions } from 'store/user';
+import { LocalStorage } from 'store/LocalStorage';
 
-interface IRegister {
+export interface IRegister {
   fullName: string;
   password: string;
   email?: string;
+  verificationType: 'register' | 'login';
 }
 
 export const RegisterScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.register>
 > = ({ navigation }) => {
   const { initUser } = useUserStoreActions();
+  const { navigatedToMain } = useUserStore(state => ({
+    navigatedToMain: state.navigatedToMain
+  }));
+  console.log('navigatedToMain:', navigatedToMain);
   const showToast = useToast();
-  // const scrollRef = useRef<ScrollView>(null)
   const {
     control,
     handleSubmit,
@@ -42,8 +47,8 @@ export const RegisterScreen: React.FC<
     },
   });
 
+
   const onSubmit = async (data: IRegister) => {
-    console.log(data);
     try {
       const res = await axios({
         url: Endpoints.auth.register,
@@ -54,44 +59,35 @@ export const RegisterScreen: React.FC<
           name: data.fullName,
         },
       });
+
       if (res.status === 201) {
-        initUser(res.data);
-        showToast('success', 'Registation successful');
-        // navigation.navigate(Routes.verification, data)
+        showToast('success', 'Registration successful');
+        navigation.navigate(Routes.verification, {
+          fullname: data.fullName,
+          email: data.email,
+          password: data.password,
+          verificationType: 'register',
+        });
       } else {
-        showToast('error', 'Register failed')
+        showToast('error', 'Register failed');
       }
     } catch (error) {
-      showToast('error', 'An error occured');
+      showToast('error', 'An error occurred');
       console.error('Error details', error.response?.data || error.message);
     }
-  }
-  //         username: data.email?.replace('@gmail.com', ''),
-  //         password: data.password,
-  //         name: data.fullName,
-  //         email: data.email,
+  };
 
-
-
-  // useEffect(()=>{
-  //   const showListener = Keyboard.addListener(keyboardShowEvent, ()=>{
-  //     scrollRef?.current?.scrollToEnd({animated:true})
-  //   })
-  //   const hideListener = Keyboard.addListener(keyboardHideEvent, ()=>{
-  //     scrollRef?.current?.scrollTo({y:0, animated:true})
-  //   })
-  //   return ()=>{
-  //     hideListener.remove();
-  //     showListener.remove()
-  //   }
-  // },[])
+  useEffect(() => {
+    console.log('Component re-rendered with navigatedToMain:', navigatedToMain);
+  }, [navigatedToMain]);
 
   return (
     <ScrollView
       keyboardShouldPersistTaps="handled"
       scrollEnabled={false}
       style={CommonStyles.flex}
-      contentContainerStyle={CommonStyles.flex}>
+      contentContainerStyle={CommonStyles.flex}
+    >
       <Navbar
         type="standard"
         onLeftPress={navigation.goBack}
@@ -132,8 +128,8 @@ export const RegisterScreen: React.FC<
       <View style={styles.footer}>
         <Buttons
           text="Create an account"
-          // loading={isSubmitted}
-          onPress={handleSubmit(onSubmit)}
+          loading={isSubmitted}
+          onPress={() => handleSubmit(onSubmit)()}
         />
         <TextLink
           content="By signing up you agree to our Terms and Conditions of Use"

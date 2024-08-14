@@ -22,6 +22,14 @@ export class LocalStorage {
         }
     }
 
+    public static token(method: TFunctionalMethod, data?: string) {
+        if (method === 'get') {
+            return storage.getString(StorageKeys.token) || null;
+        }
+        this.set(StorageKeys.token, 'string', data);
+    }
+
+
     public static clean(key: StorageKeys | StorageKeys[] | 'all') {
         if (key === 'all') {
             storage.clearAll();
@@ -69,5 +77,12 @@ export class LocalStorage {
             return totalPrice ? JSON.parse(totalPrice) : 0;
         }
         this.set(StorageKeys.totalPrice, 'number', data);
+    }
+    public static navigatedToMain(method: TFunctionalMethod, data?: boolean) {
+        if (method === 'get') {
+            const navigatedToMain = storage.getString(StorageKeys.navigatedToMain);
+            return navigatedToMain ? JSON.parse(navigatedToMain) : false;
+        }
+        this.set(StorageKeys.navigatedToMain, 'boolean', data);
     }
 }

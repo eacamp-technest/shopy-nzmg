@@ -7,5 +7,8 @@ export enum StorageKeys {
     carts = 'carts',
     totalPrice = 'totalPrice',
     subTotalPrice = 'subTotalPrice',
-    addresses = 'addresses'
+    addresses = 'addresses',
+    isVerified = 'isVerified',
+    navigatedToMain = 'navigatedToMain',
+    token = 'token',
 }

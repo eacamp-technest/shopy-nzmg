@@ -1,21 +1,21 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
-import {Edges, SafeAreaView} from 'react-native-safe-area-context';
-import {WelcomeScreen} from 'screens/auth/Welcome.Screen';
-import {VerificationScreen} from 'screens/auth/Verification.Screen';
-import {LoginScreen} from 'screens/auth/Login.Screen';
-import {RegisterScreen} from 'screens/auth/Register.Screen';
-import {ModalScreen} from 'screens/Modal.Screen';
-import {Routes} from './routes';
-import {NavigationParamList} from 'types/navigation.types';
-import {CommonStyles} from 'theme/common.styles';
+import { Edges, SafeAreaView } from 'react-native-safe-area-context';
+import { WelcomeScreen } from 'screens/auth/Welcome.Screen';
+import { VerificationScreen } from 'screens/auth/Verification.Screen';
+import { LoginScreen } from 'screens/auth/Login.Screen';
+import { RegisterScreen } from 'screens/auth/Register.Screen';
+import { ModalScreen } from 'screens/Modal.Screen';
+import { Routes } from './routes';
+import { NavigationParamList } from 'types/navigation.types';
+import { CommonStyles } from 'theme/common.styles';
 import {
   authStackScreenOption,
   defaultScreenOptions,
   modalScreenOptions,
 } from 'configs/navigation.configs';
-import {PaymentScreensTab} from 'screens/payments';
-import {HomeScreen} from 'screens/main/Home.Screen';
+import { PaymentScreensTab } from 'screens/payments';
+import { HomeScreen } from 'screens/main/Home.Screen';
 
 const AuthStack = createNativeStackNavigator<NavigationParamList>();
 
