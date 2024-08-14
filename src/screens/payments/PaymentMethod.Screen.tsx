@@ -1,28 +1,28 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native';
-import React, { useEffect, useState, useCallback } from 'react';
-import { Navbar } from 'components/Navbar';
-import { TypographyStyles } from 'theme/typography';
-import { TextLink } from 'components/TextLinks';
-import { colors } from 'theme/colors';
-import { Buttons } from 'components/Buttons';
-import { Routes } from 'router/routes';
-import { CommonStyles } from 'theme/common.styles';
-import { useUserStore } from 'store/user/user.store';
-import { ICardInputFrom } from 'types/card.types';
-import { SvgImage } from 'components/SvgImages';
-import { useToast } from 'store/toast';
-import { SceneRendererProps } from 'react-native-tab-view';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { normalize } from 'theme/metrics';
+import {StyleSheet, Text, View, Pressable, Alert} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {Navbar} from 'components/Navbar';
+import {TypographyStyles} from 'theme/typography';
+import {TextLink} from 'components/TextLinks';
+import {colors} from 'theme/colors';
+import {Buttons} from 'components/Buttons';
+import {Routes} from 'router/routes';
+import {CommonStyles} from 'theme/common.styles';
+import {useUserStore} from 'store/user/user.store';
+import {ICardInputFrom} from 'types/card.types';
+import {SvgImage} from 'components/SvgImages';
+import {useToast} from 'store/toast';
+import {SceneRendererProps} from 'react-native-tab-view';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {normalize} from 'theme/metrics';
 import axios from 'axios';
-import { Endpoints } from 'services/Endpoints';
-import { LocalStorage } from 'store/LocalStorage';
+import {Endpoints} from 'services/Endpoints';
+import {LocalStorage} from 'store/LocalStorage';
 
-export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) => {
+export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({jumpTo}) => {
   const {
     cards,
     navigatedToMain,
-    actions: { selectCard, setNavigatedToMain, initUser },
+    actions: {selectCard, setNavigatedToMain, initUser},
   } = useUserStore(state => state);
 
   const navigation = useNavigation<NavigationProp<any>>();
@@ -31,14 +31,15 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
   const onSubmit = useCallback(async () => {
     try {
       const res = await axios.post(Endpoints.auth.register);
-      const { token, user } = res.data;
+      const {token, user} = res.data;
       console.log(res.data);
 
-
       if (navigatedToMain) {
-        initUser({ ...user, token });
+        initUser({...user, token});
+        console.log(token, user);
+
         await LocalStorage.navigatedToMain('set', true);
-        await LocalStorage.user('set', { ...user, token });
+        await LocalStorage.user('set', {...user, token});
         console.log(token, 'added');
       }
     } catch (error) {
@@ -48,6 +49,7 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
   }, [initUser, navigatedToMain, showToast]);
 
   const navigateToMain = useCallback(() => {
+    navigation.navigate(Routes.tab);
     setNavigatedToMain(true);
     onSubmit();
   }, [onSubmit, setNavigatedToMain]);
@@ -85,7 +87,7 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
         </Pressable>
       );
     },
-    [jumpTo, selectCard]
+    [jumpTo, selectCard],
   );
 
   const onAddNewMethod = useCallback(() => {
@@ -156,10 +158,7 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
             You don’t have a connected bank account.
           </Text>
         </View>
-        <Buttons
-          text="Connect a bank account"
-          onPress={navigateToMain}
-        />
+        <Buttons text="Connect a bank account" onPress={navigateToMain} />
       </View>
     </View>
   );
@@ -167,7 +166,7 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
 
 const styles = StyleSheet.create({
   root: {
-    paddingHorizontal: normalize('horizontal', 12),
+    paddingHorizontal: normalize('horizontal', 24),
   },
   textContainer: {
     gap: 12,
