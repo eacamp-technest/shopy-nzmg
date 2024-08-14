@@ -22,6 +22,7 @@ import { AddAddressScreen } from 'screens/main/AddAddress.Screen';
 import { Tester } from 'screens/payments/tester';
 import { YourAddress } from 'screens/main/YourAddress';
 import { ChooseCardScreen } from 'screens/home/ChooseCard.Screen';
+import { PaymentScreensTab } from 'screens/payments';
 const MainStack = createNativeStackNavigator<NavigationParamList>();
 export const MainStackRouter = () => {
   return (
@@ -42,6 +43,11 @@ export const MainStackRouter = () => {
       <MainStack.Screen
         name={Routes.itemlistScreen}
         component={ItemListScreen}
+      />
+
+      <MainStack.Screen
+        name={Routes.paymentScreensTab}
+        component={PaymentScreensTab}
       />
 
       <MainStack.Screen name={Routes.cart} component={CartScreen} />

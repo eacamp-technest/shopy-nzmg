@@ -58,7 +58,11 @@ export const RegisterScreen: React.FC<
           password: data.password,
           name: data.fullName,
         },
-      });
+
+      })
+      console.log({ Rres: res.data })
+
+        ;
 
       if (res.status === 201) {
         showToast('success', 'Registration successful');

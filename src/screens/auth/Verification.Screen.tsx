@@ -1,16 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Keyboard, ScrollView } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { TextLink } from 'components/TextLinks';
-import { Buttons } from 'components/Buttons';
-import { CommonStyles } from 'theme/common.styles';
-import { OtpCodeField } from 'components/OtpCodeField';
-import { NavigationParamList } from 'types/navigation.types';
-import { Routes } from 'router/routes';
-import { useUserStore } from 'store/user/user.store';
-import { MainStackRouter } from 'router/Main.Router';
+import {View, StyleSheet, Keyboard, ScrollView} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {TextLink} from 'components/TextLinks';
+import {Buttons} from 'components/Buttons';
+import {CommonStyles} from 'theme/common.styles';
+import {OtpCodeField} from 'components/OtpCodeField';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {useUserStore} from 'store/user/user.store';
+import {MainStackRouter} from 'router/Main.Router';
 
 console.warn = (message: string) => {
   if (message.includes('Non-serializable')) {
@@ -20,17 +20,19 @@ console.warn = (message: string) => {
 
 export const VerificationScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.verification>
-> = ({ navigation, route }) => {
-  const { verificationType = 'login' } = route.params || {};
+> = ({navigation, route}) => {
+  const {verificationType = 'login'} = route.params || {};
   const [code, setCode] = React.useState<string>('');
-  const { isVerified, actions: { verifyUser } } = useUserStore(state => state);
+  const {
+    actions: {initUser},
+  } = useUserStore(state => state);
 
   const verify = () => {
     if (verificationType === 'register') {
-      console.log('Registration verification',);
+      console.log('Registration verification');
+      initUser(route.params);
       navigation.navigate(Routes.paymentScreensTab);
     }
-
   };
 
   return (
