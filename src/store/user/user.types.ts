@@ -11,7 +11,8 @@ interface IUserStoreActions {
     initUser: (user: IUser) => void;
     reset: () => void;
     logout: () => void;
-    addAddress: (address: IAddress) => void
+    addAddress: (address: IAddress) => void;
+    setNavigatedToMain: (navigated: boolean) => void;  // Add this
 }
 
 export interface IUserStore {
@@ -20,5 +21,7 @@ export interface IUserStore {
     addresses: IAddress[];
     selectedCard: ICardInputFrom | null;
     selectedAddress: IAddress | null;
+    navigatedToMain: boolean;  // Add this
     actions: IUserStoreActions;
 }
+

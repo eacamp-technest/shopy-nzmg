@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Navbar } from 'components/Navbar';
 import { TypographyStyles } from 'theme/typography';
 import { TextLink } from 'components/TextLinks';
@@ -14,58 +14,87 @@ import { useToast } from 'store/toast';
 import { SceneRendererProps } from 'react-native-tab-view';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { normalize } from 'theme/metrics';
-import { Tables } from 'components/Tables';
+import axios from 'axios';
+import { Endpoints } from 'services/Endpoints';
+import { LocalStorage } from 'store/LocalStorage';
 
 export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) => {
   const {
     cards,
-    actions: { selectCard },
+    navigatedToMain,
+    actions: { selectCard, setNavigatedToMain, initUser },
   } = useUserStore(state => state);
-  const navigation = useNavigation<NavigationProp<any>>();
 
+  const navigation = useNavigation<NavigationProp<any>>();
   const showToast = useToast();
 
-  const renderCards = (data: ICardInputFrom) => {
-    const onPress = () => {
-      selectCard(data.id);
-      jumpTo(Routes.yourCard);
-    };
-    return (
-      <Pressable
-        onLayout={() => console.log('render')}
-        key={data.id}
-        style={styles.component}
-        onPress={onPress}>
-        <SvgImage
-          color={colors.black}
-          source={require('../../assets/vectors/brands.svg')}
-        />
-        <Text
-          style={[
-            TypographyStyles.RegularNormalSemiBold,
-            CommonStyles.flexGrow,
-          ]}>
-          Mastercard * * * * {data.cardNumber.slice(-4)}
-        </Text>
-        <SvgImage
-          isPressable
-          onPress={() => console.log('...')}
-          source={require('../../assets/vectors/chevron-right.svg')}
-          color={colors.ink.darkest}
-        />
-      </Pressable>
-    );
-  };
-  const [paymentText, setPaymentText] = useState<string>('Add Payment Method');
+  const onSubmit = useCallback(async () => {
+    try {
+      const res = await axios.post(Endpoints.auth.register);
+      const { token, user } = res.data;
+      console.log(res.data);
 
-  const onAddNewMethod = () => {
-    if (cards.length >= 2) {
+
+      if (navigatedToMain) {
+        initUser({ ...user, token });
+        await LocalStorage.navigatedToMain('set', true);
+        await LocalStorage.user('set', { ...user, token });
+        console.log(token, 'added');
+      }
+    } catch (error) {
+      showToast('error', 'Failed to register. Please try again.');
+      console.error('Error details', error.response?.data || error.message);
+    }
+  }, [initUser, navigatedToMain, showToast]);
+
+  const navigateToMain = useCallback(() => {
+    setNavigatedToMain(true);
+    onSubmit();
+  }, [onSubmit, setNavigatedToMain]);
+
+  useEffect(() => {
+    console.log('Component re-rendered with navigatedToMain:', navigatedToMain);
+  }, [navigatedToMain]);
+
+  const renderCards = useCallback(
+    (data: ICardInputFrom) => {
+      const onPress = () => {
+        selectCard(data.id);
+        jumpTo(Routes.yourCard);
+      };
+
+      return (
+        <Pressable key={data.id} style={styles.component} onPress={onPress}>
+          <SvgImage
+            color={colors.black}
+            source={require('../../assets/vectors/brands.svg')}
+          />
+          <Text
+            style={[
+              TypographyStyles.RegularNormalSemiBold,
+              CommonStyles.flexGrow,
+            ]}>
+            Mastercard * * * * {data.cardNumber.slice(-4)}
+          </Text>
+          <SvgImage
+            isPressable
+            onPress={() => console.log('...')}
+            source={require('../../assets/vectors/chevron-right.svg')}
+            color={colors.ink.darkest}
+          />
+        </Pressable>
+      );
+    },
+    [jumpTo, selectCard]
+  );
+
+  const onAddNewMethod = useCallback(() => {
+    if (cards.length >= 3) {
       showToast('error', 'You can only store up to 3 cards');
       return;
     }
-    setPaymentText('Add another Card');
     jumpTo(Routes.addnewcard);
-  };
+  }, [cards.length, jumpTo, showToast]);
 
   return (
     <View style={styles.root}>
@@ -76,12 +105,11 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
         onLeftPress={() => navigation.goBack()}
         left={require('../../assets/vectors/chevron-left.svg')}
         rightActionType="text"
-        onRightPress={() => navigation.navigate(Routes.home)}
-        right={'Skip'}
+        onRightPress={navigateToMain}
+        right="Skip"
       />
-      <Navbar type="large" title="payment methods" />
       <View style={styles.container}>
-        <View style={styles.text}>
+        <View style={styles.textContainer}>
           <Text style={TypographyStyles.RegularNormalSemiBold}>
             STORED CARD
           </Text>
@@ -111,7 +139,7 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
                 TypographyStyles.RegularNormalSemiBold,
                 CommonStyles.flexGrow,
               ]}>
-              {paymentText}
+              {cards.length >= 1 ? 'Add another Card' : 'Add Payment Method'}
             </Text>
             <SvgImage
               source={require('../../assets/vectors/chevron-right.svg')}
@@ -130,7 +158,7 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
         </View>
         <Buttons
           text="Connect a bank account"
-          onPress={() => navigation.navigate(Routes.home)}
+          onPress={navigateToMain}
         />
       </View>
     </View>
@@ -140,6 +168,10 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({ jumpTo }) =>
 const styles = StyleSheet.create({
   root: {
     paddingHorizontal: normalize('horizontal', 12),
+  },
+  textContainer: {
+    gap: 12,
+    paddingVertical: normalize('vertical', 24),
   },
   text: {
     ...TypographyStyles.RegularNormalRegular,

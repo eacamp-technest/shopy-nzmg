@@ -11,7 +11,8 @@ const initial: Omit<IUserStore, 'actions'> = {
     selectedCard: null,
     selectedAddress: null,
     addresses: [],
-    cards: []
+    navigatedToMain: false,
+    cards: [],
 }
 
 export const useUserStore = create<IUserStore>((set, get) => ({
@@ -21,8 +22,10 @@ export const useUserStore = create<IUserStore>((set, get) => ({
             const cards = LocalStorage.cards('get');
             const user = LocalStorage.user('get');
             const addresses = LocalStorage.addresses('get') || [];
-            set({ user, cards, addresses });
+            const navigatedToMain = LocalStorage.navigatedToMain('get') || false;
+            set({ user, cards, addresses, navigatedToMain });
         },
+
         logout: () => {
             LocalStorage.clean([StorageKeys.user, StorageKeys.cards]);
             get().actions.reset();
@@ -31,6 +34,9 @@ export const useUserStore = create<IUserStore>((set, get) => ({
         initUser: user => {
             set({ user });
             LocalStorage.user('set', user);
+            if (user.token) {
+                LocalStorage.token('set', user.token);
+            }
         },
         addCard: card => {
             const isExist = get().cards.find(info => info.id === card.id);
@@ -67,6 +73,9 @@ export const useUserStore = create<IUserStore>((set, get) => ({
             const updatedAddresses = [...get().addresses.filter(addr => addr.id !== addressData.id), addressData];
             set({ addresses: updatedAddresses });
             LocalStorage.addresses('set', updatedAddresses);
+        },
+        setNavigatedToMain: (navigated) => {
+            set({ navigatedToMain: navigated });
         },
         reset: () => set({ ...initial })
     }

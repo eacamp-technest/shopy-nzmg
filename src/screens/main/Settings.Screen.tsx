@@ -1,25 +1,26 @@
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {Navbar} from 'components/Navbar';
-import {colors} from 'theme/colors';
-import {Tables} from 'components/Tables';
-import {SvgImage} from 'components/SvgImages';
-import {FlatList} from 'react-native-gesture-handler';
-import {TypographyStyles} from 'theme/typography';
-import {normalize} from 'theme/metrics';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {NavigationParamList} from 'types/navigation.types';
-import {Routes} from 'router/routes';
-import {ISettings, SETTINGS} from 'constants/settings';
-import {useUserStoreActions} from 'store/user';
-import {useStatusBar} from 'helpers/useStatusBar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Navbar } from 'components/Navbar';
+import { colors } from 'theme/colors';
+import { Tables } from 'components/Tables';
+import { SvgImage } from 'components/SvgImages';
+import { FlatList } from 'react-native-gesture-handler';
+import { TypographyStyles } from 'theme/typography';
+import { normalize } from 'theme/metrics';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigationParamList } from 'types/navigation.types';
+import { Routes } from 'router/routes';
+import { ISettings, SETTINGS } from 'constants/settings';
+import { useUserStoreActions } from 'store/user';
+import { useStatusBar } from 'helpers/useStatusBar';
 
 export const SettingsScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.settings>
-> = ({navigation}) => {
+> = ({ navigation }) => {
   useStatusBar('dark-content', colors.white);
-  const {logout} = useUserStoreActions();
+  const { logout } = useUserStoreActions();
+
 
   return (
     <SafeAreaProvider style={styles.root}>
@@ -35,7 +36,7 @@ export const SettingsScreen: React.FC<
       <FlatList
         data={SETTINGS}
         keyExtractor={item => item.id}
-        renderItem={({item}: {item: ISettings}) => (
+        renderItem={({ item }: { item: ISettings }) => (
           <View>
             {item.id === '5' ? (
               <View

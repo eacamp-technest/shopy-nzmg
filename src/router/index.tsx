@@ -12,10 +12,11 @@ const delay = (ms: number, cb?: any) =>
 const Router = () => {
   const [ready, setReady] = useState<boolean>(false);
   const {
-    user,
+    user, navigatedToMain,
     actions: { initialize: initializeUser },
   } = useUserStore(state => state);
   const { actions: { initialize: initializeCart } } = useCartStore(state => state);
+
   const init = useCallback(async () => {
     await delay(1500, initializeUser());
     initializeCart();
@@ -24,7 +25,7 @@ const Router = () => {
   }, [initializeUser, initializeCart]);
 
   useEffect(() => {
-    console.log(user);
+    console.log(user, navigatedToMain);
     init();
   }, [init]);
 
@@ -34,7 +35,10 @@ const Router = () => {
 
   return (
     <NavigationContainer>
-      {user ? <MainStackRouter /> : <AuthRouter />}
+      {user || navigatedToMain ?
+        <MainStackRouter />
+        : <AuthRouter />
+      }
     </NavigationContainer>
   );
 };
