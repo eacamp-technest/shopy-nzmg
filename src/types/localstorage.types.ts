@@ -11,4 +11,5 @@ export enum StorageKeys {
     isVerified = 'isVerified',
     navigatedToMain = 'navigatedToMain',
     token = 'token',
+    savedItems = 'savedItems'
 }

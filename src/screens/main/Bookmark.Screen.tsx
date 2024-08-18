@@ -21,13 +21,9 @@ import {normalize} from 'theme/metrics';
 import {IProduct, ProductCard} from 'components/ProductCard';
 import axios from 'axios';
 import {useStatusBar} from 'helpers/useStatusBar';
-interface IData {
-  id?: number;
-  title?: string;
-  price?: number;
-  category?: string;
-  image?: string;
-}
+import {useSavedItemsStore} from 'store/savedItem/savedItem.store';
+import {categories} from './Home.Screen';
+
 export const BookmarkScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.bookmark>
 > = ({navigation}) => {
@@ -36,6 +32,12 @@ export const BookmarkScreen: React.FC<
   const [products, setProducts] = useState<IProduct[]>([]);
   const [loading, setLoading] = useState(true);
   const EndPoints = 'https://fakestoreapi.com/products';
+
+  const {
+    savedItems,
+    actions: {deleteItemFromSaved},
+  } = useSavedItemsStore(state => state);
+
   const renderItem = useCallback(
     ({item}: {item: IProduct}) => {
       return (
@@ -50,6 +52,7 @@ export const BookmarkScreen: React.FC<
           onPress={() =>
             navigation.navigate(Routes.productDetail, {product: item})
           }
+          onHeartPress={() => deleteItemFromSaved(item)}
         />
       );
     },
@@ -83,11 +86,16 @@ export const BookmarkScreen: React.FC<
         ) : (
           <View>
             <FlatList
-              data={products}
+              data={savedItems}
               renderItem={renderItem}
               horizontal={false}
               showsVerticalScrollIndicator={false}
               keyExtractor={item => item.id.toString()}
+              ListEmptyComponent={
+                <Text style={styles.emptyComponentText}>
+                  No Products in favourites
+                </Text>
+              }
             />
           </View>
         )}
@@ -96,12 +104,41 @@ export const BookmarkScreen: React.FC<
   };
 
   const Boards: React.FC = () => {
+    const groupedItems = savedItems.reduce((groups: any, item: IProduct) => {
+      const category = item.category || 'Uncategorized';
+      if (!groups[category]) {
+        groups[category] = [];
+      }
+      groups[category].push(item);
+      return groups;
+    }, {});
     return (
-      <View>
-        <Text>Boards</Text>
+      <View style={styles.onBoard}>
+        {Object.keys(groupedItems).length === 0 ? (
+          <Text style={styles.emptyComponentText}> No boards created</Text>
+        ) : (
+          Object.keys(groupedItems).map(category => (
+            <View key={category} style={styles.categoryText}>
+              <Text
+                style={[
+                  TypographyStyles.RegularNoneSemiBold,
+                  styles.onBoardText,
+                ]}>
+                {category}
+              </Text>
+              <FlatList
+                data={groupedItems[category]}
+                renderItem={renderItem}
+                keyExtractor={item => item.id.toString()}
+                showsVerticalScrollIndicator={false}
+              />
+            </View>
+          ))
+        )}
       </View>
     );
   };
+
   const renderScene = SceneMap({
     allItems: AllItems,
     boards: Boards,
@@ -161,5 +198,21 @@ const styles = StyleSheet.create({
 
   sceneContainerStyle: {
     paddingTop: 8,
+  },
+  emptyComponentText: {
+    ...TypographyStyles.RegularTightSemiBold,
+    marginTop: normalize('vertical', 20),
+    color: colors.ink.dark,
+    textAlign: 'center',
+  },
+  onBoard: {
+    paddingHorizontal: normalize('horizontal', 24),
+    paddingTop: 12,
+  },
+  onBoardText: {
+    marginBottom: 8,
+  },
+  categoryText: {
+    marginBottom: normalize('vertical', 24),
   },
 });

@@ -43,9 +43,9 @@ export type NavigationParamList = {
   [Routes.tester]: undefined;
   [Routes.review]: undefined;
   [Routes.home]: undefined;
-  [Routes.bookmark]: undefined;
   [Routes.discover]: undefined;
-  [Routes.bookmark]: undefined;
+  [Routes.bookmark]: {product: IProduct};
+  // [Routes.bookmark]: undefined;
   [Routes.settings]: undefined;
   [Routes.nortification]: undefined;
   [Routes.search]: undefined;
