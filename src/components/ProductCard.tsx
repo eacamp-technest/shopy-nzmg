@@ -33,6 +33,8 @@ export interface IProduct {
   };
   onPress?: () => void;
   onBinPress?: () => void;
+  onHeartPress?: () => void;
+  addToCart?: () => void;
 }
 
 export const ProductCard: React.FC<IProduct> = ({
@@ -48,6 +50,8 @@ export const ProductCard: React.FC<IProduct> = ({
   category,
   onPress,
   onBinPress,
+  onHeartPress,
+  addToCart,
 }) => {
   const [counter, setCounter] = useState(1);
   const {
@@ -127,13 +131,16 @@ export const ProductCard: React.FC<IProduct> = ({
                 style={styles.button}
                 textColor={{color: colors.ink.base}}
                 text="Move to Bag"
+                onPress={() => addToCart}
               />
-              <SvgImage
-                fill={colors.red.light}
-                width={26}
-                height={24}
-                source={require('../assets/vectors/heart.svg')}
-              />
+              <Pressable onPress={onHeartPress}>
+                <SvgImage
+                  fill={colors.red.light}
+                  width={26}
+                  height={24}
+                  source={require('../assets/vectors/heart.svg')}
+                />
+              </Pressable>
             </View>
           ) : null}
         </View>

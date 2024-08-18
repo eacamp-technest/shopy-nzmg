@@ -14,6 +14,7 @@ import {Buttons} from 'components/Buttons';
 import {useCartStore} from 'store/cart/cart.store';
 import {useUserStore} from 'store/user/user.store';
 import {useStatusBar} from 'helpers/useStatusBar';
+import {normalize} from 'theme/metrics';
 
 export const CartScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.cart>
@@ -54,6 +55,9 @@ export const CartScreen: React.FC<
         horizontal={true}
         size="s"
         isCounter={true}
+        onPress={() =>
+          navigation.navigate(Routes.productDetail, {product: item})
+        }
         onBinPress={() => {
           console.log('delete');
           deleteItemFromCart(item);
@@ -83,6 +87,11 @@ export const CartScreen: React.FC<
         renderItem={renderInCart}
         showsVerticalScrollIndicator={false}
         style={styles.list}
+        ListEmptyComponent={
+          <Text style={styles.emptyComponentText}>
+            No Products in your Cart
+          </Text>
+        }
       />
       <Divider height="L" />
       <View>
@@ -170,6 +179,12 @@ const styles = StyleSheet.create({
   },
   total: {
     ...CommonStyles.alignCenterJustifyBetweenRow,
-    marginVertical: 16,
+    marginVertical: normalize('vertical', 16),
+  },
+  emptyComponentText: {
+    ...TypographyStyles.RegularTightSemiBold,
+    marginTop: normalize('vertical', 20),
+    color: colors.ink.dark,
+    textAlign: 'center',
   },
 });

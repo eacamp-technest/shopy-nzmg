@@ -1,23 +1,21 @@
-import { View, StyleSheet, ScrollView } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import { Navbar } from 'components/Navbar';
-import { Buttons } from 'components/Buttons';
-import { TextLink } from 'components/TextLinks';
-import { normalize } from 'theme/metrics';
-import { NavigationParamList } from 'types/navigation.types';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Routes } from 'router/routes';
-import { useForm } from 'react-hook-form';
-import { InputControlled } from 'components/InputControlled';
-import { FormRules } from 'constants/formRules';
-import { CommonStyles } from 'theme/common.styles';
-import { colors } from 'theme/colors';
-import { Endpoints } from 'services/Endpoints';
+import {View, StyleSheet, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Navbar} from 'components/Navbar';
+import {Buttons} from 'components/Buttons';
+import {TextLink} from 'components/TextLinks';
+import {normalize} from 'theme/metrics';
+import {NavigationParamList} from 'types/navigation.types';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Routes} from 'router/routes';
+import {useForm} from 'react-hook-form';
+import {InputControlled} from 'components/InputControlled';
+import {FormRules} from 'constants/formRules';
+import {CommonStyles} from 'theme/common.styles';
+import {colors} from 'theme/colors';
+import {Endpoints} from 'services/Endpoints';
 import axios from 'axios';
-import { useToast } from 'store/toast';
-import { useUserStore } from 'store/user/user.store';
-import { useUserStoreActions } from 'store/user';
-import { LocalStorage } from 'store/LocalStorage';
+import {useToast} from 'store/toast';
+import {useUserStore} from 'store/user/user.store';
 
 export interface IRegister {
   fullName: string;
@@ -28,17 +26,16 @@ export interface IRegister {
 
 export const RegisterScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.register>
-> = ({ navigation }) => {
-  const { initUser } = useUserStoreActions();
-  const { navigatedToMain } = useUserStore(state => ({
-    navigatedToMain: state.navigatedToMain
+> = ({navigation}) => {
+  const {navigatedToMain} = useUserStore(state => ({
+    navigatedToMain: state.navigatedToMain,
   }));
   console.log('navigatedToMain:', navigatedToMain);
   const showToast = useToast();
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitted },
+    formState: {errors, isSubmitted},
   } = useForm<IRegister>({
     defaultValues: {
       fullName: 'NGS Group',
@@ -46,7 +43,6 @@ export const RegisterScreen: React.FC<
       password: 'qwe45678!',
     },
   });
-
 
   const onSubmit = async (data: IRegister) => {
     try {
@@ -58,11 +54,8 @@ export const RegisterScreen: React.FC<
           password: data.password,
           name: data.fullName,
         },
-
-      })
-      console.log({ Rres: res.data })
-
-        ;
+      });
+      console.log({Rres: res.data});
 
       if (res.status === 201) {
         showToast('success', 'Registration successful');
@@ -90,8 +83,7 @@ export const RegisterScreen: React.FC<
       keyboardShouldPersistTaps="handled"
       scrollEnabled={false}
       style={CommonStyles.flex}
-      contentContainerStyle={CommonStyles.flex}
-    >
+      contentContainerStyle={CommonStyles.flex}>
       <Navbar
         type="standard"
         onLeftPress={navigation.goBack}

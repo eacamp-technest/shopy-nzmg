@@ -70,6 +70,13 @@ export class LocalStorage {
         }
         this.set(StorageKeys.carts, 'array', data);
     }
+    public static savedItems(method: TFunctionalMethod, data?: IProduct[]) {
+        if (method === 'get') {
+            const savedItems = storage.getString(StorageKeys.savedItems);
+            return savedItems ? JSON.parse(savedItems) : [];
+        }
+        this.set(StorageKeys.savedItems, 'array', data);
+    }
 
     public static subTotalPrice(method: TFunctionalMethod, data?: number) {
         if (method === 'get') {

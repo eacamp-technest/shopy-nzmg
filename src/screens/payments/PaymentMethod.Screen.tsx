@@ -1,5 +1,5 @@
-import {StyleSheet, Text, View, Pressable, Alert} from 'react-native';
-import React, {useEffect, useState, useCallback} from 'react';
+import {StyleSheet, Text, View, Pressable} from 'react-native';
+import React, {useEffect, useCallback} from 'react';
 import {Navbar} from 'components/Navbar';
 import {TypographyStyles} from 'theme/typography';
 import {TextLink} from 'components/TextLinks';
@@ -158,7 +158,10 @@ export const PaymentMethodScreen: React.FC<SceneRendererProps> = ({jumpTo}) => {
             You don’t have a connected bank account.
           </Text>
         </View>
-        <Buttons text="Connect a bank account" onPress={navigateToMain} />
+        <Buttons
+          text="Connect a bank account"
+          onPress={() => console.log('connected to bank account')}
+        />
       </View>
     </View>
   );

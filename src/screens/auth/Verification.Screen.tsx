@@ -29,9 +29,35 @@ export const VerificationScreen: React.FC<
 
   const verify = () => {
     if (verificationType === 'register') {
-      console.log('Registration verification');
-      initUser(route.params);
-      navigation.navigate(Routes.paymentScreensTab);
+      navigation.navigate(Routes.modalScreen, {
+        title: 'What’s your team name',
+        wrapperStyle: {gap: 24},
+        buttons: [
+          {
+            text: 'Agree and continue',
+            types: 'primary',
+            onPress: () => {
+              console.log('Registration verification');
+              initUser(route.params);
+              navigation.navigate(Routes.paymentScreensTab);
+            },
+          },
+          {
+            text: 'Disagree and close',
+            types: 'transparent',
+            // onPress: navigation.goBack,
+          },
+        ],
+        subTitle: (
+          <TextLink
+            content={modalContent}
+            center
+            highlighted={modalHighlighted}
+          />
+        ),
+        onClose: () => {},
+        closeable: true,
+      });
     }
   };
 
