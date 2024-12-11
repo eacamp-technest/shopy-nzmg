@@ -1,7 +1,16 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {
+  NativeStackNavigationOptions,
+  NativeStackNavigationProp,
+} from '@react-navigation/native-stack';
 import {Routes} from 'router/routes';
 import {IModal} from 'components/Modal';
+import {IProduct} from 'components/ProductCard';
 export type AppNavigation = NativeStackNavigationProp<NavigationParamList>;
+
+interface ISearchProps extends NativeStackNavigationOptions {
+  items?: string[] | null;
+  onItemPress?: (item: string) => void;
+}
 
 export type NavigationParamList = {
   [Routes.authRouter]: {
@@ -25,11 +34,33 @@ export type NavigationParamList = {
   [Routes.createyourcard]: undefined;
   [Routes.yourCard]: undefined;
   [Routes.test]: undefined;
+  [Routes.cart]: undefined;
+  [Routes.addAddress]: undefined;
+  [Routes.yourAddress]: {
+    name: string;
+    address: string;
+  };
+  [Routes.tester]: undefined;
+  [Routes.review]: undefined;
   [Routes.home]: undefined;
-  [Routes.itemlist]: undefined;
   [Routes.discover]: undefined;
+  [Routes.bookmark]: {product: IProduct};
+  // [Routes.bookmark]: undefined;
   [Routes.settings]: undefined;
-  [Routes.discoverNested]: undefined;
+  [Routes.nortification]: undefined;
+  [Routes.search]: undefined;
+  [Routes.filters]: undefined;
+  [Routes.tab]: undefined;
+  [Routes.itemlistScreen]: {
+    filters?: {
+      minPrice?: number;
+      maxPrice?: number;
+      size?: string;
+      color?: string;
+      category?: null | string;
+    };
+    sortCriteria?: 'lowestPrice' | 'highestPrice';
+  };
   [Routes.womenList]: undefined;
   [Routes.discoverRouter]: undefined;
   [Routes.menList]: undefined;
@@ -39,4 +70,14 @@ export type NavigationParamList = {
   [Routes.profile]: undefined;
   [Routes.order]: undefined;
   [Routes.scanner]: undefined;
+  [Routes.success]: undefined;
+  [Routes.reset]: undefined;
+  [Routes.checkEmail]: undefined;
+  [Routes.newPassword]: undefined;
+  [Routes.resetPassword]: undefined;
+  [Routes.productDetail]: {product: IProduct};
+  [Routes.bookmarkRouter]: undefined;
+  [Routes.popular]: undefined;
+  [Routes.about]: undefined;
+  [Routes.chooseCard]: undefined;
 };

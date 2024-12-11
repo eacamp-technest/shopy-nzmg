@@ -7,13 +7,14 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {TypographyStyles} from 'theme/typography';
 import {CommonStyles} from 'theme/common.styles';
 import {SvgImage} from './SvgImages';
 import {colors} from 'theme/colors';
 import {Buttons} from './Buttons';
 import {normalize} from 'theme/metrics';
+import {CheckBox} from './CheckBox';
 
 type TIcon = {
   icon: NodeRequire;
@@ -29,7 +30,8 @@ type NavbarActions =
   | 'text'
   | 'button'
   | 'none'
-  | 'icon-subText';
+  | 'icon-subText'
+  | 'checkBox';
 type NavbarSide = NodeRequire | TIcon | string | React.ReactNode | undefined;
 
 interface INavBar {
@@ -43,9 +45,12 @@ interface INavBar {
   leftActionType?: NavbarActions;
   rightActionType?: NavbarActions;
   style?: StyleProp<ViewStyle>;
-  textStyle?: StyleProp<TextStyle> | undefined;
+  rightTextStyle?: StyleProp<TextStyle> | undefined;
+  leftTextStyle?: StyleProp<TextStyle> | undefined;
   rootStyle?: StyleProp<ViewStyle>;
   titleColor?: string;
+  check?: boolean;
+  checkSquare?: boolean;
 }
 
 export const Navbar: React.FC<INavBar> = ({
@@ -58,9 +63,12 @@ export const Navbar: React.FC<INavBar> = ({
   style,
   rootStyle,
   mode,
-  textStyle,
+  check = false,
+  rightTextStyle,
+  leftTextStyle,
   onLeftPress,
   onRightPress,
+  checkSquare,
   titleColor,
 }) => {
   if (type === 'large') {
@@ -93,7 +101,11 @@ export const Navbar: React.FC<INavBar> = ({
         return (
           <Text
             numberOfLines={2}
-            style={[styles.textType, side === 'left' && textStyle]}>
+            style={[
+              styles.textType,
+              side === 'left' && leftTextStyle,
+              side === 'right' && rightTextStyle,
+            ]}>
             {data as string}
           </Text>
         );
@@ -165,6 +177,13 @@ export const Navbar: React.FC<INavBar> = ({
             size="small"
             text={data?.toString()}
             onPress={onPressAction}
+          />
+        );
+      case 'checkBox':
+        return (
+          <CheckBox
+            types={checkSquare ? 'square' : 'circle'}
+            setCheck={check}
           />
         );
 

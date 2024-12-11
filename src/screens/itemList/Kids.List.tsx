@@ -10,6 +10,7 @@ import {Tables} from 'components/Tables';
 import {SvgImage} from 'components/SvgImages';
 import {normalize} from 'theme/metrics';
 import {TypographyStyles} from 'theme/typography';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 const renderKids = ({item}: {item: IGenderItem}) => (
   <Tables
@@ -27,6 +28,8 @@ const renderKids = ({item}: {item: IGenderItem}) => (
 export const KidsList: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.kidslist>
 > = ({navigation}) => {
+  useStatusBar('dark-content', colors.skyBlue.base);
+
   return (
     <View style={styles.root}>
       <View style={styles.contain}>

@@ -7,6 +7,7 @@ import {Routes} from 'router/routes';
 import {CommonStyles} from 'theme/common.styles';
 import {useUserStore} from 'store/user/user.store';
 import {SceneRendererProps} from 'react-native-tab-view';
+import {normalize} from 'theme/metrics';
 
 export const YourCardScreen: React.FC<SceneRendererProps> = ({jumpTo}) => {
   const {
@@ -48,5 +49,6 @@ const styles = StyleSheet.create({
   root: {
     gap: 32,
     flex: 1,
+    paddingHorizontal: normalize('horizontal', 24),
   },
 });

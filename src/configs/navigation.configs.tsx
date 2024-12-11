@@ -48,6 +48,21 @@ const tabIconConfig: {[key: string]: NodeRequire} = {
   [Routes.nortification]: require('../assets/vectors/bell.svg'),
   [Routes.settings]: require('../assets/vectors/settings.svg'),
 };
+interface SearchScreenOptions extends NativeStackNavigationOptions {
+  items?: string[] | null;
+}
+export const searchScreenOptions: SearchScreenOptions = {
+  ...defaultScreenOptions,
+  headerTitle: 'Search products',
+  presentation: 'formSheet',
+  headerLargeTitle: true,
+  headerSearchBarOptions: {
+    inputType: 'text',
+    autoFocus: true,
+    hideWhenScrolling: false,
+  },
+  headerShown: true,
+};
 
 const renderTabIcon =
   (routeName: Routes) =>

@@ -1,57 +1,66 @@
-import { View, StyleSheet, Keyboard, ScrollView } from 'react-native';
 import React from 'react';
-import { Navbar } from 'components/Navbar';
-import { colors } from 'theme/colors';
-import { TextLink } from 'components/TextLinks';
-import { Buttons } from 'components/Buttons';
-import { CommonStyles } from 'theme/common.styles';
-import { OtpCodeField } from 'components/OtpCodeField';
-import { NavigationParamList } from 'types/navigation.types';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Routes } from 'router/routes';
+import {View, StyleSheet, Keyboard, ScrollView} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Navbar} from 'components/Navbar';
+import {colors} from 'theme/colors';
+import {TextLink} from 'components/TextLinks';
+import {Buttons} from 'components/Buttons';
+import {CommonStyles} from 'theme/common.styles';
+import {OtpCodeField} from 'components/OtpCodeField';
+import {NavigationParamList} from 'types/navigation.types';
+import {Routes} from 'router/routes';
+import {useUserStore} from 'store/user/user.store';
+import {MainStackRouter} from 'router/Main.Router';
 
 console.warn = (message: string) => {
   if (message.includes('Non-serializable')) {
     return;
   }
 };
+
 export const VerificationScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.verification>
-> = ({ navigation, route }) => {
-  const { verificationType } = route.params
+> = ({navigation, route}) => {
+  const {verificationType = 'login'} = route.params || {};
   const [code, setCode] = React.useState<string>('');
-  const verify = () => {
-    if (verificationType === 'login') {
-      console.log('Login verification');
-      return
-    }
+  const {
+    actions: {initUser},
+  } = useUserStore(state => state);
 
-    navigation.navigate(Routes.modalScreen, {
-      title: 'What’s your team name',
-      wrapperStyle: { gap: 24 },
-      buttons: [
-        {
-          text: 'Agree and continue',
-          types: 'primary',
-          onPress: () => navigation.navigate(Routes.paymentScreensTab),
-        },
-        {
-          text: 'Disagree and close',
-          types: 'transparent',
-          onPress: navigation.goBack,
-        },
-      ],
-      subTitle: (
-        <TextLink
-          content={modalContent}
-          center
-          highlighted={modalHighlighted}
-        />
-      ),
-      onClose: () => { },
-      closeable: true,
-    });
+  const verify = () => {
+    if (verificationType === 'register') {
+      navigation.navigate(Routes.modalScreen, {
+        title: 'What’s your team name',
+        wrapperStyle: {gap: 24},
+        buttons: [
+          {
+            text: 'Agree and continue',
+            types: 'primary',
+            onPress: () => {
+              console.log('Registration verification');
+              initUser(route.params);
+              navigation.navigate(Routes.paymentScreensTab);
+            },
+          },
+          {
+            text: 'Disagree and close',
+            types: 'transparent',
+            // onPress: navigation.goBack,
+          },
+        ],
+        subTitle: (
+          <TextLink
+            content={modalContent}
+            center
+            highlighted={modalHighlighted}
+          />
+        ),
+        onClose: () => {},
+        closeable: true,
+      });
+    }
   };
+
   return (
     <ScrollView scrollEnabled={false} contentContainerStyle={CommonStyles.flex}>
       <Navbar

@@ -6,12 +6,12 @@
  */
 
 import React from 'react';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {StatusBar, StyleSheet, View} from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import Router from 'router';
-import {colors} from './src/theme/colors';
-import {gestureHandlerRootHOC} from 'react-native-gesture-handler';
-import {Toast} from 'components/Toast';
+import { colors } from './src/theme/colors';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import { Toast } from 'components/Toast';
 
 function App(): React.JSX.Element {
   return (

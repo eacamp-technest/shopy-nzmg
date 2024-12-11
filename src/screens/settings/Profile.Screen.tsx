@@ -11,10 +11,13 @@ import {FlatList} from 'react-native-gesture-handler';
 import {Tables} from 'components/Tables';
 import {SvgImage} from 'components/SvgImages';
 import {IProfile, PROFILE} from 'constants/settings';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 export const ProfileScreen: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.profile>
 > = ({navigation}) => {
+  useStatusBar('dark-content', colors.mellowApricot.base);
+
   return (
     <View>
       <View style={styles.contain}>
@@ -45,6 +48,11 @@ export const ProfileScreen: React.FC<
         renderItem={({item}: {item: IProfile}) => (
           <Tables
             Left={<SvgImage color={colors.primary.base} source={item.icon} />}
+            onPress={() =>
+              item.id === '4'
+                ? navigation.navigate(Routes.reset)
+                : console.log(item.title)
+            }
             title={item.title}
             subTitle={item.subTitle}
             style={styles.table}

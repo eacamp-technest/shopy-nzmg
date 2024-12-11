@@ -1,6 +1,6 @@
-import {StyleSheet, TextStyle} from 'react-native';
-import {colors} from './colors';
-import {normalize} from './metrics';
+import { StyleSheet, TextStyle } from 'react-native';
+import { colors } from './colors';
+import { normalize } from './metrics';
 
 export const bebasFonts = {
   700: 'BebasNeue Bold',
@@ -13,6 +13,7 @@ export const montserratFonts = {
 };
 export const inter = {
   500: 'Inter-Medium',
+  400: 'Inter-Regular'
 };
 const fontSize12 = normalize('font', 12);
 const fontSize14 = normalize('font', 14);
@@ -276,6 +277,11 @@ export const TypographyStyles = StyleSheet.create({
   Inter: {
     fontSize: fontSize12,
     fontFamily: inter[500],
+    ...commonFontStyling,
+  },
+  InterRegular: {
+    fontSize: fontSize16,
+    fontFamily: inter[400],
     ...commonFontStyling,
   },
 });

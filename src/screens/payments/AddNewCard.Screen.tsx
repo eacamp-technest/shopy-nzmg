@@ -15,6 +15,7 @@ import {useUserStoreActions} from 'store/user';
 import DatePicker from 'react-native-date-picker';
 import {useToast} from 'store/toast';
 import {SceneRendererProps} from 'react-native-tab-view';
+import {normalize} from 'theme/metrics';
 
 export const AddNewCardScreen: React.FC<SceneRendererProps> = ({jumpTo}) => {
   const [picker, setPicker] = useState<boolean>(false);
@@ -57,7 +58,7 @@ export const AddNewCardScreen: React.FC<SceneRendererProps> = ({jumpTo}) => {
     setPicker(false);
   };
   return (
-    <View style={CommonStyles.flex}>
+    <View style={[CommonStyles.flex, styles.root]}>
       <Navbar
         type="standard"
         leftActionType="icon"
@@ -132,6 +133,9 @@ const vectors = {
 };
 
 const styles = StyleSheet.create({
+  root: {
+    paddingHorizontal: normalize('horizontal', 24),
+  },
   inputs: {
     gap: 24,
     marginTop: 24,

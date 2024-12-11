@@ -10,6 +10,7 @@ import {Tables} from 'components/Tables';
 import {SvgImage} from 'components/SvgImages';
 import {normalize} from 'theme/metrics';
 import {TypographyStyles} from 'theme/typography';
+import {useStatusBar} from 'helpers/useStatusBar';
 
 const renderMen = ({item}: {item: IGenderItem}) => (
   <Tables
@@ -27,6 +28,8 @@ const renderMen = ({item}: {item: IGenderItem}) => (
 export const MenList: React.FC<
   NativeStackScreenProps<NavigationParamList, Routes.menList>
 > = ({navigation}) => {
+  useStatusBar('dark-content', colors.blue.base);
+
   return (
     <View style={styles.root}>
       <View style={styles.contain}>

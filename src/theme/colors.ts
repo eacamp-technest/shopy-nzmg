@@ -81,4 +81,5 @@ export const colors = {
   },
   white: '#FFF',
   black: '#000',
+  backdrop: 'rgba(0, 0, 0, 0.8)',
 };

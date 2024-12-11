@@ -67,4 +67,27 @@ export class FormRules {
       message: "Cardholder name must be alphabetic",
     },
   } as RegisterOptions;
+
+  public static address = {
+    required: {
+      message: "Address is required",
+      value: true,
+    },
+    // pattern: {
+    //   value: Regex.address,
+    //   message: "Address is not valid",
+    // },
+  } as RegisterOptions;
+
+  public static country = {
+    required: {
+      message: "Country is required",
+      value: true,
+    },
+    pattern: {
+      value: Regex.country,
+      message: "Country is not valid",
+    },
+  } as RegisterOptions;
 }
+
